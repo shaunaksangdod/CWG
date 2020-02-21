@@ -1,5 +1,3 @@
-#from StdSuites.Type_Names_Suite import null
-
 import pandas,os,errno
 import timeit as t
 import global_data
@@ -1436,7 +1434,7 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
 
 def NB_ALL():
     print 'NB_ALL'
-    PATH = 'data/2014/NB_All/'
+    PATH = 'data/2015/NB_All/'
     UnEmp(NATIVITY=1,PATH=PATH)
     FT_Work(NATIVITY=1,PATH=PATH)
     Poverty(NATIVITY=1,PATH=PATH)
@@ -1448,7 +1446,7 @@ def NB_ALL():
 def FB_ALL():
 
     """ print 'FB_ALL'
-    PATH = 'data/2014/FB_All/'
+    PATH = 'data/2015/FB_All/'
     UnEmp(NATIVITY=2,PATH=PATH)
     FT_Work(NATIVITY=2,PATH=PATH)
     Poverty(NATIVITY=2,PATH=PATH)
@@ -1459,7 +1457,7 @@ def FB_ALL():
 
     # GRP 11
     print 'GRP11'
-    PATH = 'data/2014/GRP11/'
+    PATH = 'data/2015/GRP11/'
     UnEmp(NATIVITY=2, PATH=PATH,GRP11=1)
     FT_Work(NATIVITY=2, PATH=PATH,GRP11=1)
     Poverty(NATIVITY=2, PATH=PATH,GRP11=1)
@@ -1470,7 +1468,7 @@ def FB_ALL():
 
 def NB_WNH():
     print 'NB_WNH'
-    PATH = 'data/2014/NB_WNH/'
+    PATH = 'data/2015/NB_WNH/'
     UnEmp(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     FT_Work(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     Poverty(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
@@ -1481,7 +1479,7 @@ def NB_WNH():
     
 def FB_WNH():
     print 'FB_WNH'
-    PATH = 'data/2014/FB_WNH/'
+    PATH = 'data/2015/FB_WNH/'
     UnEmp(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
     FT_Work(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
     Poverty(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
@@ -1493,7 +1491,7 @@ def FB_WNH():
 
 def FB_POC(): # TODO Need to check result
     print 'FB_POC'
-    PATH = 'data/2014/FB_POC/'
+    PATH = 'data/2015/FB_POC/'
     #RAC1P=1,HISP=1 used for People of color
     UnEmp(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1)
     FT_Work(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1)
@@ -1560,13 +1558,13 @@ def get_percentage(df = None,indicator = None, GRP11=None):
 def get_disparity_score_grade_grp_11(PATH=None):
     disparity_grp11=pandas.DataFrame()
     disparity_grp11_final=pandas.DataFrame()
-    UnEmp=pandas.read_csv('data/2014/GRP11/step_2/UnEmp.csv',usecols=['puma','HSINC_UnEmp_Total'])
-    FT_work=pandas.read_csv('data/2014/GRP11/step_2/FT_Work.csv',usecols=['HSINC_FT_Work_Total'])
-    Poverty=pandas.read_csv('data/2014/GRP11/step_2/Poverty.csv',usecols=['HSINC_Poverty_Total'])
-    Working_Poor=pandas.read_csv('data/2014/GRP11/step_2/Working_Poor.csv',usecols=['HSINC_Working_Poor_Total'])
-    Rent_Burden=pandas.read_csv('data/2014/GRP11/step_2/Rent_Burden.csv',usecols=['HSINC_Rent_Burden_Total'])
-    Home_Ownership=pandas.read_csv('data/2014/GRP11/step_2/Home_Ownership.csv',usecols=['HSINC_Home_Ownership_Total'])
-    Income_level=pandas.read_csv('data/2014/GRP11/step_2/Income_level_FT_Workers.csv',usecols=['HSINC_Avg_PINCP_mf_t'])
+    UnEmp=pandas.read_csv('data/2015/GRP11/step_2/UnEmp.csv',usecols=['puma','HSINC_UnEmp_Total'])
+    FT_work=pandas.read_csv('data/2015/GRP11/step_2/FT_Work.csv',usecols=['HSINC_FT_Work_Total'])
+    Poverty=pandas.read_csv('data/2015/GRP11/step_2/Poverty.csv',usecols=['HSINC_Poverty_Total'])
+    Working_Poor=pandas.read_csv('data/2015/GRP11/step_2/Working_Poor.csv',usecols=['HSINC_Working_Poor_Total'])
+    Rent_Burden=pandas.read_csv('data/2015/GRP11/step_2/Rent_Burden.csv',usecols=['HSINC_Rent_Burden_Total'])
+    Home_Ownership=pandas.read_csv('data/2015/GRP11/step_2/Home_Ownership.csv',usecols=['HSINC_Home_Ownership_Total'])
+    Income_level=pandas.read_csv('data/2015/GRP11/step_2/Income_level_FT_Workers.csv',usecols=['HSINC_Avg_PINCP_mf_t'])
 
     disparity_grp11=pandas.concat([UnEmp,FT_work,Poverty,Working_Poor,Rent_Burden,Home_Ownership,Income_level],axis=1)
     score_columns_list=['Unemployment_HSINC_score','FT_Work_HSINC_score','Poverty_HSINC_score','Working_Poor_HSINC_score','Rent_Burden_HSINC_score','Home_Ownership_HSINC_score','Income_level_HSINC_score','Overall_HSINC_score']
@@ -1995,27 +1993,27 @@ def get_disparity(PATH=None,call_string=None): #you cannot call this function wi
         global_data.NB_WNH_FB_POC_d.to_csv(PATH + 'NB_WNH_FB_POC_F_Disparity.csv',na_rep="#DIV/0!")
 
 def get_NB_All_FB_All_disparity():
-    get_disparity('data/2014/Disparities/','NB_ALL_FB_ALL')
+    get_disparity('data/2015/Disparities/','NB_ALL_FB_ALL')
 
 def get_NB_ALL_F_FB_ALL_F_disparity():
-    get_disparity('data/2014/Disparities/', 'NB_ALL_F_FB_ALL_F')
+    get_disparity('data/2015/Disparities/', 'NB_ALL_F_FB_ALL_F')
 
 def get_FB_ALL_F_M_disparity():
-    get_disparity('data/2014/Disparities/', 'FB_ALL_F_M')
+    get_disparity('data/2015/Disparities/', 'FB_ALL_F_M')
 
 def get_NB_WNH_FB_POC_disparity():
-    get_disparity('data/2014/Disparities/', 'NB_WNH_FB_POC')
+    get_disparity('data/2015/Disparities/', 'NB_WNH_FB_POC')
     
 def get_FB_WNH_FB_POC_disparity():
-    get_disparity('data/2014/Disparities/', 'FB_WNH_FB_POC')
+    get_disparity('data/2015/Disparities/', 'FB_WNH_FB_POC')
 
 def get_NB_WNH_FB_POC_F_disparity():
-    get_disparity('data/2014/Disparities/', 'NB_WNH_FB_POC_F')
+    get_disparity('data/2015/Disparities/', 'NB_WNH_FB_POC_F')
 
 def get_score_grade_all(PATH=None):
     sg_data_NB_ALL_FB_ALL_final = pandas.DataFrame()
     sg_data_NB_ALL_FB_ALL = pandas.read_csv(
-        'data/2014/Disparities/NB_ALL_FB_ALL_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/NB_ALL_FB_ALL_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_ALL_FB_ALL = sg_data_NB_ALL_FB_ALL.astype('object')
 
@@ -2575,7 +2573,7 @@ def get_score_grade_all(PATH=None):
 def get_score_grade_f(PATH=None):
     sg_data_f_final = pandas.DataFrame()
     sg_data_f = pandas.read_csv(
-        'data/2014/Disparities/NB_ALL_F_FB_ALL_F_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/NB_ALL_F_FB_ALL_F_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_f = sg_data_f.astype('object')
 
@@ -3135,7 +3133,7 @@ def get_score_grade_f(PATH=None):
 def get_score_grade_FB_ALL_F_M(PATH=None):
     sg_data_f_m_final = pandas.DataFrame()
     sg_data_f_m = pandas.read_csv(
-        'data/2014/Disparities/FB_ALL_F_M_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/FB_ALL_F_M_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_f_m = sg_data_f_m.astype('object')
 
@@ -3695,7 +3693,7 @@ def get_score_grade_FB_ALL_F_M(PATH=None):
 def get_score_grade_NB_WNH_FB_POC(PATH=None):
     sg_data_NB_WNH_FB_POC_final = pandas.DataFrame()
     sg_data_NB_WNH_FB_POC = pandas.read_csv(
-        'data/2014/Disparities/NB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/NB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_WNH_FB_POC = sg_data_NB_WNH_FB_POC.astype('object')
 
@@ -4255,7 +4253,7 @@ def get_score_grade_NB_WNH_FB_POC(PATH=None):
 def get_score_grade_FB_WNH_FB_POC(PATH=None):
     sg_data_FB_WNH_FB_POC_final = pandas.DataFrame()
     sg_data_FB_WNH_FB_POC = pandas.read_csv(
-        'data/2014/Disparities/FB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/FB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_FB_WNH_FB_POC = sg_data_FB_WNH_FB_POC.astype('object')
 
@@ -4815,7 +4813,7 @@ def get_score_grade_FB_WNH_FB_POC(PATH=None):
 def get_score_grade_NB_WNH_FB_POC_F(PATH=None):
     sg_data_NB_WNH_FB_POC_F_final = pandas.DataFrame()
     sg_data_NB_WNH_FB_POC_F = pandas.read_csv(
-        'data/2014/Disparities/NB_WNH_FB_POC_F_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2015/Disparities/NB_WNH_FB_POC_F_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_WNH_FB_POC_F = sg_data_NB_WNH_FB_POC_F.astype('object')
 
@@ -5395,12 +5393,12 @@ def run():
     get_FB_WNH_FB_POC_disparity()
     get_disparity_score_grade_grp_11
     get_NB_WNH_FB_POC_F_disparity()
-    get_score_grade_all('data/2014/Scores_Grades/')
-    get_score_grade_f('data/2014/Scores_Grades/')
-    get_score_grade_FB_ALL_F_M('data/2014/Scores_Grades/')
-    get_score_grade_NB_WNH_FB_POC('data/2014/Scores_Grades/')
-    get_score_grade_FB_WNH_FB_POC('data/2014/Scores_Grades/') #make this
-    get_score_grade_NB_WNH_FB_POC_F('data/2014/Scores_Grades/')
+    get_score_grade_all('data/2015/Scores_Grades/')
+    get_score_grade_f('data/2015/Scores_Grades/')
+    get_score_grade_FB_ALL_F_M('data/2015/Scores_Grades/')
+    get_score_grade_NB_WNH_FB_POC('data/2015/Scores_Grades/')
+    get_score_grade_FB_WNH_FB_POC('data/2015/Scores_Grades/') #make this
+    get_score_grade_NB_WNH_FB_POC_F('data/2015/Scores_Grades/')
     cj.csv_to_json()
 
 

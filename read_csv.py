@@ -3,8 +3,8 @@ import pandas
 p_columns = ['SERIALNO','SPORDER','PUMA','PWGTP','AGEP','SCHL','SEX','WKHP','ESR','NATIVITY','PINCP','POVPIP','ENG','RAC1P','HISP']
 h_columns = ['SERIALNO','GRPIP','TEN']
 
-p_data = pandas.read_csv('data/ss14pny.csv',usecols=p_columns)
-h_data = pandas.read_csv('data/ss14hny.csv',usecols=h_columns)
+p_data = pandas.read_csv('data/ss15pny.csv',usecols=p_columns)
+h_data = pandas.read_csv('data/ss15hny.csv',usecols=h_columns)
 
 p_data.to_csv('data/p_dataframe.csv')
 h_data.to_csv('data/h_dataframe.csv')
