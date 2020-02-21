@@ -1,0 +1,157 @@
+,puma,Total_Population,BABS_mf_t,BABS_m,BABS_f,HS_mf_t,HS_m,HS_f,HSINC_mf_t,HSINC_m,HSINC_f
+0,Total Geo,5378310,2347292,1102666,1244626,2771451,1421664,1349787,259567,150061,109506
+1,"NYC-Manhattan Community District 6--Murray Hill, Gramercy & Stuyvesant Town PUMA",54792,47732,23779,23953,6576,3676,2900,484,0,484
+2,Tompkins County PUMA,35830,17961,8173,9788,16286,8007,8279,1583,975,608
+3,Westchester County (South Central)--New Rochelle & Mount Vernon Cities PUMA,37162,22623,11049,11574,13539,6983,6556,1000,409,591
+4,"NYC-Queens Community District 7--Flushing, Murray Hill & Whitestone PUMA",27254,12042,6638,5404,14715,7182,7533,497,340,157
+5,Madison & Cortland Counties PUMA,56706,16286,7063,9223,36025,18892,17133,4395,2479,1916
+6,NYC-Brooklyn Community District 5--East New York & Starrett City PUMA,1079,292,0,292,772,298,474,15,15,0
+7,Dutchess County (Southwest) PUMA,57704,21880,10806,11074,32549,15789,16760,3275,2149,1126
+8,"NYC-Bronx Community District 3 & 6--Belmont, Crotona Park East & East Tremont PUMA",1064,234,62,172,830,240,590,0,0,0
+9,Dutchess County (North & East) PUMA,54009,20581,9144,11437,30935,15863,15072,2493,1707,786
+10,Erie County (Central) PUMA,69996,16807,7560,9247,50698,26983,23715,2491,1555,936
+11,Suffolk County (West Central)--Babylon Town (Northwest) PUMA,27352,8519,3825,4694,17374,9439,7935,1459,1150,309
+12,"Otsego, Schoharie, Oneida (South) & Herkimer (South) Counties PUMA",50484,13415,6110,7305,33636,17067,16569,3433,1897,1536
+13,NYC-Brooklyn Community District 7--Sunset Park & Windsor Terrace PUMA,15405,10089,4298,5791,4309,2668,1641,1007,391,616
+14,Westchester County (Northeast) PUMA,48643,35279,15552,19727,12794,6590,6204,570,178,392
+15,Nassau County (East Central)--Oyster Bay Town (Central) PUMA,33407,19039,9028,10011,13701,7154,6547,667,377,290
+16,Niagara County (Southwest)--Greater Niagara Falls & North Tonawanda Area PUMA,47195,11982,6361,5621,31859,15966,15893,3354,1276,2078
+17,Nassau County (Central)--Hempstead Town (East Central) PUMA,45976,23454,9369,14085,21043,11881,9162,1479,788,691
+18,Niagara County (North & East) PUMA,51237,14721,7420,7301,34882,17433,17449,1634,642,992
+19,"NYC-Queens Community District 13--Queens Village, Cambria Heights & Rosedale PUMA",9588,3398,1502,1896,5858,2722,3136,332,241,91
+20,"Chenango, Delaware & Broome (East) Counties PUMA",53406,9791,3470,6321,36872,18604,18268,6743,4575,2168
+21,Oswego County PUMA,59816,13799,6121,7678,40311,21086,19225,5706,3211,2495
+22,"NYC-Brooklyn Community District 9--Crown Heights South, Prospect Lefferts & Wingate PUMA",10794,8090,4267,3823,2496,1354,1142,208,208,0
+23,NYC-Queens Community District 10--Howard Beach & Ozone Park PUMA,10756,3164,1054,2110,6949,3453,3496,643,267,376
+24,Ontario & Yates Counties PUMA,61942,18260,7947,10313,37387,19491,17896,6295,3426,2869
+25,"NYC-Bronx Community District 8--Riverdale, Fieldston & Kingsbridge PUMA",14676,10602,5513,5089,3742,1377,2365,332,307,25
+26,Erie County (Northwest) PUMA,52483,18683,8248,10435,32279,16436,15843,1521,677,844
+27,NYC-Brooklyn Community District 14--Flatbush & Midwood PUMA,24466,16086,7913,8173,7768,3971,3797,612,382,230
+28,"Rockland County (West)--Spring Valley, Suffern Villages & Monsey PUMA",21811,7423,3988,3435,11808,5062,6746,2580,1524,1056
+29,"NYC-Manhattan Community District 1 & 2--Battery Park City, Greenwich Village & Soho PUMA",62253,54976,28556,26420,6858,3796,3062,419,135,284
+30,"NYC-Bronx Community District 4--Concourse, Highbridge & Mount Eden PUMA",642,287,287,0,355,355,0,0,0,0
+31,NYC-Queens Community District 1--Astoria & Long Island City PUMA,39129,27253,13155,14098,10937,5877,5060,939,360,579
+32,Erie County (West Central)--Buffalo City (West) PUMA,35992,17718,8973,8745,15655,8103,7552,2619,1078,1541
+33,Schenectady County--Schenectady City PUMA,61845,21260,8893,12367,36758,18141,18617,3827,2906,921
+34,NYC-Brooklyn Community District 2--Brooklyn Heights & Fort Greene PUMA,36954,31132,15374,15758,5027,2769,2258,795,371,424
+35,"Steuben (North & West), Schuyler & Chemung (North) Counties PUMA",52867,9694,4198,5496,38838,19678,19160,4335,2820,1515
+36,NYC-Brooklyn Community District 1--Greenpoint & Williamsburg PUMA,47271,32006,16734,15272,11996,6362,5634,3269,1935,1334
+37,Suffolk County (Northwest)--Huntington Town (North) PUMA,36940,24192,12116,12076,12543,6002,6541,205,115,90
+38,Erie County (Northeast) PUMA,56353,21786,9916,11870,33505,16707,16798,1062,672,390
+39,Monroe County (North & West) PUMA,48765,16995,6626,10369,29962,16555,13407,1808,1292,516
+40,Oneida County (Central)--Greater Utica & Rome Cities PUMA,58261,16981,8379,8602,38035,18832,19203,3245,1602,1643
+41,"NYC-Brooklyn Community District 12--Borough Park, Kensington & Ocean Parkway PUMA",33004,12189,6925,5264,15830,7138,8692,4985,3106,1879
+42,Erie County (West Central)--Buffalo City (East) PUMA,26811,4885,2997,1888,18371,9442,8929,3555,2295,1260
+43,Suffolk County (Northwest)--Smithtown Town PUMA,51055,28649,13626,15023,21247,11384,9863,1159,687,472
+44,Nassau County (Northeast)--Oyster Bay Town (North) & Glen Cove City PUMA,36632,23863,11856,12007,12230,5998,6232,539,377,162
+45,NYC-Manhattan Community District 8--Upper East Side PUMA,85760,77683,31538,46145,8077,3886,4191,0,0,0
+46,Suffolk County (Southwest)--Islip Town (South) PUMA,39610,17081,8088,8993,21597,11437,10160,932,635,297
+47,"NYC-Brooklyn Community District 6--Park Slope, Carroll Gardens & Red Hook PUMA",47184,40347,19550,20797,5885,2743,3142,952,729,223
+48,Erie County (South) PUMA,83550,30354,13708,16646,50650,26446,24204,2546,1038,1508
+49,Albany County (Outside Albany City) PUMA,85817,34620,16987,17633,48320,24843,23477,2877,1133,1744
+50,NYC-Staten Island Community District 2--New Springville & South Beach PUMA,33317,10707,4517,6190,20826,9529,11297,1784,1356,428
+51,Erie County (North Central) PUMA,45698,26309,11479,14830,18037,8791,9246,1352,1243,109
+52,"NYC-Staten Island Community District 3--Tottenville, Great Kills & Annadale PUMA",62877,22979,9861,13118,36862,18102,18760,3036,2109,927
+53,"NYC-Manhattan Community District 12--Washington Heights, Inwood & Marble Hill PUMA",20271,16378,8041,8337,3716,2668,1048,177,177,0
+54,NYC-Manhattan Community District 7--Upper West Side & West Side PUMA,67979,60836,26087,34749,7047,4374,2673,96,0,96
+55,"NYC-Queens Community District 5--Ridgewood, Glendale & Middle Village PUMA",27128,10594,4869,5725,15086,7987,7099,1448,395,1053
+56,"NYC-Brooklyn Community District 15--Sheepshead Bay, Gerritsen Beach & Homecrest PUMA",19160,8493,4353,4140,9830,5112,4718,837,588,249
+57,"NYC-Queens Community District 12--Jamaica, Hollis & St. Albans PUMA",1914,479,267,212,1351,1150,201,84,68,16
+58,Suffolk County (North Central)--Brookhaven Town (North) PUMA,41463,21315,9314,12001,19224,10559,8665,924,838,86
+59,Albany County (East Central)--Albany City PUMA,27990,13119,5907,7212,13473,6951,6522,1398,946,452
+60,NYC-Manhattan Community District 3--Chinatown & Lower East Side PUMA,32743,27074,14769,12305,5062,3005,2057,607,504,103
+61,Rensselaer County--Troy City PUMA,72939,20611,9278,11333,46973,23741,23232,5355,2744,2611
+62,Warren & Washington Counties PUMA,63442,14249,5896,8353,44160,22655,21505,5033,3055,1978
+63,Orange County (Northeast)--Greater Newburgh City PUMA,33791,11109,5486,5623,20642,11249,9393,2040,1179,861
+64,"Rockland County (South)--Orangetown, Clarkstown (South) & Ramapo (Southeast) Towns PUMA",34522,19261,8704,10557,13409,7727,5682,1852,460,1392
+65,Fulton & Montgomery Counties PUMA,48315,9246,3811,5435,34047,16648,17399,5022,3660,1362
+66,NYC-Brooklyn Community District 11--Bensonhurst & Bath Beach PUMA,19636,6003,2479,3524,11135,5688,5447,2498,1394,1104
+67,Monroe County (Central)--Rochester City (East) PUMA,26197,14675,8276,6399,10148,5586,4562,1374,652,722
+68,Chautauqua County PUMA,59397,12786,5422,7364,42839,21415,21424,3772,2516,1256
+69,Nassau County (Northwest)--North Hempstead Town (North) PUMA,32678,26964,12978,13986,5543,2064,3479,171,99,72
+70,"Clinton, Franklin, Essex & Hamilton Counties PUMA",79099,21273,8519,12754,52190,27924,24266,5636,3778,1858
+71,NYC-Queens Community District 6--Forest Hills & Rego Park PUMA,15350,11191,4530,6661,4014,2471,1543,145,145,0
+72,Monroe County (Central)--Rochester City (West) PUMA,18986,5373,2737,2636,12202,5314,6888,1411,845,566
+73,Orange County (Southeast) PUMA,44814,16200,7149,9051,25044,12240,12804,3570,2096,1474
+74,Rockland County (North)--New City & Congers PUMA,29010,14945,6517,8428,13022,7102,5920,1043,235,808
+75,Westchester County (Southeast) PUMA,29287,21406,10942,10464,7655,3519,4136,226,101,125
+76,"NYC-Manhattan Community District 9--Hamilton Heights, Manhattanville & West Harlem PUMA",14797,13380,5367,8013,1417,1000,417,0,0,0
+77,Nassau County (Southwest)--Hempstead Town (Southwest) & Long Beach City PUMA,35673,21855,10592,11263,13304,6668,6636,514,397,117
+78,NYC-Queens Community District 2--Sunnyside & Woodside PUMA,18986,11796,6398,5398,6120,3429,2691,1070,925,145
+79,"NYC-Bronx Community District 11--Pelham Parkway, Morris Park & Laconia PUMA",9178,3438,1789,1649,4574,2935,1639,1166,390,776
+80,Onondaga County (Central)--Syracuse City (Outer) PUMA,74174,29650,14250,15400,41791,20271,21520,2733,1413,1320
+81,Wayne & Seneca Counties PUMA,60818,13987,5768,8219,41596,21702,19894,5235,2652,2583
+82,"NYC-Bronx Community District 7--Bedford Park, Fordham North & Norwood PUMA",1963,1499,394,1105,464,464,0,0,0,0
+83,Nassau County (West Central)--Hempstead Town (Northwest) PUMA,29952,15646,7327,8319,13909,7565,6344,397,101,296
+84,NYC-Brooklyn Community District 18--Canarsie & Flatlands PUMA,18203,7918,3835,4083,9589,4736,4853,696,529,167
+85,"NYC-Bronx Community District 12--Wakefield, Williamsbridge & Woodlawn PUMA",4382,1462,841,621,2265,1169,1096,655,491,164
+86,Suffolk County (South Central)--Brookhaven Town (South) PUMA,53335,12080,3669,8411,38158,18291,19867,3097,1984,1113
+87,NYC-Queens Community District 4--Elmhurst & South Corona PUMA,4462,1274,1119,155,3060,1903,1157,128,46,82
+88,Livingston & Wyoming Counties PUMA,49233,9348,4336,5012,35518,18967,16551,4367,2032,2335
+89,"NYC-Bronx Community District 10--Co-op City, Pelham Bay & Schuylerville PUMA",16690,6970,2904,4066,8261,4443,3818,1459,487,972
+90,Cattaraugus & Allegany Counties PUMA,58048,12173,5336,6837,39997,20067,19930,5878,3462,2416
+91,Herkimer (North & Central) & Oneida (Outer) Counties PUMA,58772,10717,4329,6388,43108,22227,20881,4947,2866,2081
+92,Orange County (Northwest) PUMA,42787,10715,5055,5660,28986,14040,14946,3086,1976,1110
+93,Columbia & Greene Counties PUMA,49881,13398,5919,7479,33227,17004,16223,3256,1756,1500
+94,Suffolk County (East) PUMA,52275,22244,10367,11877,28625,14498,14127,1406,529,877
+95,Monroe County (East) PUMA,59311,30288,13185,17103,27829,12840,14989,1194,667,527
+96,Sullivan & Ulster (West) Counties PUMA,42867,10673,5030,5643,28864,14761,14103,3330,2075,1255
+97,Cayuga & Onondaga (South) Counties PUMA,56069,15486,6800,8686,36702,18834,17868,3881,2583,1298
+98,"NYC-Bronx Community District 1 & 2--Hunts Point, Longwood & Melrose PUMA",612,83,0,83,402,122,280,127,72,55
+99,Suffolk County (Southwest)--Babylon Town (Southeast) PUMA,37537,12458,5510,6948,23355,12148,11207,1724,672,1052
+100,Onondaga County (Central)--Syracuse City PUMA,33327,10420,5889,4531,20093,9492,10601,2814,1678,1136
+101,Ulster County (East) PUMA,62264,20511,8365,12146,36843,19489,17354,4910,2495,2415
+102,NYC-Queens Community District 9--Richmond Hill & Woodhaven PUMA,10961,5373,3001,2372,4909,2654,2255,679,347,332
+103,NYC-Brooklyn Community District 13--Brighton Beach & Coney Island PUMA,8866,3562,1409,2153,4894,2993,1901,410,329,81
+104,Broome County (West Central)--Greater Binghamton City & Greater Johnson City Village PUMA,45011,15056,6744,8312,26957,13637,13320,2998,1658,1340
+105,Nassau County (South Central)--Hempstead Town (Southeast) PUMA,35670,18491,7584,10907,16430,9100,7330,749,475,274
+106,Saratoga County (Outer) PUMA,56378,18531,9299,9232,34549,17664,16885,3298,2182,1116
+107,"NYC-Manhattan Community District 4 & 5--Chelsea, Clinton & Midtown Business District PUMA",50951,43572,25118,18454,7012,5176,1836,367,136,231
+108,NYC-Brooklyn Community District 4--Bushwick PUMA,13833,10604,4673,5931,3146,1933,1213,83,83,0
+109,Suffolk County (Central)--Islip Town (East) PUMA,45717,18228,8306,9922,25514,13161,12353,1975,1380,595
+110,Westchester County (Southwest)--Yonkers City PUMA,33616,17151,8280,8871,15569,8171,7398,896,129,767
+111,Nassau County (West Central)--North Hempstead Town (South) PUMA,25929,13355,6756,6599,11836,5748,6088,738,494,244
+112,"NYC-Queens Community District 8--Briarwood, Fresh Meadows & Hillcrest PUMA",15758,8667,4422,4245,6932,3811,3121,159,134,25
+113,Jefferson & Lewis Counties PUMA,62292,14541,7593,6948,42293,21810,20483,5458,2947,2511
+114,Suffolk County (Central)--Brookhaven Town (West Central) PUMA,41663,14861,6877,7984,25425,13670,11755,1377,833,544
+115,Suffolk County (Northwest)--Huntington Town (South) PUMA,34564,19790,9799,9991,14157,7448,6709,617,404,213
+116,NYC-Brooklyn Community District 16--Brownsville & Ocean Hill PUMA,903,256,141,115,350,139,211,297,178,119
+117,"NYC-Staten Island Community District 1--Port Richmond, Stapleton & Mariner's Harbor PUMA",31415,11458,4993,6465,18460,10320,8140,1497,758,739
+118,Chemung (South) & Steuben (East) Counties--Greater Elmira & Greater Corning Cities PUMA,45254,12988,5178,7810,30021,15499,14522,2245,1670,575
+119,Monroe County (Central)--Greece & Gates Towns PUMA,53833,16410,7383,9027,35727,18256,17471,1696,1362,334
+120,NYC-Queens Community District 3--Jackson Heights & North Corona PUMA,5306,3029,1543,1486,1778,1214,564,499,99,400
+121,"NYC-Queens Community District 14--Far Rockaway, Breezy Point & Broad Channel PUMA",16237,8369,4413,3956,6559,3362,3197,1309,681,628
+122,NYC-Brooklyn Community District 10--Bay Ridge & Dyker Heights PUMA,25597,14987,7062,7925,10045,5820,4225,565,227,338
+123,Broome (Outer West) & Tioga Counties PUMA,53425,15267,8083,7184,34151,16690,17461,4007,2216,1791
+124,Putnam County PUMA,41965,18727,9337,9390,22578,11491,11087,660,185,475
+125,"NYC-Brooklyn Community District 17--East Flatbush, Farragut & Rugby PUMA",1246,809,202,607,425,279,146,12,0,12
+126,"NYC-Queens Community District 11--Bayside, Douglaston & Little Neck PUMA",24600,12105,6074,6031,12433,6544,5889,62,13,49
+127,Nassau County (Central)--Hempstead Town (Northeast) PUMA,41587,17658,9415,8243,22513,10879,11634,1416,713,703
+128,Suffolk County (Central)--Brookhaven Town (Central) PUMA,47865,16269,7852,8417,29578,14774,14804,2018,1382,636
+129,NYC-Manhattan Community District 10--Central Harlem PUMA,11570,9527,5016,4511,2013,1226,787,30,30,0
+130,"NYC-Bronx Community District 5--Morris Heights, Fordham South & Mount Hope PUMA",570,283,128,155,266,71,195,21,21,0
+131,NYC-Manhattan Community District 11--East Harlem PUMA,7012,5799,3180,2619,1139,849,290,74,0,74
+132,Westchester County (Northwest) PUMA,36369,22824,10812,12012,13054,7064,5990,491,135,356
+133,Onondaga County (North) PUMA,64238,26689,12411,14278,35808,17560,18248,1741,876,865
+134,NYC-Brooklyn Community District 8--Crown Heights North & Prospect Heights PUMA,12450,9411,5119,4292,2815,1595,1220,224,133,91
+135,NYC-Brooklyn Community District 3--Bedford-Stuyvesant PUMA,11803,7260,2792,4468,3511,1853,1658,1032,793,239
+136,Genesee & Orleans Counties PUMA,48196,8569,3477,5092,36266,18429,17837,3361,1976,1385
+137,Westchester County (Central)--White Plains City PUMA,48264,33953,15935,18018,13011,7345,5666,1300,896,404
+138,Saratoga County (South & Central) PUMA,52772,26089,12695,13394,25281,11882,13399,1402,789,613
+139,Monroe County (South) PUMA,71283,42029,21295,20734,28427,13659,14768,827,185,642
+140,Suffolk County (Central)--Islip Town (Northwest) PUMA,14017,4141,1558,2583,7808,4236,3572,2068,1166,902
+141,St. Lawrence County PUMA,49213,12127,5551,6576,32438,16807,15631,4648,2753,1895
+142,Nassau County (West Central)--Hempstead Town (West Central) PUMA,25405,11916,6113,5803,13014,6577,6437,475,260,215
+143,Nassau County (Central)--Hempstead Town (North Central)--Meadowbrook Corridor PUMA,8028,3870,1875,1995,3638,1932,1706,520,376,144
+144,"NYC-Bronx Community District 9--Castle Hill, Clason Point & Parkchester PUMA",1912,772,542,230,807,245,562,333,120,213
+145,Nassau County (Southeast)--Oyster Bay Town (South) PUMA,49439,22692,11326,11366,25651,13294,12357,1096,644,452
+146,Capital Region,471064,161877,74874,87003,282741,142881,139860,26446,15511,10935
+147,Central NY,344330,112330,52534,59796,210730,106135,104595,21270,12240,9030
+148,Finger Lakes,498564,175934,81030,94904,295062,150799,144263,27568,15089,12479
+149,Long Island,923769,438630,205126,233504,457417,235907,221510,27722,16876,10846
+150,Mid-Hudson,698885,325261,152151,173110,340302,174485,165817,33322,17929,15393
+151,Mohawk Valley,215832,50359,22629,27730,148826,74774,74052,16647,10025,6622
+152,New York City,1162709,765999,369393,396606,357555,190238,167317,39155,22545,16610
+153,North Country,190604,47941,21663,26278,126921,66541,60380,15742,9478,6264
+154,Southern Tier,285793,80757,35846,44911,183125,92115,91010,21911,13914,7997
+155,Western NY,586760,188204,87420,100784,368772,187789,180983,29784,16454,13330
