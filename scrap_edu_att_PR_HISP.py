@@ -9,6 +9,7 @@ import collections
 import csv
 import json
 import csv_to_json as cj
+import math
 
 
 p_data = pandas.read_csv('data_PR_HISP/p_dataframe.csv')
@@ -63,38 +64,37 @@ puma_maps_dict={100:"St. Lawrence County PUMA",200:"Clinton, Franklin, Essex & H
 # For mapping the counties to the excel
 def puma_county(county_num):
 
-    if puma_maps_dict.has_key(county_num):
+    if county_num in puma_maps_dict:
         return puma_maps_dict.get(county_num)
     else:
-        return null
+        return None
 
-"""
 # for mapping the counties defined above to 10 regions
 def puma_region(rcounty_num):
     # check_region = [puma_maps_dict[k] for k in region_1 if k in puma_maps_dict]
-    if rcounty_num in region_1 and puma_maps_dict.has_key(rcounty_num):
+    if rcounty_num in region_1 and  rcounty_num in puma_maps_dict:
         return "Capital Region"
-    elif rcounty_num in region_2 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_2 and  rcounty_num in puma_maps_dict:
         return "Central NY"
-    elif rcounty_num in region_3 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_3 and  rcounty_num in puma_maps_dict:
         return "Finger Lakes"
-    elif rcounty_num in region_4 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_4 and  rcounty_num in puma_maps_dict:
         return "Long Island"
-    elif rcounty_num in region_5 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_5 and  rcounty_num in puma_maps_dict:
         return "Mid-Hudson"
-    elif rcounty_num in region_6 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_6 and  rcounty_num in puma_maps_dict:
         return "Mohawk"
-    elif rcounty_num in region_7 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_7 and  rcounty_num in puma_maps_dict:
         return "New York"
-    elif rcounty_num in region_8 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_8 and  rcounty_num in puma_maps_dict:
         return "North Country"
-    elif rcounty_num in region_9 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_9 and  rcounty_num in puma_maps_dict:
         return "Souther Tier"
-    elif rcounty_num in region_10 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_10 and  rcounty_num in puma_maps_dict:
         return "Western NY"
     else:
-        return null
-"""
+        return None
+
 def get_PUMA_from_CSV():
     PUMA = list()
     for p in p_data['PUMA']:
@@ -271,47 +271,57 @@ def Edu_Attainment(NATIVITY = None, PATH = '/', RAC1P=None, HISP=None,POBP=None,
     full_list = []
 
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,RAC1P=RAC1P,HISP=HISP,POBP=POBP,POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_edu_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,RAC1P=RAC1P,HISP=HISP,POBP=POBP,POBP72=POBP72)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1=["Capital Region"] + sum_region_1
     l2=["Central NY"] + sum_region_2
@@ -395,80 +405,80 @@ def Edu_Attainment(NATIVITY = None, PATH = '/', RAC1P=None, HISP=None,POBP=None,
 
 
 def NB_ALL():
-    print 'NB_ALL'
+    print ('NB_ALL')
     PATH = 'data_PR_HISP/2016/NB_All/'
     Edu_Attainment(NATIVITY=1, PATH=PATH,name='NB_ALL_Edu.csv')
 
 def FB_Hispanic():
-    print 'FB_Hispanic'
+    print('FB_Hispanic')
     PATH = 'data_PR_HISP/2016/FB_Hispanic/'
 
     Edu_Attainment(NATIVITY=2, HISP=1, RAC1P=None, PATH=PATH,name='FB_Hispanic_Edu.csv')
 
 
 def FB_WNH():
-    print 'FB_WNH'
+    print('FB_WNH')
     PATH = 'data_PR_HISP/2016/FB_WNH/'
 
     Edu_Attainment(NATIVITY=2, HISP=1, RAC1P=1, PATH=PATH,name='FB_WNH_Edu.csv')
 
 
 def FB_Hispanic_POC():
-    print 'FB_Hispanic_POC'
+    print('FB_Hispanic_POC')
     PATH = 'data_PR_HISP/2016/FB_Hispanic_POC/'
 
     Edu_Attainment(NATIVITY=2, HISP=1, RAC1P=2, PATH=PATH,name='FB_Hispanic_POC_Edu.csv')
 
 
 def PR_Hispanic():
-    print 'PR_Hispanic'
+    print('PR_Hispanic')
     PATH = 'data_PR_HISP/2016/PR_Hispanic/'
 
     Edu_Attainment(NATIVITY=1, HISP=1,POBP72=1, RAC1P=None, PATH=PATH,name='PR_Hispanic_Edu.csv')
 
 
 def NB_Mainland():
-    print 'NB_Mainland'
+    print('NB_Mainland')
     PATH = 'data_PR_HISP/2016/NB_Mainland/'
 
     Edu_Attainment(NATIVITY=1, POBP=1, PATH=PATH,name='NB_Mainland_Edu.csv')
 
 
 def NB_Mainland_PR():
-    print 'NB_Mainland_PR'
+    print('NB_Mainland_PR')
     PATH = 'data_PR_HISP/2016/NB_Mainland_PR/'
 
     Edu_Attainment(NATIVITY=1, POBP=1, HISP=1, PATH=PATH,name='NB_Mainland_PR_Edu.csv')
 
 
 def NB_WNH():
-    print 'NB_WNH'
+    print('NB_WNH')
     PATH = 'data_PR_HISP/2016/NB_WNH/'
 
     Edu_Attainment(NATIVITY=1, HISP=1, RAC1P=1, PATH=PATH,name='NB_WNH_Edu.csv')
 
 
 def NB_Hispanic():
-    print 'NB_Hispanic'
+    print('NB_Hispanic')
     PATH = 'data_PR_HISP/2016/NB_Hispanic/'
 
     Edu_Attainment(NATIVITY=1, HISP=1, RAC1P=None, POBP72=None, POBP=None, PATH=PATH,name='NB_Hispanic_Edu.csv')
 
 
 def FB_White_Hispanic():
-    print 'FB_White_Hispanic'
+    print('FB_White_Hispanic')
     PATH = 'data_PR_HISP/2016/FB_White_Hispanic/'
 
     Edu_Attainment(NATIVITY=2, HISP=2, RAC1P=3, PATH=PATH,name='FB_WHite_Hispanic_Edu.csv')
 
 def PR_POC():
-    print 'PR_People of color'
+    print('PR_People of color')
     PATH = 'data_PR_HISP/2016/PR_POC/'
 
     Edu_Attainment(NATIVITY=1, HISP=1, RAC1P=4,POBP72=1,PATH=PATH,name='PR_POC_Edu.csv')
 
 def PR_White():
-    print 'PR_White'
+    print('PR_White')
     PATH = 'data_PR_HISP/2016/PR_White/'
 
     Edu_Attainment(NATIVITY=1, HISP=3, RAC1P=5,POBP72=1,PATH=PATH,name='PR_White_Edu.csv')
@@ -501,7 +511,7 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             raise
 def run():
-    print 'Creating DataFrames...'
+    print('Creating DataFrames...')
 
     NB_ALL()
     FB_Hispanic()

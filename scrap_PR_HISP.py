@@ -8,6 +8,7 @@ import collections
 import csv
 import json
 import csv_to_json_HISP_PR as cj_HISP_PR
+import math
 
 p_data = pandas.read_csv('data_PR_HISP/p_dataframe.csv')
 h_data = pandas.read_csv('data_PR_HISP/h_dataframe.csv')
@@ -156,36 +157,36 @@ puma_maps_dict = {100: "St. Lawrence County PUMA", 200: "Clinton, Franklin, Esse
 
 # For mapping the counties to the excel
 def puma_county(county_num):
-    if puma_maps_dict.has_key(county_num):
+    if county_num in puma_maps_dict:
         return puma_maps_dict.get(county_num)
     else:
-        return null
+        return None
 
 # for mapping the counties defined above to 10 regions
 def puma_region(rcounty_num):
     # check_region = [puma_maps_dict[k] for k in region_1 if k in puma_maps_dict]
-    if rcounty_num in region_1 and puma_maps_dict.has_key(rcounty_num):
+    if rcounty_num in region_1 and  rcounty_num in puma_maps_dict:
         return "Capital Region"
-    elif rcounty_num in region_2 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_2 and  rcounty_num in puma_maps_dict:
         return "Central NY"
-    elif rcounty_num in region_3 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_3 and  rcounty_num in puma_maps_dict:
         return "Finger Lakes"
-    elif rcounty_num in region_4 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_4 and  rcounty_num in puma_maps_dict:
         return "Long Island"
-    elif rcounty_num in region_5 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_5 and  rcounty_num in puma_maps_dict:
         return "Mid-Hudson"
-    elif rcounty_num in region_6 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_6 and  rcounty_num in puma_maps_dict:
         return "Mohawk"
-    elif rcounty_num in region_7 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_7 and  rcounty_num in puma_maps_dict:
         return "New York"
-    elif rcounty_num in region_8 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_8 and  rcounty_num in puma_maps_dict:
         return "North Country"
-    elif rcounty_num in region_9 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_9 and  rcounty_num in puma_maps_dict:
         return "Souther Tier"
-    elif rcounty_num in region_10 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_10 and  rcounty_num in puma_maps_dict:
         return "Western NY"
     else:
-        return null
+        return None
 
 
 
@@ -697,47 +698,57 @@ def UnEmp(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=None
     full_list = []
 
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, ESR=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, ESR=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -832,47 +843,57 @@ def FT_Work(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=No
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, WKHP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, WKHP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -967,47 +988,57 @@ def Poverty(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=No
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, POVPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=None, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, POVPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1102,47 +1133,57 @@ def Working_poor(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(WKHP=1, NATIVITY=NATIVITY, POVPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, POVPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1240,47 +1281,57 @@ def Rent_burden(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP7
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, GRPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, GRPIP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1376,47 +1427,57 @@ def Home_ownership(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, PO
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, TEN=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, TEN=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
         l.insert(0, puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1520,13 +1581,13 @@ def Income_level_FT_Workers(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP
 
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP,
                                  POBP72=POBP72)
         l.insert(0, puma_county(p))
@@ -1534,34 +1595,44 @@ def Income_level_FT_Workers(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1643,8 +1714,8 @@ def Income_level_FT_Workers(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP
 
 
 def NB_ALL():
-    print 'NB_ALL'
-    PATH = 'data_PR_HISP/2018/NB_All/'
+    print('NB_ALL')
+    PATH = 'data_PR_HISP/2016/NB_All/'
     UnEmp(NATIVITY=1, PATH=PATH)
     FT_Work(NATIVITY=1, PATH=PATH)
     Poverty(NATIVITY=1, PATH=PATH)
@@ -1655,8 +1726,8 @@ def NB_ALL():
 
 
 def FB_Hispanic():
-    print 'FB_Hispanic'
-    PATH = 'data_PR_HISP/2018/FB_Hispanic/'
+    print('FB_Hispanic')
+    PATH = 'data_PR_HISP/2016/FB_Hispanic/'
     UnEmp(NATIVITY=2, HISP=1, RAC1P=None, PATH=PATH)
     FT_Work(NATIVITY=2, HISP=1, RAC1P=None, PATH=PATH)
     Poverty(NATIVITY=2, HISP=1, RAC1P=None, PATH=PATH)
@@ -1667,8 +1738,8 @@ def FB_Hispanic():
 
 
 def FB_WNH():
-    print 'FB_WNH'
-    PATH = 'data_PR_HISP/2018/FB_WNH/'
+    print('FB_WNH')
+    PATH = 'data_PR_HISP/2016/FB_WNH/'
     UnEmp(NATIVITY=2, HISP=1, RAC1P=1, PATH=PATH)
     FT_Work(NATIVITY=2, HISP=1, RAC1P=1, PATH=PATH)
     Poverty(NATIVITY=2, HISP=1, RAC1P=1, PATH=PATH)
@@ -1679,8 +1750,8 @@ def FB_WNH():
 
 
 def FB_Hispanic_POC():
-    print 'FB_Hispanic_POC'
-    PATH = 'data_PR_HISP/2018/FB_Hispanic_POC/'
+    print('FB_Hispanic_POC')
+    PATH = 'data_PR_HISP/2016/FB_Hispanic_POC/'
     UnEmp(NATIVITY=2, HISP=1, RAC1P=2, PATH=PATH)
     FT_Work(NATIVITY=2, HISP=1, RAC1P=2, PATH=PATH)
     Poverty(NATIVITY=2, HISP=1, RAC1P=2, PATH=PATH)
@@ -1691,8 +1762,8 @@ def FB_Hispanic_POC():
 
 
 def PR_Hispanic():
-    print 'PR_Hispanic'
-    PATH = 'data_PR_HISP/2018/PR_Hispanic/'
+    print('PR_Hispanic')
+    PATH = 'data_PR_HISP/2016/PR_Hispanic/'
     UnEmp(NATIVITY=1, HISP=1, RAC1P=None, PATH=PATH)
     FT_Work(NATIVITY=1, HISP=1, RAC1P=None, PATH=PATH)
     Poverty(NATIVITY=1, HISP=1, RAC1P=None, PATH=PATH)
@@ -1703,8 +1774,8 @@ def PR_Hispanic():
 
 
 def NB_Mainland():
-    print 'NB_Mainland'
-    PATH = 'data_PR_HISP/2018/NB_Mainland/'
+    print('NB_Mainland')
+    PATH = 'data_PR_HISP/2016/NB_Mainland/'
     UnEmp(NATIVITY=1, POBP=1, PATH=PATH)
     FT_Work(NATIVITY=1, POBP=1, PATH=PATH)
     Poverty(NATIVITY=1, POBP=1, PATH=PATH)
@@ -1715,8 +1786,8 @@ def NB_Mainland():
 
 
 def NB_Mainland_PR():
-    print 'NB_Mainland_PR'
-    PATH = 'data_PR_HISP/2018/NB_Mainland_PR/'
+    print('NB_Mainland_PR')
+    PATH = 'data_PR_HISP/2016/NB_Mainland_PR/'
     UnEmp(NATIVITY=1, POBP=1, HISP=1, PATH=PATH)
     FT_Work(NATIVITY=1, POBP=1, HISP=1, PATH=PATH)
     Poverty(NATIVITY=1, POBP=1, HISP=1, PATH=PATH)
@@ -1727,8 +1798,8 @@ def NB_Mainland_PR():
 
 
 def NB_WNH():
-    print 'NB_WNH'
-    PATH = 'data_PR_HISP/2018/NB_WNH/'
+    print('NB_WNH')
+    PATH = 'data_PR_HISP/2016/NB_WNH/'
     UnEmp(NATIVITY=1, HISP=1, RAC1P=1, PATH=PATH)
     FT_Work(NATIVITY=1, HISP=1, RAC1P=1, PATH=PATH)
     Poverty(NATIVITY=1, HISP=1, RAC1P=1, PATH=PATH)
@@ -1739,8 +1810,8 @@ def NB_WNH():
 
 
 def NB_Hispanic():
-    print 'NB_Hispanic'
-    PATH = 'data_PR_HISP/2018/NB_Hispanic/'
+    print('NB_Hispanic')
+    PATH = 'data_PR_HISP/2016/NB_Hispanic/'
     UnEmp(NATIVITY=1, HISP=1, RAC1P=None, POBP72=None, POBP=None, PATH=PATH)
     FT_Work(NATIVITY=1, HISP=1, RAC1P=None, POBP72=None, POBP=None, PATH=PATH)
     Poverty(NATIVITY=1, HISP=1, RAC1P=None, POBP72=None, POBP=None, PATH=PATH)
@@ -1751,8 +1822,8 @@ def NB_Hispanic():
 
 
 def FB_White_Hispanic():
-    print 'FB_White_Hispanic'
-    PATH = 'data_PR_HISP/2018/FB_White_Hispanic/'
+    print('FB_White_Hispanic')
+    PATH = 'data_PR_HISP/2016/FB_White_Hispanic/'
     UnEmp(NATIVITY=2, HISP=2, RAC1P=3, PATH=PATH)
     FT_Work(NATIVITY=2, HISP=2, RAC1P=3, PATH=PATH)
     Poverty(NATIVITY=2, HISP=2, RAC1P=3, PATH=PATH)
@@ -1797,7 +1868,7 @@ def get_percentage(df=None, indicator=None):
             new_df.at[i, 'HSINC_' + indicator + '_M'] = (df.at[i, columns[32]] * (1.0)) / df.at[i, columns[29]]
             new_df.at[i, 'HSINC_' + indicator + '_F'] = (df.at[i, columns[33]] * (1.0)) / df.at[i, columns[30]]
 
-    print indicator
+    print(indicator)
     return new_df
 
 
@@ -1812,71 +1883,71 @@ def get_disparity(PATH=None, call_string=None):
     PR_Hispanic_NB_Mainland_PR_disparity = pandas.DataFrame()
     FB_Hispanic_POC_FB_White_Hispanic_disparity = pandas.DataFrame()
     if call_string is 'FB_Hispanic_NB_ALL' or 'FB_Hispanic_NB_Hispanic' or 'FB_Hispanic_F_FB_Hispanic_M' or 'FB_Hispanic_PR_Hispanic':
-        NB_ALL_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/UnEmp.csv',
+        NB_ALL_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/UnEmp.csv',
                                           usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_UnEmp_df['BABS_UnEmp_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_UnEmp_df['HS_UnEmp_Total'], downcast='float')
 
-        FB_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/UnEmp.csv',
+        FB_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/UnEmp.csv',
                                                usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total', 'BABS_UnEmp_F',
                                                         'BABS_UnEmp_M', 'HS_UnEmp_F', 'HS_UnEmp_M']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(FB_Hispanic_UnEmp_df['HS_UnEmp_Total'])
 
-        NB_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/UnEmp.csv',
+        NB_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/UnEmp.csv',
                                                usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(NB_Hispanic_UnEmp_df['HS_UnEmp_Total'])
 
-        NB_ALL_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/FT_Work.csv',
+        NB_ALL_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/FT_Work.csv',
                                             usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_FT_Work_df['BABS_FT_Work_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_FT_Work_df['HS_FT_Work_Total'], downcast='float')
 
-        FB_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/FT_Work.csv',
+        FB_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/FT_Work.csv',
                                                  usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total',
                                                           'BABS_FT_Work_F', 'BABS_FT_Work_M', 'HS_FT_Work_F',
                                                           'HS_FT_Work_M']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(FB_Hispanic_FT_Work_df['HS_FT_Work_Total'])
 
-        NB_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/FT_Work.csv',
+        NB_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/FT_Work.csv',
                                                  usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(NB_Hispanic_FT_Work_df['HS_FT_Work_Total'])
 
-        NB_ALL_Poverty_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/Poverty.csv',
+        NB_ALL_Poverty_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/Poverty.csv',
                                             usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_Poverty_df['BABS_Poverty_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_Poverty_df['HS_Poverty_Total'], downcast='float')
 
-        FB_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Poverty.csv',
+        FB_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Poverty.csv',
                                                  usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total',
                                                           'BABS_Poverty_F', 'BABS_Poverty_M', 'HS_Poverty_F',
                                                           'HS_Poverty_M']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(FB_Hispanic_Poverty_df['HS_Poverty_Total'])
 
-        NB_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/Poverty.csv',
+        NB_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/Poverty.csv',
                                                  usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(NB_Hispanic_Poverty_df['HS_Poverty_Total'])
 
-        NB_ALL_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/Working_Poor.csv',
+        NB_ALL_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/Working_Poor.csv',
                                                  usecols=['puma', 'BABS_Working_Poor_Total',
                                                           'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_Working_Poor_df['BABS_Working_Poor_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_Working_Poor_df['HS_Working_Poor_Total'], downcast='float')
 
-        FB_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Working_Poor.csv',
+        FB_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Working_Poor.csv',
                                                       usecols=['puma', 'BABS_Working_Poor_Total',
                                                                'HS_Working_Poor_Total', 'BABS_Working_Poor_F',
                                                                'BABS_Working_Poor_M', 'HS_Working_Poor_F',
@@ -1885,40 +1956,40 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_Hispanic_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(FB_Hispanic_Working_Poor_df['HS_Working_Poor_Total'])
 
-        NB_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/Working_Poor.csv',
+        NB_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/Working_Poor.csv',
                                                       usecols=['puma', 'BABS_Working_Poor_Total',
                                                                'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(NB_Hispanic_Working_Poor_df['HS_Working_Poor_Total'])
 
-        NB_ALL_Income_level_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/Income_level_FT_Workers.csv',
+        NB_ALL_Income_level_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/Income_level_FT_Workers.csv',
                                                  usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_Income_level_df['BABS_Avg_PINCP_mf_t'], downcast='float')
         pandas.to_numeric(NB_ALL_Income_level_df['HS_Avg_PINCP_mf_t'], downcast='float')
 
         FB_Hispanic_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/FB_Hispanic/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/FB_Hispanic/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t', 'BABS_Avg_PINCP_f', 'BABS_Avg_PINCP_m',
                      'HS_Avg_PINCP_f', 'HS_Avg_PINCP_m']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(FB_Hispanic_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         NB_Hispanic_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/NB_Hispanic/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/NB_Hispanic/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(NB_Hispanic_Income_level_df['HS_Avg_PINCP_mf_t'])
 
-        NB_ALL_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/Rent_Burden.csv',
+        NB_ALL_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/Rent_Burden.csv',
                                                 usecols=['puma', 'BABS_Rent_Burden_Total',
                                                          'HS_Rent_Burden_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                           np.nan)
         pandas.to_numeric(NB_ALL_Rent_Burden_df['BABS_Rent_Burden_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_Rent_Burden_df['HS_Rent_Burden_Total'], downcast='float')
 
-        FB_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Rent_Burden.csv',
+        FB_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Rent_Burden.csv',
                                                      usecols=['puma', 'BABS_Rent_Burden_Total', 'HS_Rent_Burden_Total',
                                                               'BABS_Rent_Burden_F', 'BABS_Rent_Burden_M',
                                                               'HS_Rent_Burden_F', 'HS_Rent_Burden_M']).replace(
@@ -1926,21 +1997,21 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_Hispanic_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(FB_Hispanic_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        NB_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/Rent_Burden.csv',
+        NB_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/Rent_Burden.csv',
                                                      usecols=['puma', 'BABS_Rent_Burden_Total',
                                                               'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Hispanic_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(NB_Hispanic_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        NB_ALL_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/NB_All/step_2/Home_Ownership.csv',
+        NB_ALL_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/NB_All/step_2/Home_Ownership.csv',
                                                    usecols=['puma', 'BABS_Home_Ownership_Total',
                                                             'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_ALL_Home_Ownership_df['BABS_Home_Ownership_Total'], downcast='float')
         pandas.to_numeric(NB_ALL_Home_Ownership_df['HS_Home_Ownership_Total'], downcast='float')
 
-        FB_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Home_Ownership.csv',
+        FB_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Home_Ownership.csv',
                                                         usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                  'HS_Home_Ownership_Total', 'BABS_Home_Ownership_F',
                                                                  'BABS_Home_Ownership_M', 'HS_Home_Ownership_F',
@@ -1949,7 +2020,7 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_Hispanic_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(FB_Hispanic_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        NB_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/NB_Hispanic/step_2/Home_Ownership.csv',
+        NB_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/NB_Hispanic/step_2/Home_Ownership.csv',
                                                         usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                  'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -1957,72 +2028,72 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(NB_Hispanic_Home_Ownership_df['HS_Home_Ownership_Total'])
 
     if call_string is 'FB_Hispanic_POC_FB_WNH' or 'FB_Hispanic_POC_FB_White_Hispanic':
-        FB_WNH_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/UnEmp.csv',
+        FB_WNH_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/UnEmp.csv',
                                           usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(FB_WNH_UnEmp_df['HS_UnEmp_Total'])
 
-        FB_Hispanic_POC_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/UnEmp.csv',
+        FB_Hispanic_POC_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/UnEmp.csv',
                                                    usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(FB_Hispanic_POC_UnEmp_df['HS_UnEmp_Total'])
 
-        FB_White_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/FB_White_Hispanic/step_2/UnEmp.csv',
+        FB_White_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/FB_White_Hispanic/step_2/UnEmp.csv',
                                                      usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_White_Hispanic_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(FB_White_Hispanic_UnEmp_df['HS_UnEmp_Total'])
 
-        FB_WNH_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/FT_Work.csv',
+        FB_WNH_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/FT_Work.csv',
                                             usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(FB_WNH_FT_Work_df['HS_FT_Work_Total'])
 
-        FB_Hispanic_POC_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/FT_Work.csv',
+        FB_Hispanic_POC_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/FT_Work.csv',
                                                      usecols=['puma', 'BABS_FT_Work_Total',
                                                               'HS_FT_Work_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                            np.nan)
         pandas.to_numeric(FB_Hispanic_POC_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(FB_Hispanic_POC_FT_Work_df['HS_FT_Work_Total'])
 
-        FB_White_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/FB_White_Hispanic/step_2/FT_Work.csv',
+        FB_White_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/FB_White_Hispanic/step_2/FT_Work.csv',
                                                        usecols=['puma', 'BABS_FT_Work_Total',
                                                                 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_White_Hispanic_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(FB_White_Hispanic_FT_Work_df['HS_FT_Work_Total'])
 
-        FB_WNH_Poverty_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/Poverty.csv',
+        FB_WNH_Poverty_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/Poverty.csv',
                                             usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(FB_WNH_Poverty_df['HS_Poverty_Total'])
 
-        FB_Hispanic_POC_Poverty_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Poverty.csv',
+        FB_Hispanic_POC_Poverty_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Poverty.csv',
                                                      usecols=['puma', 'BABS_Poverty_Total',
                                                               'HS_Poverty_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                            np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Poverty_df['HS_Poverty_Total'])
 
-        FB_White_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2018/FB_White_Hispanic/step_2/Poverty.csv',
+        FB_White_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2016/FB_White_Hispanic/step_2/Poverty.csv',
                                                        usecols=['puma', 'BABS_Poverty_Total',
                                                                 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_White_Hispanic_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(FB_White_Hispanic_Poverty_df['HS_Poverty_Total'])
 
-        FB_WNH_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/Working_Poor.csv',
+        FB_WNH_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/Working_Poor.csv',
                                                  usecols=['puma', 'BABS_Working_Poor_Total',
                                                           'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(FB_WNH_Working_Poor_df['HS_Working_Poor_Total'])
 
-        FB_Hispanic_POC_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Working_Poor.csv',
+        FB_Hispanic_POC_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Working_Poor.csv',
                                                           usecols=['puma', 'BABS_Working_Poor_Total',
                                                                    'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -2030,66 +2101,66 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_Hispanic_POC_Working_Poor_df['HS_Working_Poor_Total'])
 
         FB_White_Hispanic_Working_Poor_df = pandas.read_csv(
-            'data_PR_HISP/2018/FB_White_Hispanic/step_2/Working_Poor.csv',
+            'data_PR_HISP/2016/FB_White_Hispanic/step_2/Working_Poor.csv',
             usecols=['puma', 'BABS_Working_Poor_Total', 'HS_Working_Poor_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                           np.nan)
         pandas.to_numeric(FB_White_Hispanic_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(FB_White_Hispanic_Working_Poor_df['HS_Working_Poor_Total'])
 
-        FB_WNH_Income_level_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/Income_level_FT_Workers.csv',
+        FB_WNH_Income_level_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/Income_level_FT_Workers.csv',
                                                  usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(FB_WNH_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         FB_Hispanic_POC_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/FB_Hispanic_POC/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/FB_Hispanic_POC/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(FB_Hispanic_POC_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         FB_White_Hispanic_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/FB_White_Hispanic/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/FB_White_Hispanic/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_White_Hispanic_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(FB_White_Hispanic_Income_level_df['HS_Avg_PINCP_mf_t'])
 
-        FB_WNH_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/Rent_Burden.csv',
+        FB_WNH_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/Rent_Burden.csv',
                                                 usecols=['puma', 'BABS_Rent_Burden_Total',
                                                          'HS_Rent_Burden_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                           np.nan)
         pandas.to_numeric(FB_WNH_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(FB_WNH_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        FB_Hispanic_POC_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Rent_Burden.csv',
+        FB_Hispanic_POC_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Rent_Burden.csv',
                                                          usecols=['puma', 'BABS_Rent_Burden_Total',
                                                                   'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        FB_White_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/FB_White_Hispanic/step_2/Rent_Burden.csv',
+        FB_White_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/FB_White_Hispanic/step_2/Rent_Burden.csv',
                                                            usecols=['puma', 'BABS_Rent_Burden_Total',
                                                                     'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_White_Hispanic_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(FB_White_Hispanic_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        FB_WNH_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/FB_WNH/step_2/Home_Ownership.csv',
+        FB_WNH_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_WNH/step_2/Home_Ownership.csv',
                                                    usecols=['puma', 'BABS_Home_Ownership_Total',
                                                             'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_WNH_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(FB_WNH_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Home_Ownership.csv',
+        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Home_Ownership.csv',
                                                             usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                      'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        FB_White_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Home_Ownership.csv',
+        FB_White_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Home_Ownership.csv',
                                                               usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                        'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -2097,92 +2168,92 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_White_Hispanic_Home_Ownership_df['HS_Home_Ownership_Total'])
 
     if call_string is 'FB_Hispanic_POC_NB_WNH':
-        NB_WNH_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/UnEmp.csv',
+        NB_WNH_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/UnEmp.csv',
                                           usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(NB_WNH_UnEmp_df['HS_UnEmp_Total'])
 
-        FB_Hispanic_POC_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/UnEmp.csv',
+        FB_Hispanic_POC_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/UnEmp.csv',
                                                    usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(FB_Hispanic_POC_UnEmp_df['HS_UnEmp_Total'])
 
-        NB_WNH_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/FT_Work.csv',
+        NB_WNH_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/FT_Work.csv',
                                             usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(NB_WNH_FT_Work_df['HS_FT_Work_Total'])
 
-        FB_Hispanic_POC_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/FT_Work.csv',
+        FB_Hispanic_POC_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/FT_Work.csv',
                                                      usecols=['puma', 'BABS_FT_Work_Total',
                                                               'HS_FT_Work_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                            np.nan)
         pandas.to_numeric(FB_Hispanic_POC_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(FB_Hispanic_POC_FT_Work_df['HS_FT_Work_Total'])
 
-        NB_WNH_Poverty_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/Poverty.csv',
+        NB_WNH_Poverty_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/Poverty.csv',
                                             usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(NB_WNH_Poverty_df['HS_Poverty_Total'])
 
-        FB_Hispanic_POC_Poverty_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Poverty.csv',
+        FB_Hispanic_POC_Poverty_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Poverty.csv',
                                                      usecols=['puma', 'BABS_Poverty_Total',
                                                               'HS_Poverty_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                            np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Poverty_df['HS_Poverty_Total'])
 
-        NB_WNH_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/Working_Poor.csv',
+        NB_WNH_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/Working_Poor.csv',
                                                  usecols=['puma', 'BABS_Working_Poor_Total',
                                                           'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(NB_WNH_Working_Poor_df['HS_Working_Poor_Total'])
 
-        FB_Hispanic_POC_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Working_Poor.csv',
+        FB_Hispanic_POC_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Working_Poor.csv',
                                                           usecols=['puma', 'BABS_Working_Poor_Total',
                                                                    'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Working_Poor_df['HS_Working_Poor_Total'])
 
-        NB_WNH_Income_level_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/Income_level_FT_Workers.csv',
+        NB_WNH_Income_level_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/Income_level_FT_Workers.csv',
                                                  usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(NB_WNH_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         FB_Hispanic_POC_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/FB_Hispanic_POC/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/FB_Hispanic_POC/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(FB_Hispanic_POC_Income_level_df['HS_Avg_PINCP_mf_t'])
 
-        NB_WNH_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/Rent_Burden.csv',
+        NB_WNH_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/Rent_Burden.csv',
                                                 usecols=['puma', 'BABS_Rent_Burden_Total',
                                                          'HS_Rent_Burden_Total']).replace([np.inf, -np.inf, '#DIV/0!'],
                                                                                           np.nan)
         pandas.to_numeric(NB_WNH_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(NB_WNH_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        FB_Hispanic_POC_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic_POC/step_2/Rent_Burden.csv',
+        FB_Hispanic_POC_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Rent_Burden.csv',
                                                          usecols=['puma', 'BABS_Rent_Burden_Total',
                                                                   'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        NB_WNH_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/NB_WNH/step_2/Home_Ownership.csv',
+        NB_WNH_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/NB_WNH/step_2/Home_Ownership.csv',
                                                    usecols=['puma', 'BABS_Home_Ownership_Total',
                                                             'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_WNH_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(NB_WNH_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/FB_Hispanic/step_2/Home_Ownership.csv',
+        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic/step_2/Home_Ownership.csv',
                                                             usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                      'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -2190,96 +2261,96 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_Hispanic_POC_Home_Ownership_df['HS_Home_Ownership_Total'])
 
     if call_string is 'PR_Hispanic_NB_Mainland' or 'FB_Hispanic_PR_Hispanic' or 'PR_Hispanic_NB_Mainland_PR':
-        PR_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/UnEmp.csv',
+        PR_Hispanic_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/UnEmp.csv',
                                                usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(PR_Hispanic_UnEmp_df['HS_UnEmp_Total'])
 
-        NB_Mainland_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/UnEmp.csv',
+        NB_Mainland_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/UnEmp.csv',
                                                usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(NB_Mainland_UnEmp_df['HS_UnEmp_Total'])
 
-        NB_Mainland_PR_UnEmp_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/UnEmp.csv',
+        NB_Mainland_PR_UnEmp_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/UnEmp.csv',
                                                   usecols=['puma', 'BABS_UnEmp_Total', 'HS_UnEmp_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_PR_UnEmp_df['BABS_UnEmp_Total'])
         pandas.to_numeric(NB_Mainland_PR_UnEmp_df['HS_UnEmp_Total'])
 
-        PR_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/FT_Work.csv',
+        PR_Hispanic_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/FT_Work.csv',
                                                  usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(PR_Hispanic_FT_Work_df['HS_FT_Work_Total'])
 
-        NB_Mainland_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/FT_Work.csv',
+        NB_Mainland_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/FT_Work.csv',
                                                  usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(NB_Mainland_FT_Work_df['HS_FT_Work_Total'])
 
-        NB_Mainland_PR_FT_Work_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/FT_Work.csv',
+        NB_Mainland_PR_FT_Work_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/FT_Work.csv',
                                                     usecols=['puma', 'BABS_FT_Work_Total', 'HS_FT_Work_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_PR_FT_Work_df['BABS_FT_Work_Total'])
         pandas.to_numeric(NB_Mainland_PR_FT_Work_df['HS_FT_Work_Total'])
 
-        PR_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/Working_Poor.csv',
+        PR_Hispanic_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/Working_Poor.csv',
                                                       usecols=['puma', 'BABS_Working_Poor_Total',
                                                                'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(PR_Hispanic_Working_Poor_df['HS_Working_Poor_Total'])
 
-        NB_Mainland_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/Working_Poor.csv',
+        NB_Mainland_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/Working_Poor.csv',
                                                       usecols=['puma', 'BABS_Working_Poor_Total',
                                                                'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(NB_Mainland_Working_Poor_df['HS_Working_Poor_Total'])
 
-        NB_Mainland_PR_Working_Poor_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/Working_Poor.csv',
+        NB_Mainland_PR_Working_Poor_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/Working_Poor.csv',
                                                          usecols=['puma', 'BABS_Working_Poor_Total',
                                                                   'HS_Working_Poor_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_PR_Working_Poor_df['BABS_Working_Poor_Total'])
         pandas.to_numeric(NB_Mainland_PR_Working_Poor_df['HS_Working_Poor_Total'])
 
-        PR_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/Poverty.csv',
+        PR_Hispanic_Poverty_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/Poverty.csv',
                                                  usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(PR_Hispanic_Poverty_df['HS_Poverty_Total'])
 
-        NB_Mainland_Poverty_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/Poverty.csv',
+        NB_Mainland_Poverty_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/Poverty.csv',
                                                  usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(NB_Mainland_Poverty_df['HS_Poverty_Total'])
 
-        NB_Mainland_PR_Poverty_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/Poverty.csv',
+        NB_Mainland_PR_Poverty_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/Poverty.csv',
                                                     usecols=['puma', 'BABS_Poverty_Total', 'HS_Poverty_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_PR_Poverty_df['BABS_Poverty_Total'])
         pandas.to_numeric(NB_Mainland_PR_Poverty_df['HS_Poverty_Total'])
 
-        PR_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/Rent_Burden.csv',
+        PR_Hispanic_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/Rent_Burden.csv',
                                                      usecols=['puma', 'BABS_Rent_Burden_Total',
                                                               'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(PR_Hispanic_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        NB_Mainland_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/Rent_Burden.csv',
+        NB_Mainland_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/Rent_Burden.csv',
                                                      usecols=['puma', 'BABS_Rent_Burden_Total',
                                                               'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_Rent_Burden_df['BABS_Rent_Burden_Total'])
         pandas.to_numeric(NB_Mainland_Rent_Burden_df['HS_Rent_Burden_Total'])
 
-        NB_Mainland_PR_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/Rent_Burden.csv',
+        NB_Mainland_PR_Rent_Burden_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/Rent_Burden.csv',
                                                         usecols=['puma', 'BABS_Rent_Burden_Total',
                                                                  'HS_Rent_Burden_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -2287,38 +2358,38 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(NB_Mainland_PR_Rent_Burden_df['HS_Rent_Burden_Total'])
 
         PR_Hispanic_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/PR_Hispanic/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/PR_Hispanic/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(PR_Hispanic_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         NB_Mainland_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/NB_Mainland/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/NB_Mainland/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(NB_Mainland_Income_level_df['HS_Avg_PINCP_mf_t'])
 
         NB_Mainland_PR_Income_level_df = pandas.read_csv(
-            'data_PR_HISP/2018/NB_Mainland_PR/step_2/Income_level_FT_Workers.csv',
+            'data_PR_HISP/2016/NB_Mainland_PR/step_2/Income_level_FT_Workers.csv',
             usecols=['puma', 'BABS_Avg_PINCP_mf_t', 'HS_Avg_PINCP_mf_t']).replace([np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_PR_Income_level_df['BABS_Avg_PINCP_mf_t'])
         pandas.to_numeric(NB_Mainland_PR_Income_level_df['HS_Avg_PINCP_mf_t'])
 
-        PR_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/PR_Hispanic/step_2/Home_Ownership.csv',
+        PR_Hispanic_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/PR_Hispanic/step_2/Home_Ownership.csv',
                                                         usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                  'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(PR_Hispanic_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(PR_Hispanic_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        NB_Mainland_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland/step_2/Home_Ownership.csv',
+        NB_Mainland_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland/step_2/Home_Ownership.csv',
                                                         usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                  'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(NB_Mainland_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(NB_Mainland_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        NB_Mainland_PR_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2018/NB_Mainland_PR/step_2/Home_Ownership.csv',
+        NB_Mainland_PR_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/NB_Mainland_PR/step_2/Home_Ownership.csv',
                                                            usecols=['puma', 'BABS_Home_Ownership_Total',
                                                                     'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
@@ -3297,39 +3368,39 @@ def get_disparity(PATH=None, call_string=None):
 
 
 def get_FB_Hispanic_NB_All_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_NB_ALL')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_NB_ALL')
 
 
 def get_FB_Hispanic_NB_Hispanic_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_NB_Hispanic')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_NB_Hispanic')
 
 
 def get_FB_Hispanic_POC_FB_WNH_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_POC_FB_WNH')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_POC_FB_WNH')
 
 
 def get_FB_Hispanic_POC_FB_White_Hispanic_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_POC_FB_White_Hispanic')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_POC_FB_White_Hispanic')
 
 
 def get_FB_Hispanic_POC_NB_WNH_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_POC_NB_WNH')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_POC_NB_WNH')
 
 
 def get_FB_Hispanic_F_FB_Hispanic_M_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_F_FB_Hispanic_M')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_F_FB_Hispanic_M')
 
 
 def get_PR_Hispanic_NB_Mainland_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'PR_Hispanic_NB_Mainland')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'PR_Hispanic_NB_Mainland')
 
 
 def get_FB_Hispanic_PR_Hispanic_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'FB_Hispanic_PR_Hispanic')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'FB_Hispanic_PR_Hispanic')
 
 
 def get_PR_Hispanic_NB_Mainland_PR_disparity():
-    get_disparity('data_PR_HISP/2018/Disparities/', 'PR_Hispanic_NB_Mainland_PR')
+    get_disparity('data_PR_HISP/2016/Disparities/', 'PR_Hispanic_NB_Mainland_PR')
 
 
 def make_sure_path_exists(path):
@@ -3343,7 +3414,7 @@ def make_sure_path_exists(path):
 def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
     sg_data_NB_ALL_FB_Hispanic_final = pandas.DataFrame()
     sg_data_NB_ALL_FB_Hispanic = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_NB_ALL_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_NB_ALL_disparity.csv').replace([np.inf, -np.inf],
                                                                                            np.nan)
     sg_data_NB_ALL_FB_Hispanic = sg_data_NB_ALL_FB_Hispanic.astype('object')
 
@@ -3908,7 +3979,7 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
     sg_data_FB_Hispanic_POC_FB_WNH_final = pandas.DataFrame()
     sg_data_FB_Hispanic_POC_FB_WNH = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_POC_FB_WNH_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_FB_WNH_disparity.csv').replace([np.inf, -np.inf],
                                                                                            np.nan)
     sg_data_FB_Hispanic_POC_FB_WNH = sg_data_FB_Hispanic_POC_FB_WNH.astype('object')
 
@@ -4473,7 +4544,7 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
     sg_data_FB_Hispanic_POC_NB_WNH_final = pandas.DataFrame()
     sg_data_FB_Hispanic_POC_NB_WNH = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_POC_NB_WNH_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_NB_WNH_disparity.csv').replace([np.inf, -np.inf],
                                                                                            np.nan)
     sg_data_FB_Hispanic_POC_NB_WNH = sg_data_FB_Hispanic_POC_NB_WNH.astype('object')
 
@@ -5038,7 +5109,7 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
     sg_data_FB_Hispanic_F_FB_Hispanic_M_final = pandas.DataFrame()
     sg_data_FB_Hispanic_F_FB_Hispanic_M = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_F_FB_Hispanic_M_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_F_FB_Hispanic_M_disparity.csv').replace([np.inf, -np.inf],
                                                                                        np.nan)
     sg_data_FB_Hispanic_F_FB_Hispanic_M = sg_data_FB_Hispanic_F_FB_Hispanic_M.astype('object')
 
@@ -5597,7 +5668,7 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 def get_score_grade_FB_HISP_NB_HISP(PATH=None):
     sg_data_FB_HISP_NB_HISP_final = pandas.DataFrame()
     sg_data_FB_HISP_NB_HISP = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_NB_Hispanic_disparity.csv').replace([np.inf, -np.inf], np.nan)
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_NB_Hispanic_disparity.csv').replace([np.inf, -np.inf], np.nan)
     sg_data_FB_HISP_NB_HISP = sg_data_FB_HISP_NB_HISP.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -6125,7 +6196,7 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
 def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
     sg_data_FB_HISP_POC_FB_WH_final = pandas.DataFrame()
     sg_data_FB_HISP_POC_FB_WH = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_POC_FB_White_Hispanic_disparity.csv').replace([np.inf, -np.inf], np.nan)
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_FB_White_Hispanic_disparity.csv').replace([np.inf, -np.inf], np.nan)
     sg_data_FB_HISP_POC_FB_WH = sg_data_FB_HISP_POC_FB_WH.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -6683,7 +6754,7 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 def get_score_grade_FB_HISP_PR_HISP(PATH=None):
     sg_data_FB_HISP_PR_HISP_final = pandas.DataFrame()
     sg_data_FB_HISP_PR_HISP = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/FB_Hispanic_PR_Hispanic_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_PR_Hispanic_disparity.csv').replace([np.inf, -np.inf],
                                                                                                  np.nan)
     sg_data_FB_HISP_PR_HISP = sg_data_FB_HISP_PR_HISP.astype('object')
 
@@ -7242,7 +7313,7 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 def get_score_grade_PR_HISP_NB_mainland(PATH=None):
     sg_data_PR_HISP_NB_mainland_final = pandas.DataFrame()
     sg_data_PR_HISP_NB_mainland = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/PR_Hispanic_NB_Mainland_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/PR_Hispanic_NB_Mainland_disparity.csv').replace([np.inf, -np.inf],
                                                                                        np.nan)
     sg_data_PR_HISP_NB_mainland = sg_data_PR_HISP_NB_mainland.astype('object')
 
@@ -7801,7 +7872,7 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
     sg_data_PR_HISP_NB_mainland_PR_final = pandas.DataFrame()
     sg_data_PR_HISP_NB_mainland_PR = pandas.read_csv(
-        'data_PR_HISP/2018/Disparities/PR_Hispanic_NB_Mainland_PR_disparity.csv').replace([np.inf, -np.inf],
+        'data_PR_HISP/2016/Disparities/PR_Hispanic_NB_Mainland_PR_disparity.csv').replace([np.inf, -np.inf],
                                                                                        np.nan)
     sg_data_PR_HISP_NB_mainland_PR = sg_data_PR_HISP_NB_mainland_PR.astype('object')
 
@@ -8357,39 +8428,42 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
     sg_data_PR_HISP_NB_mainland_PR_final.to_csv(PATH + 'PR_Hispanic_NB_mainland_PR.csv', na_rep="#DIV/0!")
 
 def run():
-    print 'Creating DataFrames...'
+    print('Creating DataFrames...')
 
+    FB_Hispanic()
+    NB_Hispanic()
+    FB_Hispanic_POC()
+    FB_White_Hispanic()
 
     NB_ALL()
-    FB_Hispanic()
     FB_WNH()
-    FB_Hispanic_POC()
+
     PR_Hispanic()
     NB_Mainland()
     NB_Mainland_PR()
     NB_WNH()
-    NB_Hispanic()
-    FB_White_Hispanic()
+
+    get_FB_Hispanic_NB_Hispanic_disparity()
+    get_FB_Hispanic_POC_FB_White_Hispanic_disparity()
+    get_FB_Hispanic_F_FB_Hispanic_M_disparity()
 
     get_FB_Hispanic_NB_All_disparity()
-    get_FB_Hispanic_NB_Hispanic_disparity()
     get_FB_Hispanic_POC_FB_WNH_disparity()
     get_FB_Hispanic_POC_NB_WNH_disparity()
-    get_FB_Hispanic_F_FB_Hispanic_M_disparity()
     get_PR_Hispanic_NB_Mainland_disparity()
     get_FB_Hispanic_PR_Hispanic_disparity()
-    get_FB_Hispanic_POC_FB_White_Hispanic_disparity()
     get_PR_Hispanic_NB_Mainland_PR_disparity()
-    
-    get_score_grade_NB_ALL_FB_Hispanic('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_Hispanic_POC_FB_WNH('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_Hispanic_POC_NB_WNH('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_Hispanic_F_FB_Hispanic_M('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_HISP_NB_HISP('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_HISP_POC_FB_WH('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_FB_HISP_PR_HISP('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_PR_HISP_NB_mainland('data_PR_HISP/2018/Score_Grades/')
-    get_score_grade_PR_HISP_NB_mainland_PR('data_PR_HISP/2018/Score_Grades/')
+
+    get_score_grade_FB_HISP_NB_HISP('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_FB_HISP_POC_FB_WH('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_FB_Hispanic_F_FB_Hispanic_M('data_PR_HISP/2016/Score_Grades/')
+
+    get_score_grade_NB_ALL_FB_Hispanic('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_FB_Hispanic_POC_FB_WNH('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_FB_Hispanic_POC_NB_WNH('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_FB_HISP_PR_HISP('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_PR_HISP_NB_mainland('data_PR_HISP/2016/Score_Grades/')
+    get_score_grade_PR_HISP_NB_mainland_PR('data_PR_HISP/2016/Score_Grades/')
 
 
     cj_HISP_PR.csv_to_json_HISP_PR()

@@ -6,6 +6,8 @@ h_columns = ['SERIALNO','GRPIP','TEN']
 p_data = pandas.read_csv('data_PR_HISP/ss16pny.csv',usecols=p_columns)
 h_data = pandas.read_csv('data_PR_HISP/ss16hny.csv',usecols=h_columns)
 
+p_data.to_csv('data_PR_HISP/p_dataframe.csv')
+h_data.to_csv('data_PR_HISP/h_dataframe.csv')
 
 '''
 --General variables(Hispanic Data):

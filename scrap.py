@@ -7,6 +7,7 @@ import collections
 import csv
 import json
 import csv_to_json as cj
+import math
 
 
 p_data = pandas.read_csv('data/p_dataframe.csv')
@@ -61,36 +62,36 @@ puma_maps_dict={100:"St. Lawrence County PUMA",200:"Clinton, Franklin, Essex & H
 # For mapping the counties to the excel
 def puma_county(county_num):
 
-    if puma_maps_dict.has_key(county_num):
+    if county_num in puma_maps_dict:
         return puma_maps_dict.get(county_num)
     else:
-        return null
+        return None
 
 # for mapping the counties defined above to 10 regions
 def puma_region(rcounty_num):
     # check_region = [puma_maps_dict[k] for k in region_1 if k in puma_maps_dict]
-    if rcounty_num in region_1 and puma_maps_dict.has_key(rcounty_num):
+    if rcounty_num in region_1 and  rcounty_num in puma_maps_dict:
         return "Capital Region"
-    elif rcounty_num in region_2 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_2 and  rcounty_num in puma_maps_dict:
         return "Central NY"
-    elif rcounty_num in region_3 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_3 and  rcounty_num in puma_maps_dict:
         return "Finger Lakes"
-    elif rcounty_num in region_4 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_4 and  rcounty_num in puma_maps_dict:
         return "Long Island"
-    elif rcounty_num in region_5 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_5 and  rcounty_num in puma_maps_dict:
         return "Mid-Hudson"
-    elif rcounty_num in region_6 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_6 and  rcounty_num in puma_maps_dict:
         return "Mohawk"
-    elif rcounty_num in region_7 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_7 and  rcounty_num in puma_maps_dict:
         return "New York"
-    elif rcounty_num in region_8 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_8 and  rcounty_num in puma_maps_dict:
         return "North Country"
-    elif rcounty_num in region_9 and puma_maps_dict.has_key(rcounty_num):
-        return "Souther Tier"
-    elif rcounty_num in region_10 and puma_maps_dict.has_key(rcounty_num):
+    elif rcounty_num in region_9 and  rcounty_num in puma_maps_dict:
+        return "Southern Tier"
+    elif rcounty_num in region_10 and  rcounty_num in puma_maps_dict:
         return "Western NY"
     else:
-        return null
+        return None
 
 def get_PUMA_from_CSV():
     PUMA = list()
@@ -599,47 +600,57 @@ def UnEmp(NATIVITY = None, PATH = '/', RAC1P=None, HISP=None,GRP11=None,FB_WNH=N
                     'HSINC_UnEmp_mf_t', 'HSINC_UnEmp_m', 'HSINC_UnEmp_f']
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,ESR=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,ESR=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1=["Capital Region"] + sum_region_1
     l2=["Central NY"] + sum_region_2
@@ -722,47 +733,57 @@ def FT_Work(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GRP11=None,FB_WNH=
                     ]
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,WKHP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,WKHP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -844,47 +865,57 @@ def Poverty(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GRP11=None,FB_WNH=
                     ]
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,POVPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,POVPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -966,47 +997,57 @@ def Working_poor(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GRP11=None,FB
                     'HSINC_P_mf_t', 'HSINC_P_m', 'HSINC_P_f']
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(WKHP=1,NATIVITY=NATIVITY,POVPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,WKHP=1,NATIVITY=NATIVITY,POVPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1089,47 +1130,57 @@ def Rent_burden(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GRP11=None,FB_
                     ]
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,GRPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,GRPIP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1212,47 +1263,57 @@ def Home_Ownership(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GRP11=None,
                     ]
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,TEN=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,TEN=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -1336,48 +1397,57 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
                                         ]
     full_list = []
     # First row is not a PUMA county. It is the summation row.
-    print '----------------- For Total Geo'
+    print ('----------------- For Total Geo')
     l = create_row_dataframe(NATIVITY=NATIVITY,WKHP=1,PINCP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data.PUMA_Counties:
-        print '----------------- For PUMA: ', puma_county(p)
+        #print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,WKHP=1,PINCP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
             region_1_list.append(l[1:])
-            sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
-            sum_region_2 = [sum(x) for x in zip(*region_2_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
             region_3_list.append(l[1:])
-            sum_region_3 = [sum(x) for x in zip(*region_3_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
             region_4_list.append(l[1:])
-            sum_region_4 = [sum(x) for x in zip(*region_4_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
             region_5_list.append(l[1:])
-            sum_region_5 = [sum(x) for x in zip(*region_5_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
             region_6_list.append(l[1:])
-            sum_region_6 = [sum(x) for x in zip(*region_6_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
             region_7_list.append(l[1:])
-            sum_region_7 = [sum(x) for x in zip(*region_7_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
             region_8_list.append(l[1:])
-            sum_region_8 = [sum(x) for x in zip(*region_8_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
             region_9_list.append(l[1:])
-            sum_region_9 = [sum(x) for x in zip(*region_9_list)]
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
             region_10_list.append(l[1:])
-            sum_region_10 = [sum(x) for x in zip(*region_10_list)]
-
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
     l3 = ["Finger Lakes"] + sum_region_3
@@ -1402,8 +1472,7 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
     if GRP11 is None:
         result_df = pandas.DataFrame(full_list, columns=col_NB_Income_Level_FT_workers)
         make_sure_path_exists(PATH + 'step_1/')
-        result_df.to_csv(PATH + 'step_1/' + 'Income_level_FT_Workers.csv', na_rep="#DIV/0!")
-
+        result_df.to_csv(PATH + 'step_1/' + 'Income_level_FT_Workers.csv',na_rep="#DIV/0!")
         if NATIVITY is 1 and RAC1P is None and HISP is None:
             global_data.NB_ALL_Income_level_p = result_df
             make_sure_path_exists(PATH + 'step_2/')
@@ -1433,8 +1502,8 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
         global_data.FB_ALL_GRP11_Income_level_p.to_csv(PATH + 'step_2/' + 'Income_level_FT_Workers.csv', na_rep="#DIV/0!")
 
 def NB_ALL():
-    print 'NB_ALL'
-    PATH = 'data/2015/NB_All/'
+    print ('NB_ALL')
+    PATH = 'data/2018/NB_All/'
     UnEmp(NATIVITY=1,PATH=PATH)
     FT_Work(NATIVITY=1,PATH=PATH)
     Poverty(NATIVITY=1,PATH=PATH)
@@ -1445,19 +1514,19 @@ def NB_ALL():
 
 def FB_ALL():
 
-    """ print 'FB_ALL'
-    PATH = 'data/2015/FB_All/'
+    print ('FB_ALL')
+    PATH = 'data/2018/FB_All/'
     UnEmp(NATIVITY=2,PATH=PATH)
     FT_Work(NATIVITY=2,PATH=PATH)
     Poverty(NATIVITY=2,PATH=PATH)
     Working_poor(NATIVITY=2,PATH=PATH)
     Rent_burden(NATIVITY=2,PATH=PATH)
     Home_Ownership(NATIVITY=2,PATH=PATH)
-    Income_level_FT_Workers(NATIVITY=2, PATH=PATH) """
+    Income_level_FT_Workers(NATIVITY=2, PATH=PATH)
 
-    # GRP 11
-    print 'GRP11'
-    PATH = 'data/2015/GRP11/'
+    #GRP 11
+    print('GRP11')
+    PATH = 'data/2018/GRP11/'
     UnEmp(NATIVITY=2, PATH=PATH,GRP11=1)
     FT_Work(NATIVITY=2, PATH=PATH,GRP11=1)
     Poverty(NATIVITY=2, PATH=PATH,GRP11=1)
@@ -1467,8 +1536,8 @@ def FB_ALL():
     Income_level_FT_Workers(NATIVITY=2, PATH=PATH,GRP11=1)
 
 def NB_WNH():
-    print 'NB_WNH'
-    PATH = 'data/2015/NB_WNH/'
+    print('NB_WNH')
+    PATH = 'data/2018/NB_WNH/'
     UnEmp(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     FT_Work(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     Poverty(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
@@ -1476,10 +1545,10 @@ def NB_WNH():
     Rent_burden(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     Home_Ownership(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
     Income_level_FT_Workers(NATIVITY=1,PATH=PATH,RAC1P=1,HISP=1)
-    
+
 def FB_WNH():
-    print 'FB_WNH'
-    PATH = 'data/2015/FB_WNH/'
+    print('FB_WNH')
+    PATH = 'data/2018/FB_WNH/'
     UnEmp(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
     FT_Work(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
     Poverty(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
@@ -1488,10 +1557,9 @@ def FB_WNH():
     Home_Ownership(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
     Income_level_FT_Workers(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1,FB_WNH=1)
 
-
 def FB_POC(): # TODO Need to check result
-    print 'FB_POC'
-    PATH = 'data/2015/FB_POC/'
+    print('FB_POC')
+    PATH = 'data/2018/FB_POC/'
     #RAC1P=1,HISP=1 used for People of color
     UnEmp(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1)
     FT_Work(NATIVITY=2,PATH=PATH,RAC1P=1,HISP=1)
@@ -1507,6 +1575,7 @@ def get_percentage(df = None,indicator = None, GRP11=None):
 
     columns = list(df)
     if GRP11 is None and indicator is not 'FT_Work' and indicator is not 'Home_Ownership' and indicator is not 'Income_Level_FT_Workers':
+        print (indicator)
         for i in df.index:
             new_df.at[i, 'puma'] = df.at[i, 'puma']
             new_df.at[i, 'BABS_'+indicator+'_Total'] = ((df.at[i, columns[16]] * (1.0)) / df.at[i, columns[10]])*100
@@ -1553,18 +1622,18 @@ def get_percentage(df = None,indicator = None, GRP11=None):
             new_df.at[i, 'HSINC_' + indicator + '_M'] = ((df.at[i, columns[5]] * (1.0)) / df.at[i, columns[2]]) * 100
             new_df.at[i, 'HSINC_' + indicator + '_F'] = ((df.at[i, columns[6]] * (1.0)) / df.at[i, columns[3]]) * 100
 
-    print indicator
+    print (indicator)
     return new_df
 def get_disparity_score_grade_grp_11(PATH=None):
     disparity_grp11=pandas.DataFrame()
     disparity_grp11_final=pandas.DataFrame()
-    UnEmp=pandas.read_csv('data/2015/GRP11/step_2/UnEmp.csv',usecols=['puma','HSINC_UnEmp_Total'])
-    FT_work=pandas.read_csv('data/2015/GRP11/step_2/FT_Work.csv',usecols=['HSINC_FT_Work_Total'])
-    Poverty=pandas.read_csv('data/2015/GRP11/step_2/Poverty.csv',usecols=['HSINC_Poverty_Total'])
-    Working_Poor=pandas.read_csv('data/2015/GRP11/step_2/Working_Poor.csv',usecols=['HSINC_Working_Poor_Total'])
-    Rent_Burden=pandas.read_csv('data/2015/GRP11/step_2/Rent_Burden.csv',usecols=['HSINC_Rent_Burden_Total'])
-    Home_Ownership=pandas.read_csv('data/2015/GRP11/step_2/Home_Ownership.csv',usecols=['HSINC_Home_Ownership_Total'])
-    Income_level=pandas.read_csv('data/2015/GRP11/step_2/Income_level_FT_Workers.csv',usecols=['HSINC_Avg_PINCP_mf_t'])
+    UnEmp=pandas.read_csv('data/2018/GRP11/step_2/UnEmp.csv',usecols=['puma','HSINC_UnEmp_Total'])
+    FT_work=pandas.read_csv('data/2018/GRP11/step_2/FT_Work.csv',usecols=['HSINC_FT_Work_Total'])
+    Poverty=pandas.read_csv('data/2018/GRP11/step_2/Poverty.csv',usecols=['HSINC_Poverty_Total'])
+    Working_Poor=pandas.read_csv('data/2018/GRP11/step_2/Working_Poor.csv',usecols=['HSINC_Working_Poor_Total'])
+    Rent_Burden=pandas.read_csv('data/2018/GRP11/step_2/Rent_Burden.csv',usecols=['HSINC_Rent_Burden_Total'])
+    Home_Ownership=pandas.read_csv('data/2018/GRP11/step_2/Home_Ownership.csv',usecols=['HSINC_Home_Ownership_Total'])
+    Income_level=pandas.read_csv('data/2018/GRP11/step_2/Income_level_FT_Workers.csv',usecols=['HSINC_Avg_PINCP_mf_t'])
 
     disparity_grp11=pandas.concat([UnEmp,FT_work,Poverty,Working_Poor,Rent_Burden,Home_Ownership,Income_level],axis=1)
     score_columns_list=['Unemployment_HSINC_score','FT_Work_HSINC_score','Poverty_HSINC_score','Working_Poor_HSINC_score','Rent_Burden_HSINC_score','Home_Ownership_HSINC_score','Income_level_HSINC_score','Overall_HSINC_score']
@@ -1854,7 +1923,7 @@ def get_disparity(PATH=None,call_string=None): #you cannot call this function wi
         FB_Income_level = global_data.FB_POC_Income_level_p
         FB_Rent_burden = global_data.FB_POC_Rent_burden_p
         FB_Home_Ownership = global_data.FB_POC_Home_Ownership_p
-    elif call_string is 'FB_WNH_FB_POC':
+    elif call_string is 'FB_WNH_FB_POC' or call_string is 'FB_WNH_FB_POC_F':
         NB_UnEmp = global_data.FB_WNH_UnEmp_p
         NB_FT_Work = global_data.FB_WNH_FT_Work_p
         NB_Poverty = global_data.FB_WNH_Poverty_p
@@ -1873,6 +1942,7 @@ def get_disparity(PATH=None,call_string=None): #you cannot call this function wi
 
     if call_string is 'NB_ALL_FB_ALL':
         #if(global_data.NB_ALL_FB_ALL_d is not None and NB_UnEmp is not None and FB_UnEmp is not None):
+
         for i in NB_UnEmp.index:
             global_data.NB_ALL_FB_ALL_d.at[i, 'puma'] = NB_UnEmp.at[i,'puma']
             global_data.NB_ALL_FB_ALL_d.at[i,'Unemployment_BABS'] = (FB_UnEmp.at[i,'BABS_UnEmp_Total'] * (1.0) ) / NB_UnEmp.at[i,'BABS_UnEmp_Total']
@@ -1992,28 +2062,51 @@ def get_disparity(PATH=None,call_string=None): #you cannot call this function wi
         make_sure_path_exists(PATH)
         global_data.NB_WNH_FB_POC_d.to_csv(PATH + 'NB_WNH_FB_POC_F_Disparity.csv',na_rep="#DIV/0!")
 
+    elif call_string is 'FB_WNH_FB_POC_F':
+            for i in FB_UnEmp.index:
+                global_data.FB_WNH_FB_POC_d.at[i, 'puma'] = FB_UnEmp.at[i, 'puma']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Unemployment_BABS'] = (FB_UnEmp.at[i, 'BABS_UnEmp_F'] * (1.0)) / NB_UnEmp.at[i, 'BABS_UnEmp_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Unemployment_HS'] = (FB_UnEmp.at[i, 'HS_UnEmp_F'] * (1.0)) / NB_UnEmp.at[i, 'HS_UnEmp_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'FT_Work_BABS'] = (FB_FT_Work.at[i, 'BABS_FT_Work_F'] * (1.0)) / NB_FT_Work.at[i, 'BABS_FT_Work_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'FT_Work_HS'] = (FB_FT_Work.at[i, 'HS_FT_Work_F'] * (1.0)) / NB_FT_Work.at[i, 'HS_FT_Work_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Poverty_BABS'] = (FB_Poverty.at[i, 'BABS_Poverty_F'] * (1.0)) / NB_Poverty.at[i, 'BABS_Poverty_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Poverty_HS'] = (FB_Poverty.at[i, 'HS_Poverty_F'] * (1.0)) / NB_Poverty.at[i, 'HS_Poverty_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Working_Poor_BABS'] = (FB_Working_Poor.at[i, 'BABS_Working_Poor_F'] * (1.0)) / NB_Working_Poor.at[i, 'BABS_Working_Poor_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Working_Poor_HS'] = (FB_Working_Poor.at[i, 'HS_Working_Poor_F'] * (1.0)) / NB_Working_Poor.at[i, 'HS_Working_Poor_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Income_level_BABS'] = (FB_Income_level.at[i, 'BABS_Avg_PINCP_f']* (1.0)) / NB_Income_level.at[i, 'BABS_Avg_PINCP_f']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Income_level_HS'] = (FB_Income_level.at[i, 'HS_Avg_PINCP_f']* (1.0)) / NB_Income_level.at[i, 'HS_Avg_PINCP_f']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Rent_Burden_BABS'] = (FB_Rent_burden.at[i, 'BABS_Rent_Burden_F'] * (1.0)) / NB_Rent_burden.at[i, 'BABS_Rent_Burden_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Rent_Burden_HS'] = (FB_Rent_burden.at[i, 'HS_Rent_Burden_F'] * (1.0)) / NB_Rent_burden.at[i, 'HS_Rent_Burden_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Home_Ownership_BABS'] = (FB_Home_Ownership.at[i, 'BABS_Home_Ownership_F'] * (1.0)) / NB_Home_Ownership.at[i, 'BABS_Home_Ownership_F']
+                global_data.FB_WNH_FB_POC_d.at[i, 'Home_Ownership_HS'] = (FB_Home_Ownership.at[i, 'HS_Home_Ownership_F'] * (1.0)) / NB_Home_Ownership.at[i,'HS_Home_Ownership_F']
+            make_sure_path_exists(PATH)
+            global_data.FB_WNH_FB_POC_d.to_csv(PATH + 'FB_WNH_FB_POC_F_Disparity.csv',na_rep="#DIV/0!")
+
 def get_NB_All_FB_All_disparity():
-    get_disparity('data/2015/Disparities/','NB_ALL_FB_ALL')
+    get_disparity('data/2018/Disparities/','NB_ALL_FB_ALL')
 
 def get_NB_ALL_F_FB_ALL_F_disparity():
-    get_disparity('data/2015/Disparities/', 'NB_ALL_F_FB_ALL_F')
+    get_disparity('data/2018/Disparities/', 'NB_ALL_F_FB_ALL_F')
 
 def get_FB_ALL_F_M_disparity():
-    get_disparity('data/2015/Disparities/', 'FB_ALL_F_M')
+    get_disparity('data/2018/Disparities/', 'FB_ALL_F_M')
 
 def get_NB_WNH_FB_POC_disparity():
-    get_disparity('data/2015/Disparities/', 'NB_WNH_FB_POC')
+    get_disparity('data/2018/Disparities/', 'NB_WNH_FB_POC')
     
 def get_FB_WNH_FB_POC_disparity():
-    get_disparity('data/2015/Disparities/', 'FB_WNH_FB_POC')
+    get_disparity('data/2018/Disparities/', 'FB_WNH_FB_POC')
 
 def get_NB_WNH_FB_POC_F_disparity():
-    get_disparity('data/2015/Disparities/', 'NB_WNH_FB_POC_F')
+    get_disparity('data/2018/Disparities/', 'NB_WNH_FB_POC_F')
+
+def get_FB_WNH_FB_POC_F_disparity():
+    get_disparity('data/2018/Disparities/', 'FB_WNH_FB_POC_F')
 
 def get_score_grade_all(PATH=None):
     sg_data_NB_ALL_FB_ALL_final = pandas.DataFrame()
     sg_data_NB_ALL_FB_ALL = pandas.read_csv(
-        'data/2015/Disparities/NB_ALL_FB_ALL_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/NB_ALL_FB_ALL_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_ALL_FB_ALL = sg_data_NB_ALL_FB_ALL.astype('object')
 
@@ -2573,7 +2666,7 @@ def get_score_grade_all(PATH=None):
 def get_score_grade_f(PATH=None):
     sg_data_f_final = pandas.DataFrame()
     sg_data_f = pandas.read_csv(
-        'data/2015/Disparities/NB_ALL_F_FB_ALL_F_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/NB_ALL_F_FB_ALL_F_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_f = sg_data_f.astype('object')
 
@@ -3133,7 +3226,7 @@ def get_score_grade_f(PATH=None):
 def get_score_grade_FB_ALL_F_M(PATH=None):
     sg_data_f_m_final = pandas.DataFrame()
     sg_data_f_m = pandas.read_csv(
-        'data/2015/Disparities/FB_ALL_F_M_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/FB_ALL_F_M_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_f_m = sg_data_f_m.astype('object')
 
@@ -3693,7 +3786,7 @@ def get_score_grade_FB_ALL_F_M(PATH=None):
 def get_score_grade_NB_WNH_FB_POC(PATH=None):
     sg_data_NB_WNH_FB_POC_final = pandas.DataFrame()
     sg_data_NB_WNH_FB_POC = pandas.read_csv(
-        'data/2015/Disparities/NB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/NB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_WNH_FB_POC = sg_data_NB_WNH_FB_POC.astype('object')
 
@@ -4253,7 +4346,7 @@ def get_score_grade_NB_WNH_FB_POC(PATH=None):
 def get_score_grade_FB_WNH_FB_POC(PATH=None):
     sg_data_FB_WNH_FB_POC_final = pandas.DataFrame()
     sg_data_FB_WNH_FB_POC = pandas.read_csv(
-        'data/2015/Disparities/FB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/FB_WNH_FB_POC_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_FB_WNH_FB_POC = sg_data_FB_WNH_FB_POC.astype('object')
 
@@ -4813,7 +4906,7 @@ def get_score_grade_FB_WNH_FB_POC(PATH=None):
 def get_score_grade_NB_WNH_FB_POC_F(PATH=None):
     sg_data_NB_WNH_FB_POC_F_final = pandas.DataFrame()
     sg_data_NB_WNH_FB_POC_F = pandas.read_csv(
-        'data/2015/Disparities/NB_WNH_FB_POC_F_Disparity.csv').replace([np.inf, -np.inf],
+        'data/2018/Disparities/NB_WNH_FB_POC_F_Disparity.csv').replace([np.inf, -np.inf],
                                                                                           np.nan)
     sg_data_NB_WNH_FB_POC_F = sg_data_NB_WNH_FB_POC_F.astype('object')
 
@@ -5369,6 +5462,567 @@ def get_score_grade_NB_WNH_FB_POC_F(PATH=None):
 
     make_sure_path_exists(PATH)
     sg_data_NB_WNH_FB_POC_F_final.to_csv(PATH + 'NB_WNH_FB_POC_F_Scores_Grades.csv', na_rep="#DIV/0!")
+    
+    
+def get_score_grade_FB_WNH_FB_POC_F(PATH=None):
+    sg_data_FB_WNH_FB_POC_F_final = pandas.DataFrame()
+    sg_data_FB_WNH_FB_POC_F = pandas.read_csv(
+        'data/2018/Disparities/FB_WNH_FB_POC_F_Disparity.csv').replace([np.inf, -np.inf],
+                                                                                          np.nan)
+    sg_data_FB_WNH_FB_POC_F = sg_data_FB_WNH_FB_POC_F.astype('object')
+
+    score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
+                          'Working_Poor_BABS_score', 'Rent_Burden_BABS_score', 'Home_Ownership_BABS_score',
+                          'Income_level_BABS_score', 'Overall_BABS_score',
+                          'Unemployment_HS_score', 'FT_Work_HS_score', 'Poverty_HS_score', 'Working_Poor_HS_score',
+                          'Income_level_HS_score',
+                          'Rent_Burden_HS_score', 'Home_Ownership_HS_score', 'Overall_HS_score']
+
+    # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
+    Unemp_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Unemployment_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Unemployment_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Unemployment_BABS != '-inf')]
+    mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
+    mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
+    stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
+    stddev_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).std()
+
+    FT_Work_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.FT_Work_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.FT_Work_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.FT_Work_BABS != '-inf')]
+    mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
+    mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
+    stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
+    stddev_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).std()
+
+    Poverty_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Poverty_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Poverty_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Poverty_BABS != '-inf')]
+    mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
+    mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
+    stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
+    stddev_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).std()
+
+    Working_Poor_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Working_Poor_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Working_Poor_BABS != '-inf')]
+    mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
+        index=range(146, 156)).std()
+
+    Rent_Burden_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Rent_Burden_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Rent_Burden_BABS != '-inf')]
+    mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
+        index=range(146, 156)).std()
+
+    Home_Ownership_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Home_Ownership_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Home_Ownership_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Home_Ownership_BABS != '-inf')]
+    mean_Home_Ownership_BABS_county = pandas.to_numeric(Home_Ownership_BABS['Home_Ownership_BABS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Home_Ownership_BABS_region = pandas.to_numeric(Home_Ownership_BABS['Home_Ownership_BABS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Home_Ownership_BABS_county = pandas.to_numeric(Home_Ownership_BABS['Home_Ownership_BABS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Home_Ownership_BABS_region = pandas.to_numeric(Home_Ownership_BABS['Home_Ownership_BABS']).reindex(
+        index=range(146, 156)).std()
+
+    Income_level_BABS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Income_level_BABS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Income_level_BABS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Income_level_BABS != '-inf')]
+    mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
+        index=range(146, 156)).std()
+
+    Unemp_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Unemployment_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Unemployment_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Unemployment_HS != '-inf')]
+    mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
+    mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
+    stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
+    stddev_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).std()
+
+    FT_Work_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.FT_Work_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.FT_Work_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.FT_Work_HS != '-inf')]
+    mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
+    mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
+    stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
+    stddev_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).std()
+
+    Poverty_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Poverty_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Poverty_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Poverty_HS != '-inf')]
+    mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
+    mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
+    stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
+    stddev_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).std()
+
+    Working_Poor_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Working_Poor_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Working_Poor_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Working_Poor_HS != '-inf')]
+    mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
+        index=range(146, 156)).std()
+
+    Rent_Burden_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Rent_Burden_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Rent_Burden_HS != '-inf')]
+    mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
+    mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
+        index=range(146, 156)).std()
+
+    Home_Ownership_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Home_Ownership_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Home_Ownership_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Home_Ownership_HS != '-inf')]
+    mean_Home_Ownership_HS_county = pandas.to_numeric(Home_Ownership_HS['Home_Ownership_HS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Home_Ownership_HS_region = pandas.to_numeric(Home_Ownership_HS['Home_Ownership_HS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Home_Ownership_HS_county = pandas.to_numeric(Home_Ownership_HS['Home_Ownership_HS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Home_Ownership_HS_region = pandas.to_numeric(Home_Ownership_HS['Home_Ownership_HS']).reindex(
+        index=range(146, 156)).std()
+
+    Income_level_HS = sg_data_FB_WNH_FB_POC_F[
+        (sg_data_FB_WNH_FB_POC_F.Income_level_HS != '#DIV/0!') & (
+            sg_data_FB_WNH_FB_POC_F.Income_level_HS != 'inf') & (
+            sg_data_FB_WNH_FB_POC_F.Income_level_HS != '-inf')]
+    mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
+        index=range(0, 146)).mean()
+    mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
+        index=range(146, 156)).mean()
+    stddev_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
+        index=range(0, 146)).std()
+    stddev_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
+        index=range(146, 156)).std()
+
+    for i in sg_data_FB_WNH_FB_POC_F.index:
+        if i >= 0 and i <= 146:
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'puma'] = sg_data_FB_WNH_FB_POC_F.at[i, 'puma']
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
+                                                                                             -1.0)) / stddev_UnEmp_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
+                                                                                        1.0)) / stddev_FT_Work_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
+                                                                                        -1.0)) / stddev_Poverty_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
+                                                                                             -1.0)) / stddev_Working_Poor_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
+                                                                                            -1.0)) / stddev_Rent_Burden_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS']) - (
+                                                                                            mean_Home_Ownership_BABS_county)) * (
+                                                                                               1.0)) / stddev_Home_Ownership_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
+                                                                                             1.0)) / stddev_Income_level_BABS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_BABS_score'] = np.nan
+
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'Overall_BABS_score'] = ((
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Unemployment_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'FT_Work_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Poverty_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Working_Poor_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Rent_Burden_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Home_Ownership_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Income_level_BABS_score']) * 1.0) / 7
+
+            # checking for scores for HS
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS']) - (
+                                                                                            mean_UnEmp_HS_county)) * (
+                                                                                           -1.0)) / stddev_UnEmp_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS']) - (
+                                                                                       mean_FT_Work_HS_county)) * (
+                                                                                      1.0)) / stddev_FT_Work_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS']) - (
+                                                                                       mean_Poverty_HS_county)) * (
+                                                                                      -1.0)) / stddev_Poverty_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS']) - (
+                                                                                            mean_Working_Poor_HS_county)) * (
+                                                                                           -1.0)) / stddev_Working_Poor_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS']) - (
+                                                                                           mean_Rent_Burden_HS_county)) * (
+                                                                                          -1.0)) / stddev_Rent_Burden_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS']) - (
+                                                                                              mean_Home_Ownership_HS_county)) * (
+                                                                                             1.0)) / stddev_Home_Ownership_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS']) - (
+                                                                                            mean_Income_level_HS_county)) * (
+                                                                                           1.0)) / stddev_Income_level_HS_county
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_HS_score'] = np.nan
+
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'Overall_HS_score'] = ((
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Unemployment_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'FT_Work_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Poverty_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Working_Poor_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Rent_Burden_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Home_Ownership_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Income_level_HS_score']) * 1.0) / 7
+
+            for column in score_columns_list:
+                indicator = str(column).split('_score')
+                if sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'A'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (1.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'A-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (0.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'B'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (0.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'B-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-0.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'C'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-0.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'C-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-1.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'D'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'D-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] < (-1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'E'
+                else:
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = "#DIV!0"
+
+        elif i >= 146 and i <= 156:
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'puma'] = sg_data_FB_WNH_FB_POC_F.at[i, 'puma']
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
+                                                                                             -1.0)) / stddev_UnEmp_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
+                                                                                        1.0)) / stddev_FT_Work_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
+                                                                                        -1.0)) / stddev_Poverty_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
+                                                                                             -1.0)) / stddev_Working_Poor_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
+                                                                                            -1.0)) / stddev_Rent_Burden_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_BABS']) - (
+                                                                                            mean_Home_Ownership_BABS_region)) * (
+                                                                                               1.0)) / stddev_Home_Ownership_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_BABS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_BABS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
+                                                                                             1.0)) / stddev_Income_level_BABS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_BABS_score'] = np.nan
+
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'Overall_BABS_score'] = ((
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Unemployment_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'FT_Work_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Poverty_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Working_Poor_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Rent_Burden_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Home_Ownership_BABS_score'] +
+                                                                                    sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                        i, 'Income_level_BABS_score']) * 1.0) / 7
+
+            # checking for scores for HS
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Unemployment_HS']) - (
+                                                                                            mean_UnEmp_HS_region)) * (
+                                                                                           -1.0)) / stddev_UnEmp_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Unemployment_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'FT_Work_HS']) - (
+                                                                                       mean_FT_Work_HS_region)) * (
+                                                                                      1.0)) / stddev_FT_Work_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'FT_Work_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Poverty_HS']) - (
+                                                                                       mean_Poverty_HS_region)) * (
+                                                                                      -1.0)) / stddev_Poverty_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Poverty_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Working_Poor_HS']) - (
+                                                                                            mean_Working_Poor_HS_region)) * (
+                                                                                           -1.0)) / stddev_Working_Poor_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Working_Poor_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Rent_Burden_HS']) - (
+                                                                                           mean_Rent_Burden_HS_region)) * (
+                                                                                          -1.0)) / stddev_Rent_Burden_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Rent_Burden_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Home_Ownership_HS']) - (
+                                                                                              mean_Home_Ownership_HS_region)) * (
+                                                                                             1.0)) / stddev_Home_Ownership_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Home_Ownership_HS_score'] = np.nan
+
+            if sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != '#DIV/0!' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS'] != '-inf':
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_HS_score'] = ((float(
+                    sg_data_FB_WNH_FB_POC_F.at[i, 'Income_level_HS']) - (
+                                                                                            mean_Income_level_HS_region)) * (
+                                                                                           1.0)) / stddev_Income_level_HS_region
+            else:
+                sg_data_FB_WNH_FB_POC_F_final.at[i, 'Income_level_HS_score'] = np.nan
+
+            sg_data_FB_WNH_FB_POC_F_final.at[i, 'Overall_HS_score'] = ((
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Unemployment_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'FT_Work_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Poverty_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Working_Poor_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Rent_Burden_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Home_Ownership_HS_score'] +
+                                                                                  sg_data_FB_WNH_FB_POC_F_final.at[
+                                                                                      i, 'Income_level_HS_score']) * 1.0) / 7
+
+            for column in score_columns_list:
+                indicator = str(column).split('_score')
+                if sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'A'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (1.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'A-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (0.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'B'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (0.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'B-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-0.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'C'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-0.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'C-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-1.25):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'D'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] >= (-1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'D-'
+                elif sg_data_FB_WNH_FB_POC_F_final.at[i, column] < (-1.75):
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = 'E'
+                else:
+                    sg_data_FB_WNH_FB_POC_F_final.at[i, indicator[0] + '_grade'] = "#DIV!0"
+
+    make_sure_path_exists(PATH)
+    sg_data_FB_WNH_FB_POC_F_final.to_csv(PATH + 'FB_WNH_FB_POC_F_Scores_Grades.csv', na_rep="#DIV/0!")
 
 def make_sure_path_exists(path):
     # https://stackoverflow.com/questions/273192/how-can-i-safely-create-a-nested-directory-in-python
@@ -5378,10 +6032,9 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             raise
 def run():
-    print 'Creating DataFrames...'
+    print ('Creating DataFrames...')
 
     NB_ALL()
-
     NB_WNH()
     FB_ALL()
     FB_WNH()
@@ -5391,14 +6044,16 @@ def run():
     get_FB_ALL_F_M_disparity()
     get_NB_WNH_FB_POC_disparity()
     get_FB_WNH_FB_POC_disparity()
-    get_disparity_score_grade_grp_11
+    get_disparity_score_grade_grp_11('data/2018/GRP11/Scores_Grades/')
     get_NB_WNH_FB_POC_F_disparity()
-    get_score_grade_all('data/2015/Scores_Grades/')
-    get_score_grade_f('data/2015/Scores_Grades/')
-    get_score_grade_FB_ALL_F_M('data/2015/Scores_Grades/')
-    get_score_grade_NB_WNH_FB_POC('data/2015/Scores_Grades/')
-    get_score_grade_FB_WNH_FB_POC('data/2015/Scores_Grades/') #make this
-    get_score_grade_NB_WNH_FB_POC_F('data/2015/Scores_Grades/')
+    get_FB_WNH_FB_POC_F_disparity()
+    get_score_grade_all('data/2018/Scores_Grades/')
+    get_score_grade_f('data/2018/Scores_Grades/')
+    get_score_grade_FB_ALL_F_M('data/2018/Scores_Grades/')
+    get_score_grade_NB_WNH_FB_POC('data/2018/Scores_Grades/')
+    get_score_grade_FB_WNH_FB_POC('data/2018/Scores_Grades/') #make this
+    get_score_grade_FB_WNH_FB_POC_F('data/2018/Scores_Grades/')
+    get_score_grade_NB_WNH_FB_POC_F('data/2018/Scores_Grades/')
     cj.csv_to_json()
 
 
