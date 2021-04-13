@@ -3,11 +3,11 @@ import pandas
 p_columns = ['SERIALNO','SPORDER','PUMA','PWGTP','AGEP','SCHL','SEX','WKHP','ESR','NATIVITY','PINCP','POVPIP','ENG','RAC1P','HISP']
 h_columns = ['SERIALNO','GRPIP','TEN']
 
-# p_data = pandas.read_csv('data/ss16pny.csv',usecols=p_columns)
-# h_data = pandas.read_csv('data/ss16hny.csv',usecols=h_columns)
+p_data = pandas.read_csv('data/ss16pny.csv',usecols=p_columns)
+h_data = pandas.read_csv('data/ss16hny.csv',usecols=h_columns)
 
-p_data = pandas.read_csv('data/psam_p36_2018.csv',usecols=p_columns)
-h_data = pandas.read_csv('data/psam_h36_2018.csv',usecols=h_columns)
+# p_data = pandas.read_csv('data/psam_p36_2018.csv',usecols=p_columns)
+# h_data = pandas.read_csv('data/psam_h36_2018.csv',usecols=h_columns)
 
 p_data.to_csv('data/p_dataframe.csv')
 h_data.to_csv('data/h_dataframe.csv')

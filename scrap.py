@@ -1402,14 +1402,17 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
     l.insert(0, "Total Geo")
     full_list.append(l)
     # For all the PUMA counties.
+
     for p in global_data.PUMA_Counties:
         #print ('----------------- For PUMA: ', puma_county(p))
         l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY,WKHP=1,PINCP=1,RAC1P=RAC1P,HISP=HISP,GRP11=GRP11,FB_WNH=FB_WNH)
         l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
+
         if p in region_1:
             region_1_list.append(l[1:])
+
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
         sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
@@ -1469,6 +1472,7 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
     full_list.append(l9)
     full_list.append(l10)
 
+
     if GRP11 is None:
         result_df = pandas.DataFrame(full_list, columns=col_NB_Income_Level_FT_workers)
         make_sure_path_exists(PATH + 'step_1/')
@@ -1504,12 +1508,12 @@ def Income_level_FT_Workers(NATIVITY = None,PATH = '/', RAC1P=None, HISP=None,GR
 def NB_ALL():
     print ('NB_ALL')
     PATH = 'data/2018/NB_All/'
-    UnEmp(NATIVITY=1,PATH=PATH)
-    FT_Work(NATIVITY=1,PATH=PATH)
-    Poverty(NATIVITY=1,PATH=PATH)
-    Working_poor(NATIVITY=1,PATH=PATH)
-    Rent_burden(NATIVITY=1,PATH=PATH)
-    Home_Ownership(NATIVITY=1,PATH=PATH)
+    # UnEmp(NATIVITY=1,PATH=PATH)
+    # FT_Work(NATIVITY=1,PATH=PATH)
+    # Poverty(NATIVITY=1,PATH=PATH)
+    # Working_poor(NATIVITY=1,PATH=PATH)
+    # Rent_burden(NATIVITY=1,PATH=PATH)
+    # Home_Ownership(NATIVITY=1,PATH=PATH)
     Income_level_FT_Workers(NATIVITY=1,PATH=PATH)
 
 def FB_ALL():
@@ -6035,25 +6039,25 @@ def run():
     print ('Creating DataFrames...')
 
     NB_ALL()
-    NB_WNH()
-    FB_ALL()
-    FB_WNH()
-    FB_POC()
-    get_NB_All_FB_All_disparity()
-    get_NB_ALL_F_FB_ALL_F_disparity()
-    get_FB_ALL_F_M_disparity()
-    get_NB_WNH_FB_POC_disparity()
-    get_FB_WNH_FB_POC_disparity()
-    get_disparity_score_grade_grp_11('data/2018/GRP11/Scores_Grades/')
-    get_NB_WNH_FB_POC_F_disparity()
-    get_FB_WNH_FB_POC_F_disparity()
-    get_score_grade_all('data/2018/Scores_Grades/')
-    get_score_grade_f('data/2018/Scores_Grades/')
-    get_score_grade_FB_ALL_F_M('data/2018/Scores_Grades/')
-    get_score_grade_NB_WNH_FB_POC('data/2018/Scores_Grades/')
-    get_score_grade_FB_WNH_FB_POC('data/2018/Scores_Grades/') #make this
-    get_score_grade_FB_WNH_FB_POC_F('data/2018/Scores_Grades/')
-    get_score_grade_NB_WNH_FB_POC_F('data/2018/Scores_Grades/')
+    # NB_WNH()
+    # FB_ALL()
+    # FB_WNH()
+    # FB_POC()
+    # get_NB_All_FB_All_disparity()
+    # get_NB_ALL_F_FB_ALL_F_disparity()
+    # get_FB_ALL_F_M_disparity()
+    # get_NB_WNH_FB_POC_disparity()
+    # get_FB_WNH_FB_POC_disparity()
+    #get_disparity_score_grade_grp_11('data/2018/GRP11/Scores_Grades/')
+    # get_NB_WNH_FB_POC_F_disparity()
+    # get_FB_WNH_FB_POC_F_disparity()
+    # get_score_grade_all('data/2018/Scores_Grades/')
+    # get_score_grade_f('data/2018/Scores_Grades/')
+    # get_score_grade_FB_ALL_F_M('data/2018/Scores_Grades/')
+    # get_score_grade_NB_WNH_FB_POC('data/2018/Scores_Grades/')
+    # get_score_grade_FB_WNH_FB_POC('data/2018/Scores_Grades/') #make this
+    # get_score_grade_FB_WNH_FB_POC_F('data/2018/Scores_Grades/')
+    # get_score_grade_NB_WNH_FB_POC_F('data/2018/Scores_Grades/')
     cj.csv_to_json()
 
 
