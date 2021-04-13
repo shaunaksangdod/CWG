@@ -3,11 +3,11 @@ import pandas
 p_columns = ['SERIALNO','SPORDER','PUMA','PWGTP','AGEP','SCHL','SEX','WKHP','ESR','NATIVITY','PINCP','POVPIP','ENG','RAC1P','HISP']
 h_columns = ['SERIALNO','GRPIP','TEN']
 
-# p_data = pandas.read_csv('data/ss16pny.csv',usecols=p_columns)
-# h_data = pandas.read_csv('data/ss16hny.csv',usecols=h_columns)
+# p_data = pandas.read_csv('data/ss18pny.csv',usecols=p_columns)
+# h_data = pandas.read_csv('data/ss18hny.csv',usecols=h_columns)
 
-p_data = pandas.read_csv('data/psam_p36_2018.csv',usecols=p_columns)
-h_data = pandas.read_csv('data/psam_h36_2018.csv',usecols=h_columns)
+p_data = pandas.read_csv('data/ss18pny.csv',usecols=p_columns)
+h_data = pandas.read_csv('data/ss18hny.csv',usecols=h_columns)
 
 p_data.to_csv('data/p_dataframe.csv')
 h_data.to_csv('data/h_dataframe.csv')
@@ -18,7 +18,7 @@ General variables:
     Education: SCHL:
                 BABS: 21(BS),22(MS),23(Professional Degree),24(PHD)
                 HS: 16(Reg. HS),17(GED or alternate credentials),18(College less than 1 yr),19(1 or more years of clg, no degree),20(associate degree)
-                HSINC: 0-15(0-12 no diploma)
+                HSINC: 0-16(0-12 no diploma)
 
     Geo-Items: PUMA (region codes: https://www.census.gov/geo/maps-data/maps/2010puma/st36_ny.html )
     Nativity: NATIVITY:
@@ -40,13 +40,13 @@ Special variables:
                 35-99 : full-time
     3.
     Poverty: POVPIP
-                0-150: poverty
-                150+: not poverty
+                0-160: poverty
+                160+: not poverty
     4.
     Working Poor:
                 WKHP:   35+
-                POVPIP: 0-150: poverty
-                        150+: not poverty
+                POVPIP: 0-160: poverty
+                        160+: not poverty
     5.
     Income level for FT workers:
                 WKHP:   35+
