@@ -200,9 +200,13 @@ def get_PUMA_from_CSV():
 
 def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=None, WKHP=None, ESR=None, PINCP=None,
                          POVPIP=None, GRPIP=None, TEN=None, RAC1P=None, HISP=None,FB_WNH=None, POBP=None, POBP72=None):
+    if PUMA is not None:
+        if not isinstance(PUMA, list):
+            PUMA = [PUMA]
+
     #   GRPIP and TEN are from housing data set.
     arguments = locals()
-    # print 'args: ',arguments
+    #print 'args: ',arguments
     count = 0
     for a in arguments.keys():
         if a is not 'PUMA' \
@@ -238,7 +242,7 @@ def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=Non
     p_data1 = p_data_tmp[p_data_tmp['AGEP'].isin(range(25, 64 + 1))]
     # Filter out PUMA
     if PUMA is not None:
-        p_data1 = p_data1[p_data1['PUMA'] == PUMA]
+        p_data1 = p_data1[p_data1['PUMA'].isin(PUMA)] ##todo PUMA should always be a list now
     if NATIVITY is 2:
         p_data1 = p_data1[p_data1['ENG'].isin(range(1, 2 + 1))]
 
@@ -1587,52 +1591,69 @@ def Income_level_FT_Workers(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP
     full_list.append(l)
     # For all the PUMA counties.
     for p in global_data_PR_HISP.PUMA_Counties:
-        print('----------------- For PUMA: ', puma_county(p))
-        l = create_row_dataframe(PUMA=p, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP,
-                                 POBP72=POBP72)
-        l.insert(0, puma_county(p))
+        #print ('----------------- For PUMA: ', puma_county(p))
+        l = create_row_dataframe(PUMA=p,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+        l.insert(0,puma_county(p))
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
-            region_1_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+            region_1_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        # sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
-            region_2_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
-        sum_region_2 = [sum(x) for x in zip(*test)]
+            region_2_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        # sum_region_2 = [sum(x) for x in zip(*test)]
+
         if p in region_3:
-            region_3_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
-        sum_region_3 = [sum(x) for x in zip(*test)]
+            region_3_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        # sum_region_3 = [sum(x) for x in zip(*test)]
+
         if p in region_4:
-            region_4_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
-        sum_region_4 = [sum(x) for x in zip(*test)]
+            region_4_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        # sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
-            region_5_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
-        sum_region_5 = [sum(x) for x in zip(*test)]
+            region_5_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        # sum_region_5 = [sum(x) for x in zip(*test)]
+
         if p in region_6:
-            region_6_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
-        sum_region_6 = [sum(x) for x in zip(*test)]
+            region_6_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        # sum_region_6 = [sum(x) for x in zip(*test)]
+
         if p in region_7:
-            region_7_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
-        sum_region_7 = [sum(x) for x in zip(*test)]
+            region_7_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        # sum_region_7 = [sum(x) for x in zip(*test)]
+
         if p in region_8:
-            region_8_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
-        sum_region_8 = [sum(x) for x in zip(*test)]
+            region_8_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        # sum_region_8 = [sum(x) for x in zip(*test)]
+
         if p in region_9:
-            region_9_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
-        sum_region_9 = [sum(x) for x in zip(*test)]
+            region_9_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        # sum_region_9 = [sum(x) for x in zip(*test)]
+
         if p in region_10:
-            region_10_list.append(l[1:])
-        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
-        sum_region_10 = [sum(x) for x in zip(*test)]
+            region_10_list.append(p)
+        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        # sum_region_10 = [sum(x) for x in zip(*test)]
+
+    sum_region_1 = create_row_dataframe(PUMA=region_1_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_2 = create_row_dataframe(PUMA=region_2_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_3 = create_row_dataframe(PUMA=region_3_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_4 = create_row_dataframe(PUMA=region_4_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_5 = create_row_dataframe(PUMA=region_5_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_6 = create_row_dataframe(PUMA=region_6_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_7 = create_row_dataframe(PUMA=region_7_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_8 = create_row_dataframe(PUMA=region_8_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_9 = create_row_dataframe(PUMA=region_9_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
+    sum_region_10 = create_row_dataframe(PUMA=region_10_list,NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP, POBP=POBP, POBP72=POBP72)
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
