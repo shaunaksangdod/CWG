@@ -162,32 +162,32 @@ def puma_county(county_num):
     else:
         return None
 
-
 # for mapping the counties defined above to 10 regions
 def puma_region(rcounty_num):
     # check_region = [puma_maps_dict[k] for k in region_1 if k in puma_maps_dict]
-    if rcounty_num in region_1 and rcounty_num in puma_maps_dict:
+    if rcounty_num in region_1 and  rcounty_num in puma_maps_dict:
         return "Capital Region"
-    elif rcounty_num in region_2 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_2 and  rcounty_num in puma_maps_dict:
         return "Central NY"
-    elif rcounty_num in region_3 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_3 and  rcounty_num in puma_maps_dict:
         return "Finger Lakes"
-    elif rcounty_num in region_4 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_4 and  rcounty_num in puma_maps_dict:
         return "Long Island"
-    elif rcounty_num in region_5 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_5 and  rcounty_num in puma_maps_dict:
         return "Mid-Hudson"
-    elif rcounty_num in region_6 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_6 and  rcounty_num in puma_maps_dict:
         return "Mohawk"
-    elif rcounty_num in region_7 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_7 and  rcounty_num in puma_maps_dict:
         return "New York"
-    elif rcounty_num in region_8 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_8 and  rcounty_num in puma_maps_dict:
         return "North Country"
-    elif rcounty_num in region_9 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_9 and  rcounty_num in puma_maps_dict:
         return "Souther Tier"
-    elif rcounty_num in region_10 and rcounty_num in puma_maps_dict:
+    elif rcounty_num in region_10 and  rcounty_num in puma_maps_dict:
         return "Western NY"
     else:
         return None
+
 
 
 def get_PUMA_from_CSV():
@@ -199,11 +199,7 @@ def get_PUMA_from_CSV():
 
 
 def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=None, WKHP=None, ESR=None, PINCP=None,
-                         POVPIP=None, GRPIP=None, TEN=None, RAC1P=None, HISP=None, FB_WNH=None, POBP=None, POBP72=None):
-    if PUMA is not None:
-        if not isinstance(PUMA, list):
-            PUMA = [PUMA]
-
+                         POVPIP=None, GRPIP=None, TEN=None, RAC1P=None, HISP=None,FB_WNH=None, POBP=None, POBP72=None):
     #   GRPIP and TEN are from housing data set.
     arguments = locals()
     # print 'args: ',arguments
@@ -242,7 +238,7 @@ def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=Non
     p_data1 = p_data_tmp[p_data_tmp['AGEP'].isin(range(25, 64 + 1))]
     # Filter out PUMA
     if PUMA is not None:
-        p_data1 = p_data1[p_data1['PUMA'].isin(PUMA)]  ##todo PUMA should always be a list now
+        p_data1 = p_data1[p_data1['PUMA'] == PUMA]
     if NATIVITY is 2:
         p_data1 = p_data1[p_data1['ENG'].isin(range(1, 2 + 1))]
 
@@ -624,6 +620,7 @@ def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=Non
     Total_BABS = Total_BABS_m + Total_BABS_f
     # print 'BABS Total: ', Total_BABS
 
+
     # -----------------------------------------------------
 
     # Total UnEmp Female
@@ -656,6 +653,7 @@ def create_row_dataframe(PUMA=None, NATIVITY=None, AGEP=None, SCHL=None, SEX=Non
     # Total M+F
     Total_geo = Total_geo_f + Total_geo_m
     # print 'Total Population: ',Total_geo
+
 
     list_to_return = [Total_geo, Total_geo_m, Total_geo_f,
                       Total_Emp_mf_t, Total_emp_m, Total_emp_f,
@@ -714,7 +712,7 @@ def UnEmp(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=None
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -859,7 +857,7 @@ def FT_Work(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=No
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -1004,7 +1002,7 @@ def Poverty(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP72=No
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -1149,7 +1147,7 @@ def Working_poor(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -1297,7 +1295,7 @@ def Rent_burden(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, POBP7
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -1443,7 +1441,7 @@ def Home_ownership(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP=None, PO
         if p in region_1:
             region_1_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        sum_region_1 = [sum(x) for x in zip(*test)]  # sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
             region_2_list.append(l[1:])
         test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
@@ -1596,66 +1594,45 @@ def Income_level_FT_Workers(NATIVITY=None, PATH='/', RAC1P=None, HISP=None, POBP
         full_list.append(l)
         # add list to appropriate region list
         if p in region_1:
-            region_1_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
-        # sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
+            region_1_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_1_list]
+        sum_region_1 = [sum(x) for x in zip(*test)] #sum_region_1 = [sum(x) for x in zip(*region_1_list)]
         if p in region_2:
-            region_2_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
-        # sum_region_2 = [sum(x) for x in zip(*test)]
+            region_2_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_2_list]
+        sum_region_2 = [sum(x) for x in zip(*test)]
         if p in region_3:
-            region_3_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
-        # sum_region_3 = [sum(x) for x in zip(*test)]
+            region_3_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_3_list]
+        sum_region_3 = [sum(x) for x in zip(*test)]
         if p in region_4:
-            region_4_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
-        # sum_region_4 = [sum(x) for x in zip(*test)]
+            region_4_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_4_list]
+        sum_region_4 = [sum(x) for x in zip(*test)]
         if p in region_5:
-            region_5_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
-        # sum_region_5 = [sum(x) for x in zip(*test)]
+            region_5_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_5_list]
+        sum_region_5 = [sum(x) for x in zip(*test)]
         if p in region_6:
-            region_6_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
-        # sum_region_6 = [sum(x) for x in zip(*test)]
+            region_6_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_6_list]
+        sum_region_6 = [sum(x) for x in zip(*test)]
         if p in region_7:
-            region_7_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
-        # sum_region_7 = [sum(x) for x in zip(*test)]
+            region_7_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_7_list]
+        sum_region_7 = [sum(x) for x in zip(*test)]
         if p in region_8:
-            region_8_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
-        # sum_region_8 = [sum(x) for x in zip(*test)]
+            region_8_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_8_list]
+        sum_region_8 = [sum(x) for x in zip(*test)]
         if p in region_9:
-            region_9_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
-        # sum_region_9 = [sum(x) for x in zip(*test)]
+            region_9_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_9_list]
+        sum_region_9 = [sum(x) for x in zip(*test)]
         if p in region_10:
-            region_10_list.append(p)
-        # test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
-        # sum_region_10 = [sum(x) for x in zip(*test)]
-
-    sum_region_1 = create_row_dataframe(PUMA=region_1_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_2 = create_row_dataframe(PUMA=region_2_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_3 = create_row_dataframe(PUMA=region_3_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_4 = create_row_dataframe(PUMA=region_4_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_5 = create_row_dataframe(PUMA=region_5_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_6 = create_row_dataframe(PUMA=region_6_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_7 = create_row_dataframe(PUMA=region_7_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_8 = create_row_dataframe(PUMA=region_8_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_9 = create_row_dataframe(PUMA=region_9_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P, HISP=HISP,
-                                        POBP=POBP, POBP72=POBP72)
-    sum_region_10 = create_row_dataframe(PUMA=region_10_list, NATIVITY=NATIVITY, WKHP=1, PINCP=1, RAC1P=RAC1P,
-                                         HISP=HISP, POBP=POBP, POBP72=POBP72)
+            region_10_list.append(l[1:])
+        test = [[x if not math.isnan(x) else 0 for x in y] for y in region_10_list]
+        sum_region_10 = [sum(x) for x in zip(*test)]
 
     l1 = ["Capital Region"] + sum_region_1
     l2 = ["Central NY"] + sum_region_2
@@ -2176,10 +2153,9 @@ def get_disparity(PATH=None, call_string=None):
         pandas.to_numeric(FB_WNH_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(FB_WNH_Home_Ownership_df['HS_Home_Ownership_Total'])
 
-        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv(
-            'data_PR_HISP/2016/FB_Hispanic_POC/step_2/Home_Ownership.csv',
-            usecols=['puma', 'BABS_Home_Ownership_Total',
-                     'HS_Home_Ownership_Total']).replace(
+        FB_Hispanic_POC_Home_Ownership_df = pandas.read_csv('data_PR_HISP/2016/FB_Hispanic_POC/step_2/Home_Ownership.csv',
+                                                            usecols=['puma', 'BABS_Home_Ownership_Total',
+                                                                     'HS_Home_Ownership_Total']).replace(
             [np.inf, -np.inf, '#DIV/0!'], np.nan)
         pandas.to_numeric(FB_Hispanic_POC_Home_Ownership_df['BABS_Home_Ownership_Total'])
         pandas.to_numeric(FB_Hispanic_POC_Home_Ownership_df['HS_Home_Ownership_Total'])
@@ -2669,9 +2645,7 @@ def get_disparity(PATH=None, call_string=None):
 
             if str(FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_M']) != '0' and str(
                     FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_M']) != '0.0':
-                FB_Hispanic_F_FB_Hispanic_M_disparity.at[i, 'FT_Work_BABS'] = float(
-                    FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_F']) / float(
-                    FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_M'])
+                FB_Hispanic_F_FB_Hispanic_M_disparity.at[i, 'FT_Work_BABS'] = float(FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_F']) / float(FB_Hispanic_FT_Work_df.at[i, 'BABS_FT_Work_M'])
             else:
                 FB_Hispanic_F_FB_Hispanic_M_disparity.at[i, 'FT_Work_BABS'] = np.nan
 
@@ -2766,17 +2740,12 @@ def get_disparity(PATH=None, call_string=None):
     if call_string is 'FB_Hispanic_POC_FB_WNH':
         for i in FB_WNH_UnEmp_df.index:
             FB_Hispanic_POC_FB_WNH_disparity.at[i, 'puma'] = FB_WNH_UnEmp_df.at[i, 'puma']
-            if FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'] != '0' and FB_WNH_UnEmp_df.at[
-                i, 'BABS_UnEmp_Total'] != '0.0' and FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'] != 0.0:
-                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_BABS'] = float(
-                    FB_Hispanic_POC_UnEmp_df.at[i, 'BABS_UnEmp_Total']) / float(
-                    FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'])
+            if FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'] != '0' and FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'] != '0.0' and FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'] != 0.0:
+                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_BABS'] = float(FB_Hispanic_POC_UnEmp_df.at[i, 'BABS_UnEmp_Total']) / float(FB_WNH_UnEmp_df.at[i, 'BABS_UnEmp_Total'])
             else:
                 FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_BABS'] = np.nan
-            if FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != '0' and FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != '0.0' and \
-                    FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != 0.0:
-                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_HS'] = float(
-                    FB_Hispanic_POC_UnEmp_df.at[i, 'HS_UnEmp_Total']) / float(FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'])
+            if FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != '0' and FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != '0.0' and FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'] != 0.0:
+                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_HS'] = float(FB_Hispanic_POC_UnEmp_df.at[i, 'HS_UnEmp_Total']) / float(FB_WNH_UnEmp_df.at[i, 'HS_UnEmp_Total'])
             else:
                 FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Unemployment_HS'] = np.nan
             if FB_WNH_FT_Work_df.at[i, 'BABS_FT_Work_Total'] != '0' and FB_WNH_FT_Work_df.at[
@@ -2857,9 +2826,7 @@ def get_disparity(PATH=None, call_string=None):
             if FB_WNH_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'] != '0' and FB_WNH_Home_Ownership_df.at[
                 i, 'BABS_Home_Ownership_Total'] != '0.0' and FB_WNH_Home_Ownership_df.at[
                 i, 'BABS_Home_Ownership_Total'] != 0.0:
-                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Home_ownership_BABS'] = float(
-                    FB_Hispanic_POC_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total']) / float(
-                    FB_WNH_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'])
+                FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Home_ownership_BABS'] = float(FB_Hispanic_POC_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total']) / float(FB_WNH_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'])
             else:
                 FB_Hispanic_POC_FB_WNH_disparity.at[i, 'Home_ownership_BABS'] = np.nan
             if FB_WNH_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != '0' and FB_WNH_Home_Ownership_df.at[
@@ -2919,61 +2886,54 @@ def get_disparity(PATH=None, call_string=None):
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Poverty_HS'] = np.nan
             if FB_White_Hispanic_Working_Poor_df.at[i, 'BABS_Working_Poor_Total'] != '0' and \
-                    FB_White_Hispanic_Working_Poor_df.at[i, 'BABS_Working_Poor_Total'] != '0.0':
+                            FB_White_Hispanic_Working_Poor_df.at[i, 'BABS_Working_Poor_Total'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Working_Poor_BABS'] = float(
                     FB_Hispanic_POC_Working_Poor_df.at[i, 'BABS_Working_Poor_Total']) / float(
                     FB_White_Hispanic_Working_Poor_df.at[i, 'BABS_Working_Poor_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Working_Poor_BABS'] = np.nan
             if FB_White_Hispanic_Working_Poor_df.at[i, 'HS_Working_Poor_Total'] != '0' and \
-                    FB_White_Hispanic_Working_Poor_df.at[i, 'HS_Working_Poor_Total'] != '0.0':
+                            FB_White_Hispanic_Working_Poor_df.at[i, 'HS_Working_Poor_Total'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Working_Poor_HS'] = float(
                     FB_Hispanic_POC_Working_Poor_df.at[i, 'HS_Working_Poor_Total']) / float(
                     FB_White_Hispanic_Working_Poor_df.at[i, 'HS_Working_Poor_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Working_Poor_HS'] = np.nan
             if FB_White_Hispanic_Income_level_df.at[i, 'BABS_Avg_PINCP_mf_t'] != '0' and \
-                    FB_White_Hispanic_Income_level_df.at[i, 'BABS_Avg_PINCP_mf_t'] != '0.0':
+                            FB_White_Hispanic_Income_level_df.at[i, 'BABS_Avg_PINCP_mf_t'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Income_level_BABS'] = float(
                     FB_Hispanic_POC_Income_level_df.at[i, 'BABS_Avg_PINCP_mf_t']) / float(
                     FB_White_Hispanic_Income_level_df.at[i, 'BABS_Avg_PINCP_mf_t'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Income_level_BABS'] = np.nan
             if FB_White_Hispanic_Income_level_df.at[i, 'HS_Avg_PINCP_mf_t'] != '0' and \
-                    FB_White_Hispanic_Income_level_df.at[i, 'HS_Avg_PINCP_mf_t'] != '0.0':
+                            FB_White_Hispanic_Income_level_df.at[i, 'HS_Avg_PINCP_mf_t'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Income_level_HS'] = float(
                     FB_Hispanic_POC_Income_level_df.at[i, 'HS_Avg_PINCP_mf_t']) / float(
                     FB_White_Hispanic_Income_level_df.at[i, 'HS_Avg_PINCP_mf_t'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Income_level_HS'] = np.nan
             if FB_White_Hispanic_Rent_Burden_df.at[i, 'BABS_Rent_Burden_Total'] != '0' and \
-                    FB_White_Hispanic_Rent_Burden_df.at[i, 'BABS_Rent_Burden_Total'] != '0.0':
+                            FB_White_Hispanic_Rent_Burden_df.at[i, 'BABS_Rent_Burden_Total'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Rent_Burden_BABS'] = float(
                     FB_Hispanic_POC_Rent_Burden_df.at[i, 'BABS_Rent_Burden_Total']) / float(
                     FB_White_Hispanic_Rent_Burden_df.at[i, 'BABS_Rent_Burden_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Rent_Burden_BABS'] = np.nan
             if FB_White_Hispanic_Rent_Burden_df.at[i, 'HS_Rent_Burden_Total'] != '0' and \
-                    FB_White_Hispanic_Rent_Burden_df.at[i, 'HS_Rent_Burden_Total'] != '0.0':
+                            FB_White_Hispanic_Rent_Burden_df.at[i, 'HS_Rent_Burden_Total'] != '0.0':
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Rent_Burden_HS'] = float(
                     FB_Hispanic_POC_Rent_Burden_df.at[i, 'HS_Rent_Burden_Total']) / float(
                     FB_White_Hispanic_Rent_Burden_df.at[i, 'HS_Rent_Burden_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Rent_Burden_HS'] = np.nan
 
-            if FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'] != '0' and \
-                    FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'] != '0.0':
-                FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_BABS'] = float(
-                    FB_Hispanic_POC_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total']) / float(
-                    FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'])
+            if FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'] != '0' and FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'] != '0.0':
+                FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_BABS'] = float(FB_Hispanic_POC_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total']) / float(FB_White_Hispanic_Home_Ownership_df.at[i, 'BABS_Home_Ownership_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_BABS'] = np.nan
-            if FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != '0' and \
-                    FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != '0.0' and \
-                    FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != 0.0:
-                FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_HS'] = float(
-                    FB_Hispanic_POC_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total']) / float(
-                    FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'])
+            if FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != '0' and FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != '0.0' and FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'] != 0.0:
+                FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_HS'] = float(FB_Hispanic_POC_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total']) / float(FB_White_Hispanic_Home_Ownership_df.at[i, 'HS_Home_Ownership_Total'])
             else:
                 FB_Hispanic_POC_FB_White_Hispanic_disparity.at[i, 'Home_ownership_HS'] = np.nan
         make_sure_path_exists(PATH)
@@ -3451,12 +3411,11 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             raise
 
-
 def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
     sg_data_NB_ALL_FB_Hispanic_final = pandas.DataFrame()
     sg_data_NB_ALL_FB_Hispanic = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/FB_Hispanic_NB_ALL_disparity.csv').replace([np.inf, -np.inf],
-                                                                                  np.nan)
+                                                                                           np.nan)
     sg_data_NB_ALL_FB_Hispanic = sg_data_NB_ALL_FB_Hispanic.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -3469,8 +3428,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Unemployment_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Unemployment_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Unemployment_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -3478,8 +3437,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     FT_Work_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.FT_Work_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.FT_Work_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.FT_Work_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -3487,8 +3446,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Poverty_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Poverty_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Poverty_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Poverty_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Poverty_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -3496,8 +3455,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Working_Poor_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Working_Poor_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Working_Poor_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Working_Poor_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -3509,8 +3468,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Rent_Burden_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Rent_Burden_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Rent_Burden_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Rent_Burden_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -3522,8 +3481,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Home_ownership_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Home_ownership_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Home_ownership_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Home_ownership_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -3535,8 +3494,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Income_level_BABS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Income_level_BABS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Income_level_BABS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Income_level_BABS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Income_level_BABS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -3548,8 +3507,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Unemp_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Unemployment_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Unemployment_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Unemployment_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Unemployment_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -3557,8 +3516,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     FT_Work_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.FT_Work_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.FT_Work_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.FT_Work_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.FT_Work_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -3566,8 +3525,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Poverty_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Poverty_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Poverty_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Poverty_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Poverty_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -3575,8 +3534,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Working_Poor_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Working_Poor_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Working_Poor_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Working_Poor_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -3588,8 +3547,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Rent_Burden_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Rent_Burden_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Rent_Burden_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Rent_Burden_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -3600,8 +3559,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Home_ownership_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Home_ownership_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Home_ownership_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Home_ownership_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -3613,8 +3572,8 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
 
     Income_level_HS = sg_data_NB_ALL_FB_Hispanic[
         (sg_data_NB_ALL_FB_Hispanic.Income_level_HS != '#DIV/0!') & (
-                sg_data_NB_ALL_FB_Hispanic.Income_level_HS != 'inf') & (
-                sg_data_NB_ALL_FB_Hispanic.Income_level_HS != '-inf')]
+            sg_data_NB_ALL_FB_Hispanic.Income_level_HS != 'inf') & (
+            sg_data_NB_ALL_FB_Hispanic.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -3628,173 +3587,173 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'puma'] = sg_data_NB_ALL_FB_Hispanic.at[i, 'puma']
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                         -1.0)) / stddev_UnEmp_BABS_county
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                    1.0)) / stddev_FT_Work_BABS_county
+                                                                                             1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                    -1.0)) / stddev_Poverty_BABS_county
+                                                                                             -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS']) - (
-                                                                                          mean_Working_Poor_BABS_county)) * (
-                                                                                         -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                               mean_Working_Poor_BABS_county)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                        -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS']) - (
-                                                                                            mean_Home_ownership_BABS_county)) * (
-                                                                                           1.0)) / stddev_Home_ownership_BABS_county
+                                                                                                 mean_Home_ownership_BABS_county)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS']) - (
-                                                                                          mean_Income_level_BABS_county)) * (
-                                                                                         1.0)) / stddev_Income_level_BABS_county
+                                                                                               mean_Income_level_BABS_county)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Unemployment_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'FT_Work_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Poverty_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Working_Poor_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Rent_Burden_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Home_ownership_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS']) - (
-                                                                                        mean_UnEmp_HS_county)) * (
-                                                                                       -1.0)) / stddev_UnEmp_HS_county
+                                                                                                 mean_UnEmp_HS_county)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS']) - (
-                                                                                   mean_FT_Work_HS_county)) * (
-                                                                                  1.0)) / stddev_FT_Work_HS_county
+                                                                                            mean_FT_Work_HS_county)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS']) - (
-                                                                                   mean_Poverty_HS_county)) * (
-                                                                                  -1.0)) / stddev_Poverty_HS_county
+                                                                                            mean_Poverty_HS_county)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS']) - (
-                                                                                        mean_Working_Poor_HS_county)) * (
-                                                                                       -1.0)) / stddev_Working_Poor_HS_county
+                                                                                                 mean_Working_Poor_HS_county)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS']) - (
-                                                                                       mean_Rent_Burden_HS_county)) * (
-                                                                                      -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                                mean_Rent_Burden_HS_county)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS']) - (
-                                                                                          mean_Home_ownership_HS_county)) * (
-                                                                                         1.0)) / stddev_Home_ownership_HS_county
+                                                                                                   mean_Home_ownership_HS_county)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS']) - (
-                                                                                        mean_Income_level_HS_county)) * (
-                                                                                       1.0)) / stddev_Income_level_HS_county
+                                                                                                 mean_Income_level_HS_county)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Overall_HS_score'] = ((
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Unemployment_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'FT_Work_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Poverty_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Working_Poor_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Rent_Burden_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Home_ownership_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -3822,173 +3781,173 @@ def get_score_grade_NB_ALL_FB_Hispanic(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'puma'] = sg_data_NB_ALL_FB_Hispanic.at[i, 'puma']
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                         -1.0)) / stddev_UnEmp_BABS_region
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                    1.0)) / stddev_FT_Work_BABS_region
+                                                                                             1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                    -1.0)) / stddev_Poverty_BABS_region
+                                                                                             -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_BABS']) - (
-                                                                                          mean_Working_Poor_BABS_region)) * (
-                                                                                         -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                               mean_Working_Poor_BABS_region)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                        -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_BABS']) - (
-                                                                                            mean_Home_ownership_BABS_region)) * (
-                                                                                           1.0)) / stddev_Home_ownership_BABS_region
+                                                                                                 mean_Home_ownership_BABS_region)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_BABS']) - (
-                                                                                          mean_Income_level_BABS_region)) * (
-                                                                                         1.0)) / stddev_Income_level_BABS_region
+                                                                                               mean_Income_level_BABS_region)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Unemployment_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'FT_Work_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Poverty_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Working_Poor_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Rent_Burden_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Home_ownership_BABS_score'] +
-                                                                                    sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                        i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Unemployment_HS']) - (
-                                                                                        mean_UnEmp_HS_region)) * (
-                                                                                       -1.0)) / stddev_UnEmp_HS_region
+                                                                                                 mean_UnEmp_HS_region)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'FT_Work_HS']) - (
-                                                                                   mean_FT_Work_HS_region)) * (
-                                                                                  1.0)) / stddev_FT_Work_HS_region
+                                                                                            mean_FT_Work_HS_region)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Poverty_HS']) - (
-                                                                                   mean_Poverty_HS_region)) * (
-                                                                                  -1.0)) / stddev_Poverty_HS_region
+                                                                                            mean_Poverty_HS_region)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Working_Poor_HS']) - (
-                                                                                        mean_Working_Poor_HS_region)) * (
-                                                                                       -1.0)) / stddev_Working_Poor_HS_region
+                                                                                                 mean_Working_Poor_HS_region)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Rent_Burden_HS']) - (
-                                                                                       mean_Rent_Burden_HS_region)) * (
-                                                                                      -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                                mean_Rent_Burden_HS_region)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Home_ownership_HS']) - (
-                                                                                          mean_Home_ownership_HS_region)) * (
-                                                                                         1.0)) / stddev_Home_ownership_HS_region
+                                                                                                   mean_Home_ownership_HS_region)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_NB_ALL_FB_Hispanic.at[i, 'Income_level_HS']) - (
-                                                                                        mean_Income_level_HS_region)) * (
-                                                                                       1.0)) / stddev_Income_level_HS_region
+                                                                                                 mean_Income_level_HS_region)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_NB_ALL_FB_Hispanic_final.at[i, 'Overall_HS_score'] = ((
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Unemployment_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'FT_Work_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Poverty_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Working_Poor_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Rent_Burden_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Home_ownership_HS_score'] +
-                                                                                  sg_data_NB_ALL_FB_Hispanic_final.at[
-                                                                                      i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_NB_ALL_FB_Hispanic_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -4021,7 +3980,7 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
     sg_data_FB_Hispanic_POC_FB_WNH_final = pandas.DataFrame()
     sg_data_FB_Hispanic_POC_FB_WNH = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_FB_WNH_disparity.csv').replace([np.inf, -np.inf],
-                                                                                      np.nan)
+                                                                                           np.nan)
     sg_data_FB_Hispanic_POC_FB_WNH = sg_data_FB_Hispanic_POC_FB_WNH.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -4034,8 +3993,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -4043,8 +4002,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     FT_Work_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -4052,8 +4011,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Poverty_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Poverty_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Poverty_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Poverty_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -4061,8 +4020,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Working_Poor_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -4074,8 +4033,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Rent_Burden_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -4087,8 +4046,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Home_ownership_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -4100,8 +4059,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Income_level_BABS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Income_level_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Income_level_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Income_level_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -4113,8 +4072,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Unemp_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -4122,8 +4081,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     FT_Work_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -4131,8 +4090,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Poverty_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Poverty_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Poverty_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Poverty_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -4140,8 +4099,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Working_Poor_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -4153,8 +4112,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Rent_Burden_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -4165,8 +4124,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Home_ownership_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -4178,8 +4137,8 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
 
     Income_level_HS = sg_data_FB_Hispanic_POC_FB_WNH[
         (sg_data_FB_Hispanic_POC_FB_WNH.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Income_level_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_FB_WNH.Income_level_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_FB_WNH.Income_level_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_FB_WNH.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -4193,173 +4152,173 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'puma'] = sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'puma']
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_county
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_county
+                                                                                             1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_county
+                                                                                             -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS']) - (
-                                                                                              mean_Working_Poor_BABS_county)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                               mean_Working_Poor_BABS_county)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_county)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_county
+                                                                                                 mean_Home_ownership_BABS_county)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS']) - (
-                                                                                              mean_Income_level_BABS_county)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_county
+                                                                                               mean_Income_level_BABS_county)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_county)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_county
+                                                                                                 mean_UnEmp_HS_county)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_county)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_county
+                                                                                            mean_FT_Work_HS_county)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_county)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_county
+                                                                                            mean_Poverty_HS_county)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_county)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_county
+                                                                                                 mean_Working_Poor_HS_county)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_county)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                                mean_Rent_Burden_HS_county)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_county)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_county
+                                                                                                   mean_Home_ownership_HS_county)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_county)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_county
+                                                                                                 mean_Income_level_HS_county)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -4387,173 +4346,173 @@ def get_score_grade_FB_Hispanic_POC_FB_WNH(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'puma'] = sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'puma']
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_region
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_region
+                                                                                             1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_region
+                                                                                             -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_BABS']) - (
-                                                                                              mean_Working_Poor_BABS_region)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                               mean_Working_Poor_BABS_region)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_region)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_region
+                                                                                                 mean_Home_ownership_BABS_region)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_BABS']) - (
-                                                                                              mean_Income_level_BABS_region)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_region
+                                                                                               mean_Income_level_BABS_region)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_region)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_region
+                                                                                                 mean_UnEmp_HS_region)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_region)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_region
+                                                                                            mean_FT_Work_HS_region)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_region)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_region
+                                                                                            mean_Poverty_HS_region)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_region)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_region
+                                                                                                 mean_Working_Poor_HS_region)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_region)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                                mean_Rent_Burden_HS_region)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_region)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_region
+                                                                                                   mean_Home_ownership_HS_region)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_FB_WNH.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_region)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_region
+                                                                                                 mean_Income_level_HS_region)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_FB_WNH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_FB_WNH_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_FB_WNH_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -4586,7 +4545,7 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
     sg_data_FB_Hispanic_POC_NB_WNH_final = pandas.DataFrame()
     sg_data_FB_Hispanic_POC_NB_WNH = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_NB_WNH_disparity.csv').replace([np.inf, -np.inf],
-                                                                                      np.nan)
+                                                                                           np.nan)
     sg_data_FB_Hispanic_POC_NB_WNH = sg_data_FB_Hispanic_POC_NB_WNH.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -4599,8 +4558,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -4608,8 +4567,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     FT_Work_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -4617,8 +4576,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Poverty_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Poverty_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Poverty_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Poverty_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -4626,8 +4585,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Working_Poor_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -4639,8 +4598,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Rent_Burden_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -4652,8 +4611,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Home_ownership_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -4665,8 +4624,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Income_level_BABS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Income_level_BABS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Income_level_BABS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Income_level_BABS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -4678,8 +4637,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Unemp_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -4687,8 +4646,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     FT_Work_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -4696,8 +4655,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Poverty_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Poverty_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Poverty_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Poverty_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -4705,8 +4664,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Working_Poor_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -4718,8 +4677,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Rent_Burden_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -4730,8 +4689,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Home_ownership_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -4743,8 +4702,8 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
 
     Income_level_HS = sg_data_FB_Hispanic_POC_NB_WNH[
         (sg_data_FB_Hispanic_POC_NB_WNH.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Income_level_HS != 'inf') & (
-                sg_data_FB_Hispanic_POC_NB_WNH.Income_level_HS != '-inf')]
+            sg_data_FB_Hispanic_POC_NB_WNH.Income_level_HS != 'inf') & (
+            sg_data_FB_Hispanic_POC_NB_WNH.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -4758,173 +4717,173 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'puma'] = sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'puma']
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_county
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_county
+                                                                                             1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_county
+                                                                                             -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS']) - (
-                                                                                              mean_Working_Poor_BABS_county)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                               mean_Working_Poor_BABS_county)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_county)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_county
+                                                                                                 mean_Home_ownership_BABS_county)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS']) - (
-                                                                                              mean_Income_level_BABS_county)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_county
+                                                                                               mean_Income_level_BABS_county)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_county)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_county
+                                                                                                 mean_UnEmp_HS_county)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_county)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_county
+                                                                                            mean_FT_Work_HS_county)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_county)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_county
+                                                                                            mean_Poverty_HS_county)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_county)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_county
+                                                                                                 mean_Working_Poor_HS_county)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_county)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                                mean_Rent_Burden_HS_county)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_county)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_county
+                                                                                                   mean_Home_ownership_HS_county)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_county)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_county
+                                                                                                 mean_Income_level_HS_county)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -4952,173 +4911,173 @@ def get_score_grade_FB_Hispanic_POC_NB_WNH(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'puma'] = sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'puma']
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_region
+                                                                                                  -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_region
+                                                                                             1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_region
+                                                                                             -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_BABS']) - (
-                                                                                              mean_Working_Poor_BABS_region)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                               mean_Working_Poor_BABS_region)) * (
+                                                                                                  -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_region)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_region
+                                                                                                 mean_Home_ownership_BABS_region)) * (
+                                                                                                    1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_BABS']) - (
-                                                                                              mean_Income_level_BABS_region)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_region
+                                                                                               mean_Income_level_BABS_region)) * (
+                                                                                                  1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Unemployment_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'FT_Work_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Poverty_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Working_Poor_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Rent_Burden_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Home_ownership_BABS_score'] +
+                                                                                         sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                             i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_region)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_region
+                                                                                                 mean_UnEmp_HS_region)) * (
+                                                                                                -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_region)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_region
+                                                                                            mean_FT_Work_HS_region)) * (
+                                                                                           1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_region)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_region
+                                                                                            mean_Poverty_HS_region)) * (
+                                                                                           -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_region)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_region
+                                                                                                 mean_Working_Poor_HS_region)) * (
+                                                                                                -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_region)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                                mean_Rent_Burden_HS_region)) * (
+                                                                                               -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_region)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_region
+                                                                                                   mean_Home_ownership_HS_region)) * (
+                                                                                                  1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_POC_NB_WNH.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_region)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_region
+                                                                                                 mean_Income_level_HS_region)) * (
+                                                                                                1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_POC_NB_WNH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_FB_Hispanic_POC_NB_WNH_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Unemployment_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'FT_Work_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Poverty_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Working_Poor_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Rent_Burden_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Home_ownership_HS_score'] +
+                                                                                       sg_data_FB_Hispanic_POC_NB_WNH_final.at[
+                                                                                           i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -5151,7 +5110,7 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
     sg_data_FB_Hispanic_F_FB_Hispanic_M_final = pandas.DataFrame()
     sg_data_FB_Hispanic_F_FB_Hispanic_M = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/FB_Hispanic_F_FB_Hispanic_M_disparity.csv').replace([np.inf, -np.inf],
-                                                                                           np.nan)
+                                                                                       np.nan)
     sg_data_FB_Hispanic_F_FB_Hispanic_M = sg_data_FB_Hispanic_F_FB_Hispanic_M.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -5164,8 +5123,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -5173,8 +5132,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     FT_Work_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -5182,8 +5141,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Poverty_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -5191,8 +5150,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Working_Poor_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -5204,8 +5163,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Rent_Burden_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -5217,8 +5176,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Home_ownership_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -5230,8 +5189,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Income_level_BABS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_BABS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_BABS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_BABS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -5243,8 +5202,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Unemp_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -5252,8 +5211,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     FT_Work_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -5261,8 +5220,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Poverty_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -5270,8 +5229,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Working_Poor_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -5283,8 +5242,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Rent_Burden_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -5295,8 +5254,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Home_ownership_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -5308,8 +5267,8 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
 
     Income_level_HS = sg_data_FB_Hispanic_F_FB_Hispanic_M[
         (sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_HS != 'inf') & (
-                sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_HS != '-inf')]
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_HS != 'inf') & (
+            sg_data_FB_Hispanic_F_FB_Hispanic_M.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -5323,173 +5282,170 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'puma'] = sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'puma']
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                                  -1.0)) / stddev_UnEmp_BABS_county
+                                                                                      -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                             1.0)) / stddev_FT_Work_BABS_county
+                                                                                 1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                             -1.0)) / stddev_Poverty_BABS_county
+                                                                                 -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS']) - (
-                                                                                                   mean_Working_Poor_BABS_county)) * (
-                                                                                                  -1.0)) / stddev_Working_Poor_BABS_county
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS']) - (
-                                                                                                     mean_Home_ownership_BABS_county)) * (
-                                                                                                    1.0)) / stddev_Home_ownership_BABS_county
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
+                                                                                        1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS']) - (
-                                                                                                   mean_Income_level_BABS_county)) * (
-                                                                                                  1.0)) / stddev_Income_level_BABS_county
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
+                                                                                      1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Unemployment_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'FT_Work_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Poverty_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Working_Poor_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Rent_Burden_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Home_ownership_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS']) - (
-                                                                                                 mean_UnEmp_HS_county)) * (
-                                                                                                -1.0)) / stddev_UnEmp_HS_county
+                                                                                     mean_UnEmp_HS_county)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS']) - (
-                                                                                            mean_FT_Work_HS_county)) * (
-                                                                                           1.0)) / stddev_FT_Work_HS_county
+                                                                                mean_FT_Work_HS_county)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS']) - (
-                                                                                            mean_Poverty_HS_county)) * (
-                                                                                           -1.0)) / stddev_Poverty_HS_county
+                                                                                mean_Poverty_HS_county)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS']) - (
-                                                                                                 mean_Working_Poor_HS_county)) * (
-                                                                                                -1.0)) / stddev_Working_Poor_HS_county
+                                                                                     mean_Working_Poor_HS_county)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS']) - (
-                                                                                                mean_Rent_Burden_HS_county)) * (
-                                                                                               -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                    mean_Rent_Burden_HS_county)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS']) - (
-                                                                                                   mean_Home_ownership_HS_county)) * (
-                                                                                                  1.0)) / stddev_Home_ownership_HS_county
+                                                                                       mean_Home_ownership_HS_county)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS']) - (
-                                                                                                 mean_Income_level_HS_county)) * (
-                                                                                                1.0)) / stddev_Income_level_HS_county
+                                                                                     mean_Income_level_HS_county)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Overall_HS_score'] = ((
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Unemployment_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'FT_Work_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Poverty_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Working_Poor_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Rent_Burden_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Home_ownership_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -5517,173 +5473,170 @@ def get_score_grade_FB_Hispanic_F_FB_Hispanic_M(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'puma'] = sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'puma']
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                                  -1.0)) / stddev_UnEmp_BABS_region
+                                                                                      -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                             1.0)) / stddev_FT_Work_BABS_region
+                                                                                 1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                             -1.0)) / stddev_Poverty_BABS_region
+                                                                                 -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS']) - (
-                                                                                                   mean_Working_Poor_BABS_region)) * (
-                                                                                                  -1.0)) / stddev_Working_Poor_BABS_region
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                                 -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS']) - (
-                                                                                                     mean_Home_ownership_BABS_region)) * (
-                                                                                                    1.0)) / stddev_Home_ownership_BABS_region
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
+                                                                                        1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_BABS_score'] = ((float(
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS']) - (
-                                                                                                   mean_Income_level_BABS_region)) * (
-                                                                                                  1.0)) / stddev_Income_level_BABS_region
+                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
+                                                                                      1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Unemployment_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'FT_Work_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Poverty_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Working_Poor_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Rent_Burden_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Home_ownership_BABS_score'] +
-                                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Unemployment_HS']) - (
-                                                                                                 mean_UnEmp_HS_region)) * (
-                                                                                                -1.0)) / stddev_UnEmp_HS_region
+                                                                                     mean_UnEmp_HS_region)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'FT_Work_HS']) - (
-                                                                                            mean_FT_Work_HS_region)) * (
-                                                                                           1.0)) / stddev_FT_Work_HS_region
+                                                                                mean_FT_Work_HS_region)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Poverty_HS']) - (
-                                                                                            mean_Poverty_HS_region)) * (
-                                                                                           -1.0)) / stddev_Poverty_HS_region
+                                                                                mean_Poverty_HS_region)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Working_Poor_HS']) - (
-                                                                                                 mean_Working_Poor_HS_region)) * (
-                                                                                                -1.0)) / stddev_Working_Poor_HS_region
+                                                                                     mean_Working_Poor_HS_region)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Rent_Burden_HS']) - (
-                                                                                                mean_Rent_Burden_HS_region)) * (
-                                                                                               -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                    mean_Rent_Burden_HS_region)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Home_ownership_HS']) - (
-                                                                                                   mean_Home_ownership_HS_region)) * (
-                                                                                                  1.0)) / stddev_Home_ownership_HS_region
+                                                                                       mean_Home_ownership_HS_region)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_Hispanic_F_FB_Hispanic_M.at[i, 'Income_level_HS']) - (
-                                                                                                 mean_Income_level_HS_region)) * (
-                                                                                                1.0)) / stddev_Income_level_HS_region
+                                                                                     mean_Income_level_HS_region)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[i, 'Overall_HS_score'] = ((
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Unemployment_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'FT_Work_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Poverty_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Working_Poor_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Rent_Burden_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Home_ownership_HS_score'] +
-                                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
-                                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_Hispanic_F_FB_Hispanic_M_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -5728,87 +5681,72 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Unemployment_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Unemployment_BABS != '-inf')]
-    mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
-    mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
-    stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
-    stddev_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Unemployment_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Unemployment_BABS != '-inf')]
+    mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0,146)).mean()
+    mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146,156)).mean()
+    stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0,146)).std()
+    stddev_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146,156)).std()
 
     FT_Work_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.FT_Work_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.FT_Work_BABS != '-inf')]
-    mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
-    mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
-    stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
-    stddev_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.FT_Work_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.FT_Work_BABS != '-inf')]
+    mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0,146)).mean()
+    mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146,156)).mean()
+    stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0,146)).std()
+    stddev_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146,156)).std()
 
     Poverty_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Poverty_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Poverty_BABS != '-inf')]
-    mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
-    mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
-    stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
-    stddev_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Poverty_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Poverty_BABS != '-inf')]
+    mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0,146)).mean()
+    mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146,156)).mean()
+    stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0,146)).std()
+    stddev_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146,156)).std()
 
     Working_Poor_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Working_Poor_BABS != '-inf')]
-    mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Working_Poor_BABS != '-inf')]
+    mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(index=range(0,146)).mean()
+    mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(index=range(146,156)).mean()
+    stddev_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(index=range(0,146)).std()
+    stddev_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(index=range(146,156)).std()
+
 
     Rent_Burden_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Rent_Burden_BABS != '-inf')]
-    mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Rent_Burden_BABS != '-inf')]
+    mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(index=range(0,146)).mean()
+    mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(index=range(146,156)).mean()
+    stddev_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(index=range(0,146)).std()
+    stddev_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(index=range(146,156)).std()
 
     Home_ownership_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Home_ownership_BABS != '-inf')]
-    mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Home_ownership_BABS != '-inf')]
+    mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(index=range(0,146)).mean()
+    mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(index=range(146,156)).mean()
+    stddev_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(index=range(0,146)).std()
+    stddev_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(index=range(146,156)).std()
 
     Income_level_BABS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Income_level_BABS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Income_level_BABS != '-inf')]
-    mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Income_level_BABS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Income_level_BABS != '-inf')]
+    mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(index=range(0,146)).mean()
+    mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(index=range(146,156)).mean()
+    stddev_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(index=range(0,146)).std()
+    stddev_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(index=range(146,156)).std()
 
     Unemp_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Unemployment_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Unemployment_HS != '-inf')]
+            sg_data_FB_HISP_NB_HISP.Unemployment_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -5816,8 +5754,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
 
     FT_Work_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.FT_Work_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.FT_Work_HS != '-inf')]
+            sg_data_FB_HISP_NB_HISP.FT_Work_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -5825,8 +5763,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
 
     Poverty_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Poverty_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Poverty_HS != '-inf')]
+            sg_data_FB_HISP_NB_HISP.Poverty_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -5834,61 +5772,46 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
 
     Working_Poor_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Working_Poor_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Working_Poor_HS != '-inf')]
-    mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Working_Poor_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Working_Poor_HS != '-inf')]
+    mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(index=range(0, 146)).mean()
+    mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(index=range(146, 156)).mean()
+    stddev_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(index=range(0, 146)).std()
+    stddev_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(index=range(146, 156)).std()
 
     Rent_Burden_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Rent_Burden_HS != '-inf')]
+            sg_data_FB_HISP_NB_HISP.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
-    mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
-        index=range(146, 156)).std()
+    mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(146, 156)).mean()
+    stddev_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).std()
+    stddev_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(146, 156)).std()
 
     Home_ownership_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Home_ownership_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Home_ownership_HS != '-inf')]
-    mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Home_ownership_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Home_ownership_HS != '-inf')]
+    mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(index=range(0, 146)).mean()
+    mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(index=range(146, 156)).mean()
+    stddev_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(index=range(0, 146)).std()
+    stddev_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(index=range(146, 156)).std()
 
     Income_level_HS = sg_data_FB_HISP_NB_HISP[
         (sg_data_FB_HISP_NB_HISP.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_NB_HISP.Income_level_HS != 'inf') & (
-                sg_data_FB_HISP_NB_HISP.Income_level_HS != '-inf')]
-    mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
-        index=range(0, 146)).mean()
-    mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
-        index=range(146, 156)).mean()
-    stddev_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
-        index=range(0, 146)).std()
-    stddev_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
-        index=range(146, 156)).std()
+            sg_data_FB_HISP_NB_HISP.Income_level_HS != 'inf') & (
+            sg_data_FB_HISP_NB_HISP.Income_level_HS != '-inf')]
+    mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(index=range(0, 146)).mean()
+    mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(index=range(146, 156)).mean()
+    stddev_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(index=range(0, 146)).std()
+    stddev_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(index=range(146, 156)).std()
 
     for i in sg_data_FB_HISP_NB_HISP.index:
         if i >= 0 and i <= 146:
             sg_data_FB_HISP_NB_HISP_final.at[i, 'puma'] = sg_data_FB_HISP_NB_HISP.at[i, 'puma']
             if sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
                                                                                       -1.0)) / stddev_UnEmp_BABS_county
@@ -5896,8 +5819,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
                                                                                  1.0)) / stddev_FT_Work_BABS_county
@@ -5905,8 +5828,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
                                                                                  -1.0)) / stddev_Poverty_BABS_county
@@ -5914,8 +5837,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
                                                                                       -1.0)) / stddev_Working_Poor_BABS_county
@@ -5923,8 +5846,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
                                                                                      -1.0)) / stddev_Rent_Burden_BABS_county
@@ -5932,8 +5855,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
                                                                                         1.0)) / stddev_Home_ownership_BABS_county
@@ -5941,8 +5864,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
                                                                                       1.0)) / stddev_Income_level_BABS_county
@@ -5950,25 +5873,25 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_NB_HISP_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Unemployment_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'FT_Work_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Poverty_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Working_Poor_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Rent_Burden_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Home_ownership_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS']) - (
                                                                                      mean_UnEmp_HS_county)) * (
@@ -5977,8 +5900,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS']) - (
                                                                                 mean_FT_Work_HS_county)) * (
@@ -5987,8 +5910,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS']) - (
                                                                                 mean_Poverty_HS_county)) * (
@@ -5997,8 +5920,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS']) - (
                                                                                      mean_Working_Poor_HS_county)) * (
@@ -6007,8 +5930,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS']) - (
                                                                                     mean_Rent_Burden_HS_county)) * (
@@ -6017,8 +5940,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS']) - (
                                                                                        mean_Home_ownership_HS_county)) * (
@@ -6027,8 +5950,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS']) - (
                                                                                      mean_Income_level_HS_county)) * (
@@ -6037,20 +5960,20 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_NB_HISP_final.at[i, 'Overall_HS_score'] = ((
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Unemployment_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'FT_Work_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Poverty_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Working_Poor_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Rent_Burden_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Home_ownership_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -6078,8 +6001,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_HISP_NB_HISP_final.at[i, 'puma'] = sg_data_FB_HISP_NB_HISP.at[i, 'puma']
             if sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
                                                                                       -1.0)) / stddev_UnEmp_BABS_region
@@ -6087,8 +6010,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
                                                                                  1.0)) / stddev_FT_Work_BABS_region
@@ -6096,8 +6019,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
                                                                                  -1.0)) / stddev_Poverty_BABS_region
@@ -6105,8 +6028,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
                                                                                       -1.0)) / stddev_Working_Poor_BABS_region
@@ -6114,8 +6037,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
                                                                                      -1.0)) / stddev_Rent_Burden_BABS_region
@@ -6123,8 +6046,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
                                                                                         1.0)) / stddev_Home_ownership_BABS_region
@@ -6132,8 +6055,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
                                                                                       1.0)) / stddev_Income_level_BABS_region
@@ -6141,25 +6064,25 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_NB_HISP_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Unemployment_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'FT_Work_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Poverty_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Working_Poor_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Rent_Burden_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Home_ownership_BABS_score'] +
-                                                                                 sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                     i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_HISP_NB_HISP_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Unemployment_HS']) - (
                                                                                      mean_UnEmp_HS_region)) * (
@@ -6168,8 +6091,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'FT_Work_HS']) - (
                                                                                 mean_FT_Work_HS_region)) * (
@@ -6178,8 +6101,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Poverty_HS']) - (
                                                                                 mean_Poverty_HS_region)) * (
@@ -6188,8 +6111,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Working_Poor_HS']) - (
                                                                                      mean_Working_Poor_HS_region)) * (
@@ -6198,8 +6121,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Rent_Burden_HS']) - (
                                                                                     mean_Rent_Burden_HS_region)) * (
@@ -6208,8 +6131,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Home_ownership_HS']) - (
                                                                                        mean_Home_ownership_HS_region)) * (
@@ -6218,8 +6141,8 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_NB_HISP.at[i, 'Income_level_HS']) - (
                                                                                      mean_Income_level_HS_region)) * (
@@ -6228,20 +6151,20 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
                 sg_data_FB_HISP_NB_HISP_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_NB_HISP_final.at[i, 'Overall_HS_score'] = ((
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Unemployment_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'FT_Work_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Poverty_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Working_Poor_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Rent_Burden_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Home_ownership_HS_score'] +
-                                                                               sg_data_FB_HISP_NB_HISP_final.at[
-                                                                                   i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_HISP_NB_HISP_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -6273,8 +6196,7 @@ def get_score_grade_FB_HISP_NB_HISP(PATH=None):
 def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
     sg_data_FB_HISP_POC_FB_WH_final = pandas.DataFrame()
     sg_data_FB_HISP_POC_FB_WH = pandas.read_csv(
-        'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_FB_White_Hispanic_disparity.csv').replace([np.inf, -np.inf],
-                                                                                                 np.nan)
+        'data_PR_HISP/2016/Disparities/FB_Hispanic_POC_FB_White_Hispanic_disparity.csv').replace([np.inf, -np.inf], np.nan)
     sg_data_FB_HISP_POC_FB_WH = sg_data_FB_HISP_POC_FB_WH.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -6287,8 +6209,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Unemployment_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Unemployment_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Unemployment_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -6296,8 +6218,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     FT_Work_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.FT_Work_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.FT_Work_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.FT_Work_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -6305,8 +6227,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Poverty_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Poverty_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Poverty_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Poverty_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -6314,8 +6236,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Working_Poor_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Working_Poor_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -6327,8 +6249,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Rent_Burden_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Rent_Burden_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -6340,8 +6262,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Home_ownership_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Home_ownership_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -6353,8 +6275,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Income_level_BABS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Income_level_BABS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Income_level_BABS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Income_level_BABS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -6366,8 +6288,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Unemp_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Unemployment_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Unemployment_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Unemployment_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -6375,8 +6297,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     FT_Work_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.FT_Work_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.FT_Work_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.FT_Work_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -6384,8 +6306,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Poverty_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Poverty_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Poverty_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Poverty_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -6393,8 +6315,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Working_Poor_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Working_Poor_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Working_Poor_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Working_Poor_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -6406,8 +6328,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Rent_Burden_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Rent_Burden_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -6418,8 +6340,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Home_ownership_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Home_ownership_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Home_ownership_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Home_ownership_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -6431,8 +6353,8 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
 
     Income_level_HS = sg_data_FB_HISP_POC_FB_WH[
         (sg_data_FB_HISP_POC_FB_WH.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_POC_FB_WH.Income_level_HS != 'inf') & (
-                sg_data_FB_HISP_POC_FB_WH.Income_level_HS != '-inf')]
+            sg_data_FB_HISP_POC_FB_WH.Income_level_HS != 'inf') & (
+            sg_data_FB_HISP_POC_FB_WH.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -6446,170 +6368,170 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'puma'] = sg_data_FB_HISP_POC_FB_WH.at[i, 'puma']
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                        -1.0)) / stddev_UnEmp_BABS_county
+                                                                                      -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                   1.0)) / stddev_FT_Work_BABS_county
+                                                                                 1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                   -1.0)) / stddev_Poverty_BABS_county
+                                                                                 -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
-                                                                                        -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                       -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
-                                                                                          1.0)) / stddev_Home_ownership_BABS_county
+                                                                                        1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
-                                                                                        1.0)) / stddev_Income_level_BABS_county
+                                                                                      1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Unemployment_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'FT_Work_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Poverty_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Working_Poor_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Rent_Burden_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Home_ownership_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS']) - (
-                                                                                       mean_UnEmp_HS_county)) * (
-                                                                                      -1.0)) / stddev_UnEmp_HS_county
+                                                                                     mean_UnEmp_HS_county)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS']) - (
-                                                                                  mean_FT_Work_HS_county)) * (
-                                                                                 1.0)) / stddev_FT_Work_HS_county
+                                                                                mean_FT_Work_HS_county)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS']) - (
-                                                                                  mean_Poverty_HS_county)) * (
-                                                                                 -1.0)) / stddev_Poverty_HS_county
+                                                                                mean_Poverty_HS_county)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS']) - (
-                                                                                       mean_Working_Poor_HS_county)) * (
-                                                                                      -1.0)) / stddev_Working_Poor_HS_county
+                                                                                     mean_Working_Poor_HS_county)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS']) - (
-                                                                                      mean_Rent_Burden_HS_county)) * (
-                                                                                     -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                    mean_Rent_Burden_HS_county)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS']) - (
-                                                                                         mean_Home_ownership_HS_county)) * (
-                                                                                        1.0)) / stddev_Home_ownership_HS_county
+                                                                                       mean_Home_ownership_HS_county)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS']) - (
-                                                                                       mean_Income_level_HS_county)) * (
-                                                                                      1.0)) / stddev_Income_level_HS_county
+                                                                                     mean_Income_level_HS_county)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Unemployment_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'FT_Work_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Poverty_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Working_Poor_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Rent_Burden_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Home_ownership_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -6637,170 +6559,170 @@ def get_score_grade_FB_HISP_POC_FB_WH(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'puma'] = sg_data_FB_HISP_POC_FB_WH.at[i, 'puma']
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                        -1.0)) / stddev_UnEmp_BABS_region
+                                                                                      -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                   1.0)) / stddev_FT_Work_BABS_region
+                                                                                 1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                   -1.0)) / stddev_Poverty_BABS_region
+                                                                                 -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
-                                                                                        -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                       -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
-                                                                                          1.0)) / stddev_Home_ownership_BABS_region
+                                                                                        1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
-                                                                                        1.0)) / stddev_Income_level_BABS_region
+                                                                                      1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Unemployment_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'FT_Work_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Poverty_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Working_Poor_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Rent_Burden_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Home_ownership_BABS_score'] +
-                                                                                   sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                       i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Unemployment_HS']) - (
-                                                                                       mean_UnEmp_HS_region)) * (
-                                                                                      -1.0)) / stddev_UnEmp_HS_region
+                                                                                     mean_UnEmp_HS_region)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'FT_Work_HS']) - (
-                                                                                  mean_FT_Work_HS_region)) * (
-                                                                                 1.0)) / stddev_FT_Work_HS_region
+                                                                                mean_FT_Work_HS_region)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Poverty_HS']) - (
-                                                                                  mean_Poverty_HS_region)) * (
-                                                                                 -1.0)) / stddev_Poverty_HS_region
+                                                                                mean_Poverty_HS_region)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Working_Poor_HS']) - (
-                                                                                       mean_Working_Poor_HS_region)) * (
-                                                                                      -1.0)) / stddev_Working_Poor_HS_region
+                                                                                     mean_Working_Poor_HS_region)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Rent_Burden_HS']) - (
-                                                                                      mean_Rent_Burden_HS_region)) * (
-                                                                                     -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                    mean_Rent_Burden_HS_region)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Home_ownership_HS']) - (
-                                                                                         mean_Home_ownership_HS_region)) * (
-                                                                                        1.0)) / stddev_Home_ownership_HS_region
+                                                                                       mean_Home_ownership_HS_region)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_POC_FB_WH.at[i, 'Income_level_HS']) - (
-                                                                                       mean_Income_level_HS_region)) * (
-                                                                                      1.0)) / stddev_Income_level_HS_region
+                                                                                     mean_Income_level_HS_region)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_POC_FB_WH_final.at[i, 'Overall_HS_score'] = ((
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Unemployment_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'FT_Work_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Poverty_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Working_Poor_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Rent_Burden_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Home_ownership_HS_score'] +
-                                                                                 sg_data_FB_HISP_POC_FB_WH_final.at[
-                                                                                     i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_FB_HISP_POC_FB_WH_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -6833,7 +6755,7 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
     sg_data_FB_HISP_PR_HISP_final = pandas.DataFrame()
     sg_data_FB_HISP_PR_HISP = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/FB_Hispanic_PR_Hispanic_disparity.csv').replace([np.inf, -np.inf],
-                                                                                       np.nan)
+                                                                                                 np.nan)
     sg_data_FB_HISP_PR_HISP = sg_data_FB_HISP_PR_HISP.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -6846,8 +6768,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Unemployment_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Unemployment_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Unemployment_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -6855,8 +6777,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     FT_Work_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.FT_Work_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.FT_Work_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.FT_Work_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -6864,8 +6786,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Poverty_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Poverty_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Poverty_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Poverty_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Poverty_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -6873,8 +6795,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Working_Poor_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Working_Poor_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Working_Poor_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Working_Poor_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -6886,8 +6808,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Rent_Burden_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Rent_Burden_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Rent_Burden_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Rent_Burden_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -6899,8 +6821,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Home_ownership_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Home_ownership_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Home_ownership_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Home_ownership_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -6912,8 +6834,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Income_level_BABS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Income_level_BABS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Income_level_BABS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Income_level_BABS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Income_level_BABS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -6925,8 +6847,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Unemp_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Unemployment_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Unemployment_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Unemployment_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Unemployment_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -6934,8 +6856,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     FT_Work_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.FT_Work_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.FT_Work_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.FT_Work_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.FT_Work_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -6943,8 +6865,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Poverty_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Poverty_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Poverty_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Poverty_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Poverty_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -6952,8 +6874,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Working_Poor_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Working_Poor_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Working_Poor_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Working_Poor_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -6965,8 +6887,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Rent_Burden_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Rent_Burden_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Rent_Burden_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Rent_Burden_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -6977,8 +6899,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Home_ownership_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Home_ownership_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Home_ownership_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Home_ownership_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -6990,8 +6912,8 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
 
     Income_level_HS = sg_data_FB_HISP_PR_HISP[
         (sg_data_FB_HISP_PR_HISP.Income_level_HS != '#DIV/0!') & (
-                sg_data_FB_HISP_PR_HISP.Income_level_HS != 'inf') & (
-                sg_data_FB_HISP_PR_HISP.Income_level_HS != '-inf')]
+            sg_data_FB_HISP_PR_HISP.Income_level_HS != 'inf') & (
+            sg_data_FB_HISP_PR_HISP.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -7005,170 +6927,170 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_FB_HISP_PR_HISP_final.at[i, 'puma'] = sg_data_FB_HISP_PR_HISP.at[i, 'puma']
             if sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                      -1.0)) / stddev_UnEmp_BABS_county
+                                                                                        -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                 1.0)) / stddev_FT_Work_BABS_county
+                                                                                   1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                 -1.0)) / stddev_Poverty_BABS_county
+                                                                                   -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
-                                                                                      -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                        -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                     -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                       -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
-                                                                                        1.0)) / stddev_Home_ownership_BABS_county
+                                                                                          1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
-                                                                                      1.0)) / stddev_Income_level_BABS_county
+                                                                                        1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_PR_HISP_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Unemployment_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'FT_Work_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Poverty_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Working_Poor_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Rent_Burden_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Home_ownership_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Unemployment_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'FT_Work_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Poverty_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Working_Poor_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Rent_Burden_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Home_ownership_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS']) - (
-                                                                                     mean_UnEmp_HS_county)) * (
-                                                                                    -1.0)) / stddev_UnEmp_HS_county
+                                                                                       mean_UnEmp_HS_county)) * (
+                                                                                      -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS']) - (
-                                                                                mean_FT_Work_HS_county)) * (
-                                                                               1.0)) / stddev_FT_Work_HS_county
+                                                                                  mean_FT_Work_HS_county)) * (
+                                                                                 1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS']) - (
-                                                                                mean_Poverty_HS_county)) * (
-                                                                               -1.0)) / stddev_Poverty_HS_county
+                                                                                  mean_Poverty_HS_county)) * (
+                                                                                 -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS']) - (
-                                                                                     mean_Working_Poor_HS_county)) * (
-                                                                                    -1.0)) / stddev_Working_Poor_HS_county
+                                                                                       mean_Working_Poor_HS_county)) * (
+                                                                                      -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS']) - (
-                                                                                    mean_Rent_Burden_HS_county)) * (
-                                                                                   -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                      mean_Rent_Burden_HS_county)) * (
+                                                                                     -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS']) - (
-                                                                                       mean_Home_ownership_HS_county)) * (
-                                                                                      1.0)) / stddev_Home_ownership_HS_county
+                                                                                         mean_Home_ownership_HS_county)) * (
+                                                                                        1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS']) - (
-                                                                                     mean_Income_level_HS_county)) * (
-                                                                                    1.0)) / stddev_Income_level_HS_county
+                                                                                       mean_Income_level_HS_county)) * (
+                                                                                      1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_PR_HISP_final.at[i, 'Overall_HS_score'] = ((
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Unemployment_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'FT_Work_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Poverty_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Working_Poor_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Rent_Burden_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Home_ownership_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Unemployment_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'FT_Work_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Poverty_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Working_Poor_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Rent_Burden_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Home_ownership_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -7196,170 +7118,170 @@ def get_score_grade_FB_HISP_PR_HISP(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_FB_HISP_PR_HISP_final.at[i, 'puma'] = sg_data_FB_HISP_PR_HISP.at[i, 'puma']
             if sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                      -1.0)) / stddev_UnEmp_BABS_region
+                                                                                        -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                 1.0)) / stddev_FT_Work_BABS_region
+                                                                                   1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                 -1.0)) / stddev_Poverty_BABS_region
+                                                                                   -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
-                                                                                      -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                        -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                     -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                       -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
-                                                                                        1.0)) / stddev_Home_ownership_BABS_region
+                                                                                          1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
-                                                                                      1.0)) / stddev_Income_level_BABS_region
+                                                                                        1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_FB_HISP_PR_HISP_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Unemployment_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'FT_Work_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Poverty_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Working_Poor_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Rent_Burden_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Home_ownership_BABS_score'] +
-                                                                                 sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                     i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Unemployment_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'FT_Work_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Poverty_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Working_Poor_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Rent_Burden_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Home_ownership_BABS_score'] +
+                                                                               sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                   i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Unemployment_HS']) - (
-                                                                                     mean_UnEmp_HS_region)) * (
-                                                                                    -1.0)) / stddev_UnEmp_HS_region
+                                                                                       mean_UnEmp_HS_region)) * (
+                                                                                      -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'FT_Work_HS']) - (
-                                                                                mean_FT_Work_HS_region)) * (
-                                                                               1.0)) / stddev_FT_Work_HS_region
+                                                                                  mean_FT_Work_HS_region)) * (
+                                                                                 1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Poverty_HS']) - (
-                                                                                mean_Poverty_HS_region)) * (
-                                                                               -1.0)) / stddev_Poverty_HS_region
+                                                                                  mean_Poverty_HS_region)) * (
+                                                                                 -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Working_Poor_HS']) - (
-                                                                                     mean_Working_Poor_HS_region)) * (
-                                                                                    -1.0)) / stddev_Working_Poor_HS_region
+                                                                                       mean_Working_Poor_HS_region)) * (
+                                                                                      -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Rent_Burden_HS']) - (
-                                                                                    mean_Rent_Burden_HS_region)) * (
-                                                                                   -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                      mean_Rent_Burden_HS_region)) * (
+                                                                                     -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Home_ownership_HS']) - (
-                                                                                       mean_Home_ownership_HS_region)) * (
-                                                                                      1.0)) / stddev_Home_ownership_HS_region
+                                                                                         mean_Home_ownership_HS_region)) * (
+                                                                                        1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_FB_HISP_PR_HISP.at[i, 'Income_level_HS']) - (
-                                                                                     mean_Income_level_HS_region)) * (
-                                                                                    1.0)) / stddev_Income_level_HS_region
+                                                                                       mean_Income_level_HS_region)) * (
+                                                                                      1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_FB_HISP_PR_HISP_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_FB_HISP_PR_HISP_final.at[i, 'Overall_HS_score'] = ((
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Unemployment_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'FT_Work_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Poverty_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Working_Poor_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Rent_Burden_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Home_ownership_HS_score'] +
-                                                                               sg_data_FB_HISP_PR_HISP_final.at[
-                                                                                   i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Unemployment_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'FT_Work_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Poverty_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Working_Poor_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Rent_Burden_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Home_ownership_HS_score'] +
+                                                                             sg_data_FB_HISP_PR_HISP_final.at[
+                                                                                 i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -7405,8 +7327,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Unemployment_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Unemployment_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Unemployment_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -7414,8 +7336,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     FT_Work_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.FT_Work_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.FT_Work_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.FT_Work_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -7423,8 +7345,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Poverty_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Poverty_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Poverty_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Poverty_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Poverty_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -7432,8 +7354,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Working_Poor_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Working_Poor_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Working_Poor_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Working_Poor_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -7445,8 +7367,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Rent_Burden_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Rent_Burden_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Rent_Burden_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Rent_Burden_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -7458,8 +7380,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Home_ownership_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Home_ownership_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Home_ownership_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Home_ownership_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -7471,8 +7393,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Income_level_BABS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Income_level_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Income_level_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Income_level_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Income_level_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -7484,8 +7406,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Unemp_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Unemployment_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Unemployment_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Unemployment_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Unemployment_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -7493,8 +7415,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     FT_Work_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.FT_Work_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.FT_Work_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.FT_Work_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.FT_Work_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -7502,8 +7424,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Poverty_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Poverty_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Poverty_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Poverty_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Poverty_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -7511,8 +7433,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Working_Poor_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Working_Poor_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Working_Poor_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Working_Poor_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -7524,8 +7446,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Rent_Burden_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Rent_Burden_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Rent_Burden_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Rent_Burden_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -7536,8 +7458,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Home_ownership_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Home_ownership_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Home_ownership_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Home_ownership_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -7549,8 +7471,8 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
 
     Income_level_HS = sg_data_PR_HISP_NB_mainland[
         (sg_data_PR_HISP_NB_mainland.Income_level_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland.Income_level_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland.Income_level_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland.Income_level_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -7564,170 +7486,170 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_PR_HISP_NB_mainland_final.at[i, 'puma'] = sg_data_PR_HISP_NB_mainland.at[i, 'puma']
             if sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                          -1.0)) / stddev_UnEmp_BABS_county
+                                                                                      -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                     1.0)) / stddev_FT_Work_BABS_county
+                                                                                 1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                     -1.0)) / stddev_Poverty_BABS_county
+                                                                                 -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
-                                                                                          -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                         -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
-                                                                                            1.0)) / stddev_Home_ownership_BABS_county
+                                                                                        1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
-                                                                                          1.0)) / stddev_Income_level_BABS_county
+                                                                                      1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Unemployment_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'FT_Work_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Poverty_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Working_Poor_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Rent_Burden_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Home_ownership_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS']) - (
-                                                                                         mean_UnEmp_HS_county)) * (
-                                                                                        -1.0)) / stddev_UnEmp_HS_county
+                                                                                     mean_UnEmp_HS_county)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS']) - (
-                                                                                    mean_FT_Work_HS_county)) * (
-                                                                                   1.0)) / stddev_FT_Work_HS_county
+                                                                                mean_FT_Work_HS_county)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS']) - (
-                                                                                    mean_Poverty_HS_county)) * (
-                                                                                   -1.0)) / stddev_Poverty_HS_county
+                                                                                mean_Poverty_HS_county)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS']) - (
-                                                                                         mean_Working_Poor_HS_county)) * (
-                                                                                        -1.0)) / stddev_Working_Poor_HS_county
+                                                                                     mean_Working_Poor_HS_county)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS']) - (
-                                                                                        mean_Rent_Burden_HS_county)) * (
-                                                                                       -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                    mean_Rent_Burden_HS_county)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS']) - (
-                                                                                           mean_Home_ownership_HS_county)) * (
-                                                                                          1.0)) / stddev_Home_ownership_HS_county
+                                                                                       mean_Home_ownership_HS_county)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS']) - (
-                                                                                         mean_Income_level_HS_county)) * (
-                                                                                        1.0)) / stddev_Income_level_HS_county
+                                                                                     mean_Income_level_HS_county)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_final.at[i, 'Overall_HS_score'] = ((
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Unemployment_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'FT_Work_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Poverty_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Working_Poor_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Rent_Burden_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Home_ownership_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -7755,170 +7677,170 @@ def get_score_grade_PR_HISP_NB_mainland(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_PR_HISP_NB_mainland_final.at[i, 'puma'] = sg_data_PR_HISP_NB_mainland.at[i, 'puma']
             if sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                          -1.0)) / stddev_UnEmp_BABS_region
+                                                                                      -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                     1.0)) / stddev_FT_Work_BABS_region
+                                                                                 1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                     -1.0)) / stddev_Poverty_BABS_region
+                                                                                 -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
-                                                                                          -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                         -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
-                                                                                            1.0)) / stddev_Home_ownership_BABS_region
+                                                                                        1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
-                                                                                          1.0)) / stddev_Income_level_BABS_region
+                                                                                      1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Unemployment_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'FT_Work_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Poverty_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Working_Poor_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Rent_Burden_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Home_ownership_BABS_score'] +
-                                                                                     sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                         i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Unemployment_HS']) - (
-                                                                                         mean_UnEmp_HS_region)) * (
-                                                                                        -1.0)) / stddev_UnEmp_HS_region
+                                                                                     mean_UnEmp_HS_region)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'FT_Work_HS']) - (
-                                                                                    mean_FT_Work_HS_region)) * (
-                                                                                   1.0)) / stddev_FT_Work_HS_region
+                                                                                mean_FT_Work_HS_region)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Poverty_HS']) - (
-                                                                                    mean_Poverty_HS_region)) * (
-                                                                                   -1.0)) / stddev_Poverty_HS_region
+                                                                                mean_Poverty_HS_region)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Working_Poor_HS']) - (
-                                                                                         mean_Working_Poor_HS_region)) * (
-                                                                                        -1.0)) / stddev_Working_Poor_HS_region
+                                                                                     mean_Working_Poor_HS_region)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Rent_Burden_HS']) - (
-                                                                                        mean_Rent_Burden_HS_region)) * (
-                                                                                       -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                    mean_Rent_Burden_HS_region)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Home_ownership_HS']) - (
-                                                                                           mean_Home_ownership_HS_region)) * (
-                                                                                          1.0)) / stddev_Home_ownership_HS_region
+                                                                                       mean_Home_ownership_HS_region)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland.at[i, 'Income_level_HS']) - (
-                                                                                         mean_Income_level_HS_region)) * (
-                                                                                        1.0)) / stddev_Income_level_HS_region
+                                                                                     mean_Income_level_HS_region)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_final.at[i, 'Overall_HS_score'] = ((
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Unemployment_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'FT_Work_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Poverty_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Working_Poor_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Rent_Burden_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Home_ownership_HS_score'] +
-                                                                                   sg_data_PR_HISP_NB_mainland_final.at[
-                                                                                       i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -7951,7 +7873,7 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
     sg_data_PR_HISP_NB_mainland_PR_final = pandas.DataFrame()
     sg_data_PR_HISP_NB_mainland_PR = pandas.read_csv(
         'data_PR_HISP/2016/Disparities/PR_Hispanic_NB_Mainland_PR_disparity.csv').replace([np.inf, -np.inf],
-                                                                                          np.nan)
+                                                                                       np.nan)
     sg_data_PR_HISP_NB_mainland_PR = sg_data_PR_HISP_NB_mainland_PR.astype('object')
 
     score_columns_list = ['Unemployment_BABS_score', 'FT_Work_BABS_score', 'Poverty_BABS_score',
@@ -7964,8 +7886,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
     # Calculate all mean and std dev first, ignoring #DIV/0!, inf, -inf
     Unemp_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Unemployment_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Unemployment_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Unemployment_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Unemployment_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Unemployment_BABS != '-inf')]
     mean_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_BABS_region = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_BABS_county = pandas.to_numeric(Unemp_BABS['Unemployment_BABS']).reindex(index=range(0, 146)).std()
@@ -7973,8 +7895,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     FT_Work_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.FT_Work_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.FT_Work_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.FT_Work_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.FT_Work_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.FT_Work_BABS != '-inf')]
     mean_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_BABS_region = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_BABS_county = pandas.to_numeric(FT_Work_BABS['FT_Work_BABS']).reindex(index=range(0, 146)).std()
@@ -7982,8 +7904,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Poverty_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Poverty_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Poverty_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Poverty_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Poverty_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Poverty_BABS != '-inf')]
     mean_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_BABS_region = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_BABS_county = pandas.to_numeric(Poverty_BABS['Poverty_BABS']).reindex(index=range(0, 146)).std()
@@ -7991,8 +7913,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Working_Poor_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Working_Poor_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Working_Poor_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Working_Poor_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Working_Poor_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Working_Poor_BABS != '-inf')]
     mean_Working_Poor_BABS_county = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_BABS_region = pandas.to_numeric(Working_Poor_BABS['Working_Poor_BABS']).reindex(
@@ -8004,8 +7926,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Rent_Burden_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_BABS != '-inf')]
     mean_Rent_Burden_BABS_county = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Rent_Burden_BABS_region = pandas.to_numeric(Rent_Burden_BABS['Rent_Burden_BABS']).reindex(
@@ -8017,8 +7939,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Home_ownership_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Home_ownership_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Home_ownership_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Home_ownership_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Home_ownership_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Home_ownership_BABS != '-inf')]
     mean_Home_ownership_BABS_county = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_BABS_region = pandas.to_numeric(Home_ownership_BABS['Home_ownership_BABS']).reindex(
@@ -8030,8 +7952,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Income_level_BABS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Income_level_BABS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Income_level_BABS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Income_level_BABS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Income_level_BABS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Income_level_BABS != '-inf')]
     mean_Income_level_BABS_county = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_BABS_region = pandas.to_numeric(Income_level_BABS['Income_level_BABS']).reindex(
@@ -8043,8 +7965,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Unemp_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Unemployment_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Unemployment_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Unemployment_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Unemployment_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Unemployment_HS != '-inf')]
     mean_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).mean()
     mean_UnEmp_HS_region = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(146, 156)).mean()
     stddev_UnEmp_HS_county = pandas.to_numeric(Unemp_HS['Unemployment_HS']).reindex(index=range(0, 146)).std()
@@ -8052,8 +7974,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     FT_Work_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.FT_Work_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.FT_Work_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.FT_Work_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.FT_Work_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.FT_Work_HS != '-inf')]
     mean_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).mean()
     mean_FT_Work_HS_region = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(146, 156)).mean()
     stddev_FT_Work_HS_county = pandas.to_numeric(FT_Work_HS['FT_Work_HS']).reindex(index=range(0, 146)).std()
@@ -8061,8 +7983,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Poverty_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Poverty_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Poverty_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Poverty_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Poverty_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Poverty_HS != '-inf')]
     mean_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).mean()
     mean_Poverty_HS_region = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(146, 156)).mean()
     stddev_Poverty_HS_county = pandas.to_numeric(Poverty_HS['Poverty_HS']).reindex(index=range(0, 146)).std()
@@ -8070,8 +7992,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Working_Poor_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Working_Poor_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Working_Poor_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Working_Poor_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Working_Poor_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Working_Poor_HS != '-inf')]
     mean_Working_Poor_HS_county = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Working_Poor_HS_region = pandas.to_numeric(Working_Poor_HS['Working_Poor_HS']).reindex(
@@ -8083,8 +8005,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Rent_Burden_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Rent_Burden_HS != '-inf')]
     mean_Rent_Burden_HS_county = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(index=range(0, 146)).mean()
     mean_Rent_Burden_HS_region = pandas.to_numeric(Rent_Burden_HS['Rent_Burden_HS']).reindex(
         index=range(146, 156)).mean()
@@ -8095,8 +8017,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Home_ownership_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Home_ownership_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Home_ownership_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Home_ownership_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Home_ownership_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Home_ownership_HS != '-inf')]
     mean_Home_ownership_HS_county = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Home_ownership_HS_region = pandas.to_numeric(Home_ownership_HS['Home_ownership_HS']).reindex(
@@ -8108,8 +8030,8 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     Income_level_HS = sg_data_PR_HISP_NB_mainland_PR[
         (sg_data_PR_HISP_NB_mainland_PR.Income_level_HS != '#DIV/0!') & (
-                sg_data_PR_HISP_NB_mainland_PR.Income_level_HS != 'inf') & (
-                sg_data_PR_HISP_NB_mainland_PR.Income_level_HS != '-inf')]
+            sg_data_PR_HISP_NB_mainland_PR.Income_level_HS != 'inf') & (
+            sg_data_PR_HISP_NB_mainland_PR.Income_level_HS != '-inf')]
     mean_Income_level_HS_county = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
         index=range(0, 146)).mean()
     mean_Income_level_HS_region = pandas.to_numeric(Income_level_HS['Income_level_HS']).reindex(
@@ -8123,171 +8045,170 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
         if i >= 0 and i <= 146:
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'puma'] = sg_data_PR_HISP_NB_mainland_PR.at[i, 'puma']
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_county)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_county
+                                                                                      -1.0)) / stddev_UnEmp_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_county)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_county
+                                                                                 1.0)) / stddev_FT_Work_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_county)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_county
+                                                                                 -1.0)) / stddev_Poverty_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_county)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_county
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_county)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_county
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_BABS_score'] = ((float(
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_county)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_county
+                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_county)) * (
+                                                                                        1.0)) / stddev_Home_ownership_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_county)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_county
+                                                                                      1.0)) / stddev_Income_level_BABS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_county)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_county
+                                                                                     mean_UnEmp_HS_county)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_county)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_county
+                                                                                mean_FT_Work_HS_county)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_county)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_county
+                                                                                mean_Poverty_HS_county)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_county)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_county
+                                                                                     mean_Working_Poor_HS_county)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_county)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_county
+                                                                                    mean_Rent_Burden_HS_county)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_county)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_county
+                                                                                       mean_Home_ownership_HS_county)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_county)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_county
+                                                                                     mean_Income_level_HS_county)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_county
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -8315,171 +8236,170 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
         elif i >= 146 and i <= 156:
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'puma'] = sg_data_PR_HISP_NB_mainland_PR.at[i, 'puma']
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_BABS']) - (mean_UnEmp_BABS_region)) * (
-                                                                                             -1.0)) / stddev_UnEmp_BABS_region
+                                                                                      -1.0)) / stddev_UnEmp_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_BABS']) - (mean_FT_Work_BABS_region)) * (
-                                                                                        1.0)) / stddev_FT_Work_BABS_region
+                                                                                 1.0)) / stddev_FT_Work_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_BABS']) - (mean_Poverty_BABS_region)) * (
-                                                                                        -1.0)) / stddev_Poverty_BABS_region
+                                                                                 -1.0)) / stddev_Poverty_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_BABS']) - (mean_Working_Poor_BABS_region)) * (
-                                                                                             -1.0)) / stddev_Working_Poor_BABS_region
+                                                                                      -1.0)) / stddev_Working_Poor_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_BABS']) - (mean_Rent_Burden_BABS_region)) * (
-                                                                                            -1.0)) / stddev_Rent_Burden_BABS_region
+                                                                                     -1.0)) / stddev_Rent_Burden_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_BABS_score'] = ((float(
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS']) - (
-                                                                                                mean_Home_ownership_BABS_region)) * (
-                                                                                               1.0)) / stddev_Home_ownership_BABS_region
+                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_BABS']) - (mean_Home_ownership_BABS_region)) * (
+                                                                                        1.0)) / stddev_Home_ownership_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_BABS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_BABS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_BABS']) - (mean_Income_level_BABS_region)) * (
-                                                                                             1.0)) / stddev_Income_level_BABS_region
+                                                                                      1.0)) / stddev_Income_level_BABS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_BABS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Overall_BABS_score'] = ((
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Unemployment_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'FT_Work_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Poverty_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Working_Poor_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Rent_Burden_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Home_ownership_BABS_score'] +
-                                                                                        sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                            i, 'Income_level_BABS_score']) * 1.0) / 7
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Unemployment_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'FT_Work_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Poverty_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Working_Poor_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Rent_Burden_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Home_ownership_BABS_score'] +
+                                                                             sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                                 i, 'Income_level_BABS_score']) * 1.0) / 7
 
             # checking for scores for HS
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Unemployment_HS']) - (
-                                                                                            mean_UnEmp_HS_region)) * (
-                                                                                           -1.0)) / stddev_UnEmp_HS_region
+                                                                                     mean_UnEmp_HS_region)) * (
+                                                                                    -1.0)) / stddev_UnEmp_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Unemployment_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'FT_Work_HS']) - (
-                                                                                       mean_FT_Work_HS_region)) * (
-                                                                                      1.0)) / stddev_FT_Work_HS_region
+                                                                                mean_FT_Work_HS_region)) * (
+                                                                               1.0)) / stddev_FT_Work_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'FT_Work_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Poverty_HS']) - (
-                                                                                       mean_Poverty_HS_region)) * (
-                                                                                      -1.0)) / stddev_Poverty_HS_region
+                                                                                mean_Poverty_HS_region)) * (
+                                                                               -1.0)) / stddev_Poverty_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Poverty_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Working_Poor_HS']) - (
-                                                                                            mean_Working_Poor_HS_region)) * (
-                                                                                           -1.0)) / stddev_Working_Poor_HS_region
+                                                                                     mean_Working_Poor_HS_region)) * (
+                                                                                    -1.0)) / stddev_Working_Poor_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Working_Poor_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Rent_Burden_HS']) - (
-                                                                                           mean_Rent_Burden_HS_region)) * (
-                                                                                          -1.0)) / stddev_Rent_Burden_HS_region
+                                                                                    mean_Rent_Burden_HS_region)) * (
+                                                                                   -1.0)) / stddev_Rent_Burden_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Rent_Burden_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Home_ownership_HS']) - (
-                                                                                              mean_Home_ownership_HS_region)) * (
-                                                                                             1.0)) / stddev_Home_ownership_HS_region
+                                                                                       mean_Home_ownership_HS_region)) * (
+                                                                                      1.0)) / stddev_Home_ownership_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Home_ownership_HS_score'] = np.nan
 
             if sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '#DIV/0!' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != 'inf' and \
-                    sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '-inf':
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != 'inf' and \
+                            sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS'] != '-inf':
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_HS_score'] = ((float(
                     sg_data_PR_HISP_NB_mainland_PR.at[i, 'Income_level_HS']) - (
-                                                                                            mean_Income_level_HS_region)) * (
-                                                                                           1.0)) / stddev_Income_level_HS_region
+                                                                                     mean_Income_level_HS_region)) * (
+                                                                                    1.0)) / stddev_Income_level_HS_region
             else:
                 sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Income_level_HS_score'] = np.nan
 
             sg_data_PR_HISP_NB_mainland_PR_final.at[i, 'Overall_HS_score'] = ((
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Unemployment_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'FT_Work_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Poverty_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Working_Poor_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Rent_Burden_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Home_ownership_HS_score'] +
-                                                                                      sg_data_PR_HISP_NB_mainland_PR_final.at[
-                                                                                          i, 'Income_level_HS_score']) * 1.0) / 7
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Unemployment_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'FT_Work_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Poverty_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Working_Poor_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Rent_Burden_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Home_ownership_HS_score'] +
+                                                                           sg_data_PR_HISP_NB_mainland_PR_final.at[
+                                                                               i, 'Income_level_HS_score']) * 1.0) / 7
 
             for column in score_columns_list:
                 indicator = str(column).split('_score')
@@ -8506,7 +8426,6 @@ def get_score_grade_PR_HISP_NB_mainland_PR(PATH=None):
 
     make_sure_path_exists(PATH)
     sg_data_PR_HISP_NB_mainland_PR_final.to_csv(PATH + 'PR_Hispanic_NB_mainland_PR.csv', na_rep="#DIV/0!")
-
 
 def run():
     print('Creating DataFrames...')
@@ -8546,7 +8465,9 @@ def run():
     get_score_grade_PR_HISP_NB_mainland('data_PR_HISP/2016/Score_Grades/')
     get_score_grade_PR_HISP_NB_mainland_PR('data_PR_HISP/2016/Score_Grades/')
 
+
     cj_HISP_PR.csv_to_json_HISP_PR()
+
 
 
 if __name__ == '__main__':
