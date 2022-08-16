@@ -6,8 +6,8 @@ h_columns = ['SERIALNO','GRPIP','TEN']
 # p_data = pandas.read_csv('data/ss18pny.csv',usecols=p_columns)
 # h_data = pandas.read_csv('data/ss18hny.csv',usecols=h_columns)
 
-p_data = pandas.read_csv('data/ss18pny.csv',usecols=p_columns)
-h_data = pandas.read_csv('data/ss18hny.csv',usecols=h_columns)
+p_data = pandas.read_csv('data/ss14pny.csv',usecols=p_columns)
+h_data = pandas.read_csv('data/ss14hny.csv',usecols=h_columns)
 
 p_data.to_csv('data/p_dataframe.csv')
 h_data.to_csv('data/h_dataframe.csv')

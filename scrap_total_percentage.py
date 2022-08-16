@@ -250,7 +250,7 @@ def Total_Population(NATIVITY = None, PATH = '/', RAC1P=None, HISP=None,GRP11=No
 def FB_ALL():
     
     print('FB_ALL')
-    PATH = 'data/2018/FB_All/'
+    PATH = 'data/2016/FB_All/'
     Total_Population(NATIVITY=2,PATH=PATH,name='FB_total_population.csv')
 
 def get_percentage(df = None):
@@ -265,7 +265,7 @@ def get_percentage(df = None):
     return new_df
 
 def total_percentage(PATH=None):
-    total_population_df=pandas.read_csv('data/2018/FB_All/step_1/FB_total_population.csv')
+    total_population_df=pandas.read_csv('data/2016/FB_All/step_1/FB_total_population.csv')
     new_df = pandas.DataFrame()
     total_population = total_population_df['Population_mf_t'][146:].sum()
     total_population_m = total_population_df['Population_m'][146:].sum()
@@ -290,7 +290,7 @@ def run():
     print('Creating DataFrames...')
 
     FB_ALL()
-    total_percentage(PATH='data/2018/FB_All/')
+    total_percentage(PATH='data/2016/FB_All/')
 
 
 if __name__ == '__main__':
